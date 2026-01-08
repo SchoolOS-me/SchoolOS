@@ -1,0 +1,106 @@
+---
+title: Configure Automatic Deployments
+---
+
+Each deployed environment comes with a preconfigured CI/CD pipeline using AWS S3 bucket, AWS CodeBuild, and AWS
+CodePipeline. The general idea of the deployment is for the user to upload zipped code artifact to the S3 bucket,
+triggering CodeBuild and CodePipeline to execute the deployment. Artifacts are prepared by the CI pipeline
+(GitHub Actions or Bitbucket Pipelines).
+
+## Automatically synchronize external repository
+
+### Get artifacts bucket name
+
+SaaS Boilerplate generates a user for you that has minimal permissions required for uploading code artifact to the S3
+bucket. In order to implement a synchronization logic we need to get a bucket name and credentials of the user.
+To get the bucket name use the following command:
+```shell
+pnpm saas ci get-artifacts-bucket
+```
+
+Alternatively, you can find the bucket name in the AWS console under the source of the AWS CodePipeline of the
+environment.
+
+### Get authentication credentials for CI AWS user
+
+In order to upload the code artifact to the S3 bucket, the CI pipeline needs to authenticate with AWS. SaaS Boilerplate
+generates a `external-ci` user for you that has minimal permissions required for uploading code artifact to the S3
+bucket. To get the credentials of the user follow these steps:
+
+1. Open `IAM` service in web console.
+
+2. Find the `external-ci` user.
+
+3. Navigate to `Security Credentials` tab.
+
+4. Press `Create access key`.
+
+5. Copy the key id and secret.
+
+### Configure Github
+
+1. Open `Settings` page of your repository.
+
+2. Go to `Security` > `Secrets and variables` > `Actions` subpage.
+
+3. Create following secrets under `Repository secrets`:
+
+   - `AWS_ACCESS_KEY_ID` – [external-ci](#get-authentication-credentials-for-ecr-repository) user access key id
+
+   - `AWS_SECRET_ACCESS_KEY` – [external-ci](#get-authentication-credentials-for-ecr-repository) user access key secret
+
+   - `AWS_DEFAULT_REGION` – set to a region to which your system is deployed
+
+4. Go to `Code and automation` > `Environments` subpage under repository settings. Add you environment and select it.
+
+    :::info
+    You can learn more about environments on GitHub [here](https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-deployments/managing-environments-for-deployment).
+    :::
+
+5. Create following secrets under `Environment secrets`:
+
+   - `SB_CI_ARTIFACTS_BUCKET` – [artifacts bucket name](#get-artifacts-bucket-name)
+
+6. Create following secrets under `Environment variables`:
+
+   - `SB_DEPLOY_STAGE` – set to the name of the environment
+
+7. Edit the `.github/workflows/deploy-*.yml` files to match your environments.
+
+    :::info
+    Learn more about deployments using GitHub Actions [here](https://docs.github.com/en/actions/use-cases-and-examples/deploying/deploying-with-github-actions).
+    :::
+
+### Configure Bitbucket
+
+1. Open `Repository Settings` page of your repository.
+
+2. Go to `Pipelines` > `Settings` sub-page.
+
+3. Enable Bitbucket Pipelines.
+
+4. Go to `Pipelines` > `Repository variables` sub-page.
+
+5. Create following variables:
+
+   - `AWS_ACCESS_KEY_ID` – `external-ci` user access key id
+
+   - `AWS_SECRET_ACCESS_KEY` – `external-ci` user access key secret
+
+   - `AWS_DEFAULT_REGION` – set to a region to which your system is deployed
+
+    :::info
+    Learn more about repository variables on Bitbucket [here](https://support.atlassian.com/bitbucket-cloud/docs/variables-and-secrets/#Repository-variables).
+    :::
+
+6. Go to `Pipelines` > `Deployments` sub-page. And configure your deployment environment.
+
+    :::info
+    Learn more about deployments on Bitbucket [here](https://support.atlassian.com/bitbucket-cloud/docs/deployments/).
+    :::
+
+7. Create following variables for the environment:
+
+   - `SB_CI_ARTIFACTS_BUCKET` – [artifacts bucket name](#get-artifacts-bucket-name)
+
+   - `SB_DEPLOY_ENVIRONMENT_NAME` - set to the name of the full project environment name (`saas-qa` for example)
