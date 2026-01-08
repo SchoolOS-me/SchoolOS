@@ -86,9 +86,6 @@ DJANGO_CORE_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    "django_extensions",
-    "django_celery_results",
-    "django_celery_beat",
     "djstripe",
     "django_hosts",
     "drf_yasg",
@@ -96,20 +93,21 @@ THIRD_PARTY_APPS = [
     "rest_framework_simplejwt.token_blacklist",
     "social_django",
     "whitenoise",
-    "graphene_django",
     "channels",
     # "aws_xray_sdk.ext.django",
 ]
 
 LOCAL_APPS = [
+    "apps.schools",
+    "apps.accounts",
     "apps.content",
     "apps.finances",
-    "apps.users",
     "apps.notifications",
     "apps.websockets",
     "apps.integrations",
     "apps.multitenancy",
     "apps.academics",
+   
 ]
 
 INSTALLED_APPS = ["daphne"] + DJANGO_CORE_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -145,6 +143,7 @@ ROOT_URLCONF = "config.urls_api"
 ROOT_HOSTCONF = "config.hosts"
 DEFAULT_HOST = "api"
 PARENT_HOST = env_str("PARENT_HOST", "")
+AUTH_USER_MODEL = "accounts.User"
 
 # -------------------------------------------------------------------
 # Templates
@@ -241,7 +240,6 @@ XRAY_RECORDER = {
 # Auth / Users
 # -------------------------------------------------------------------
 
-AUTH_USER_MODEL = "users.User"
 
 AUTHENTICATION_BACKENDS = (
     "social_core.backends.google.GoogleOAuth2",
@@ -280,7 +278,6 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
     ),
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "apps.users.authentication.JSONWebTokenCookieAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ),
