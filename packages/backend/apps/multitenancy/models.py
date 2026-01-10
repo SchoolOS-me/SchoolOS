@@ -47,13 +47,9 @@ class Tenant(TimestampedMixin, models.Model):
         blank=True,
         through_fields=('tenant', 'user'),
     )
-    billing_email = models.EmailField(
-        db_collation="case_insensitive",
-        verbose_name="billing email address",
-        max_length=255,
-        unique=False,
-        blank=True,
-    )
+    billing_email = models.EmailField(max_length=255)
+    features = models.JSONField(default=dict, blank=True)
+
 
     objects = TenantManager()
 
@@ -136,12 +132,8 @@ class TenantMembership(TimestampedMixin, models.Model):
     # Invitation connected fields
     is_accepted = models.BooleanField(default=False)
     invitation_accepted_at = models.DateTimeField(null=True)
-    invitee_email_address = models.EmailField(
-        db_collation="case_insensitive",
-        verbose_name="invitee email address",
-        max_length=255,
-        default="",
-    )
+    invitee_email_address = models.EmailField(max_length=255)
+
 
     objects = TenantMembershipManager()
 

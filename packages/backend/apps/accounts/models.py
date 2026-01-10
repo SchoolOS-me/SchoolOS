@@ -4,6 +4,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 
 from .managers import UserManager
 from .constants import UserRole
+from django.core.exceptions import ValidationError
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -34,3 +35,17 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
+    
+
+    def clean(self):
+        if self.role == UserRole.SUPER_ADMIN and self.school is not None:
+            raise ValidationError("SUPER_ADMIN cannot be associated with a school")
+
+        if self.role != UserRole.SUPER_ADMIN and self.school is None:
+            raise ValidationError("Non-super users must be associated with a school")
+    
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+

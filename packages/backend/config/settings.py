@@ -100,6 +100,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "apps.schools",
     "apps.accounts",
+    "apps.attendance",
     "apps.content",
     "apps.finances",
     "apps.notifications",
@@ -122,21 +123,13 @@ if ENABLE_XRAY:
 # -------------------------------------------------------------------
 
 MIDDLEWARE = [
-    "common.middleware.HealthCheckMiddleware",
-    # "aws_xray_sdk.ext.django.middleware.XRayMiddleware",
-    "common.middleware.ManageCookiesMiddleware",
-    "common.middleware.SetAuthTokenCookieMiddleware",
-    "django_hosts.middleware.HostsRequestMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django_hosts.middleware.HostsResponseMiddleware",
-    "social_django.middleware.SocialAuthExceptionMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls_api"
