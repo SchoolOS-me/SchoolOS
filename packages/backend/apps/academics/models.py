@@ -197,6 +197,14 @@ class Exam(models.Model):
     end_date = models.DateField()
 
     is_published = models.BooleanField(default=False)
+    published_at = models.DateTimeField(null=True, blank=True)
+    published_by = models.ForeignKey(
+        User,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="published_exams",
+    )
 
     class Meta:
         unique_together = ("tenant", "academic_year", "name")
@@ -293,5 +301,52 @@ class GradingRule(models.Model):
     )
     min_percentage = models.FloatField()
     grade = models.CharField(max_length=5)
+
+class ClassTeacher(models.Model):
+    tenant = models.ForeignKey(
+        Tenant,
+        on_delete=models.CASCADE,
+        related_name="class_teachers",
+    )
+    teacher = models.ForeignKey(
+        Teacher,
+        on_delete=models.CASCADE,
+        related_name="class_teacher_roles",
+    )
+    school_class = models.ForeignKey(
+        SchoolClass,
+        on_delete=models.CASCADE,
+        related_name="class_teachers",
+    )
+    section = models.ForeignKey(
+        Section,
+        on_delete=models.CASCADE,
+        related_name="class_teachers",
+    )
+
+    class Meta:
+        unique_together = ("tenant", "school_class", "section")
+
+
+class ParentStudent(models.Model):
+    tenant = models.ForeignKey(
+        Tenant,
+        on_delete=models.CASCADE,
+        related_name="parent_students",
+    )
+    parent = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="children_links",
+        limit_choices_to={"role": "PARENT"},
+    )
+    student = models.ForeignKey(
+        Student,
+        on_delete=models.CASCADE,
+        related_name="parent_links",
+    )
+
+    class Meta:
+        unique_together = ("parent", "student")
 
 

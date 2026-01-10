@@ -30,6 +30,19 @@ class AttendanceSession(models.Model):
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
+    STATUS_DRAFT = "draft"
+    STATUS_SUBMITTED = "submitted"
+
+    STATUS_CHOICES = [
+        (STATUS_DRAFT, "Draft"),
+        (STATUS_SUBMITTED, "Submitted"),
+    ]
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default=STATUS_DRAFT,
+    )
 
     class Meta:
         unique_together = ("tenant", "date", "school_class", "section")

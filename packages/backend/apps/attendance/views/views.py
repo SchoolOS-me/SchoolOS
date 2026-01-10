@@ -9,6 +9,8 @@ from apps.attendance.sevices.reports import get_section_attendance_report
 from apps.multitenancy.utils import scope_queryset_to_tenant
 from apps.academics.models import Teacher
 from apps.attendance.models import AttendanceSession, StudentAttendance
+from apps.academics.permissions import teacher_can_access_section
+
 
 
 class AttendanceSessionCreateAPI(APIView):
@@ -16,30 +18,43 @@ class AttendanceSessionCreateAPI(APIView):
     def post(self, request):
         check_attendance_access(request.user)
 
-        data = request.data
-        tenant = request.user.school.tenant
+        section_id = request.data.get("section")
+        school_class_id = request.data.get("school_class")
+        date = request.data.get("date")
+
+        if not section_id or not school_class_id or not date:
+            return Response(
+                {"detail": "Missing required fields"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if not teacher_can_access_section(request.user, section_id):
+            return Response(
+                {"detail": "Not assigned to this section"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
 
         session, created = AttendanceSession.objects.get_or_create(
-            tenant=tenant,
-            date=data["date"],
-            school_class_id=data["school_class"],
-            section_id=data["section"],
+            tenant=request.user.school.tenant,
+            date=date,
+            school_class_id=school_class_id,
+            section_id=section_id,
             defaults={
-                "teacher": Teacher.objects.get(user=request.user),
+                "teacher_id": request.user.teacher_profile.id,
             },
         )
 
         if not created:
             return Response(
-                {"detail": "Attendance already exists for this class today"},
+                {"detail": "Attendance already exists"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         return Response(
-            {"id": session.id, "detail": "Attendance session created"},
+            {"id": session.id},
             status=status.HTTP_201_CREATED,
         )
-    
+
 class MarkAttendanceAPI(APIView):
 
     def post(self, request):
@@ -107,6 +122,8 @@ class SectionAttendanceReportAPI(APIView):
         )
 
         return Response(report)
+
+
 
 
 
