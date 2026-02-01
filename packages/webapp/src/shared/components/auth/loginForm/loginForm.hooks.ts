@@ -17,6 +17,15 @@ export const useLoginForm = () => {
   const generateLocalePath = useGenerateLocalePath();
   const { reload: reloadCommonQuery } = useCommonQuery();
   const { search } = useLocation();
+  const UI_ONLY = true;
+
+  if (UI_ONLY) {
+    return {
+      onSubmit: () => {},
+      isSubmitting: false,
+      error: null,
+    };
+  }
 
   const form = useApiForm<LoginFormFields>({
     errorMessages: {

@@ -14,13 +14,16 @@ import { Emitter } from '../utils/eventEmitter';
 import { SchemaType } from './types';
 import { WebSocketLink } from './webSocketLink';
 
-const IS_LOCAL_ENV = ENV.ENVIRONMENT_NAME === 'local';
+const IS_LOCAL_ENV = 'local';
+const IS_DEV = true;
+console.log(`Running in ${IS_DEV}`);
 
 export const emitter = new Emitter();
 
 const httpApiLink = createUploadLink({
   uri: apiURL('/graphql/'),
 });
+
 
 function showNetworkErrorMessage() {
   emitter.dispatchEvent(ToastEmitterActions.ADD_TOAST, {
@@ -93,16 +96,23 @@ const splitHttpLink = split(
   httpContentfulLink
 );
 
-const wsLink = new WebSocketLink();
+const wsLink = IS_DEV ? null : new WebSocketLink();
 
-const splitLink = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query);
-    return definition.kind === Kind.OPERATION_DEFINITION && definition.operation === OperationTypeNode.SUBSCRIPTION;
-  },
-  wsLink,
-  splitHttpLink
-);
+const splitLink = wsLink
+  ? split(
+      ({ query }) => {
+        const definition = getMainDefinition(query);
+        return (
+          definition.kind === Kind.OPERATION_DEFINITION &&
+          definition.operation === OperationTypeNode.SUBSCRIPTION
+        );
+      },
+      wsLink,
+      splitHttpLink
+    )
+  : splitHttpLink;
+
+
 
 const maxRetryAttempts = 5;
 
@@ -115,10 +125,13 @@ const retryLink = new RetryLink({
     return !!error && count < maxRetryAttempts;
   },
 });
+const linkChain = IS_DEV
+  ? from([splitLink])
+  : from([retryLink, splitLink]);
 
 export const client = new ApolloClient({
   connectToDevTools: IS_LOCAL_ENV,
-  link: from([retryLink, splitLink]),
+  link: linkChain,
   cache: new InMemoryCache({
     typePolicies: {
       Query: {

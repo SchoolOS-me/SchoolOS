@@ -10,14 +10,22 @@ export const LANG_PREFIX = `/:lang?/*`;
 export const TENANT_PREFIX = `:tenantId?/*`;
 
 export const RoutesConfig = {
+  // Core
   ...CoreRoutesConfig,
+
   documents: 'documents',
   ...TenantsRoutesConfig,
+
   ...GenerativeAIRoutesConfig,
   ...ContentfulRoutesConfig,
   ...CrudDemoRoutesConfig,
   ...FinancesRoutesConfig,
-  //<-- INJECT ROUTE DEFINITION -->
+
+  teacher: 'teacher',
+  teacherDashboard: 'teacher',
+  teacherAttendance: 'teacher/attendance',
+  teacherMarks: 'teacher/marks',
+  teacherResults: 'teacher/results',
 };
 
 export const NO_NAVIGATION_ROUTES = [
@@ -27,5 +35,4 @@ export const NO_NAVIGATION_ROUTES = [
   RoutesConfig.validateOtp,
   RoutesConfig.confirmEmail,
   RoutesConfig.passwordReset.index,
-  RoutesConfig.passwordReset.confirm,
 ].map(getLocalePath);

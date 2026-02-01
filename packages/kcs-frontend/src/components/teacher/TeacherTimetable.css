@@ -1,0 +1,64 @@
+.teacher-timetable {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.teacher-timetable__title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #111827;
+}
+
+.teacher-timetable__days {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.teacher-timetable__day {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.teacher-timetable__day-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #2563eb;
+}
+
+.teacher-timetable__classes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.teacher-timetable__class {
+  background-color: #f9fafb;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.teacher-timetable__subject {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.teacher-timetable__meta {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .teacher-timetable__days {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,5 +1,6 @@
 import dns from 'dns';
 import { join } from 'path';
+import path from 'path';
 
 import { viteCommonjs } from '@originjs/vite-plugin-commonjs';
 import legacy from '@vitejs/plugin-legacy';
@@ -77,6 +78,7 @@ export default defineConfig(({ mode }): UserConfig => {
       alias: {
         fs: require.resolve('rollup-plugin-node-builtins'),
         path: require.resolve('rollup-plugin-node-builtins'),
+        '@': path.resolve(__dirname, 'src'),
       },
     },
   };

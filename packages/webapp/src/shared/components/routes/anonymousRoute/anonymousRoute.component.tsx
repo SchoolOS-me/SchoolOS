@@ -23,6 +23,10 @@ export const AnonymousRoute = () => {
   const { isLoggedIn } = useAuth();
   const [search] = useSearchParams();
   const redirect = search.get('redirect');
-
-  return isLoggedIn ? <Navigate to={redirect ?? generateLocalePath(RoutesConfig.home)} /> : <Outlet />;
+  const UI_ONLY = true;
+  if (UI_ONLY) {
+    return <Outlet />;
+  } else {
+    return isLoggedIn ? <Navigate to={redirect ?? generateLocalePath(RoutesConfig.home)} /> : <Outlet />;
+  }
 };

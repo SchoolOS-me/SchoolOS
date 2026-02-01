@@ -27,16 +27,21 @@ export const ValidRoutesProviders = () => {
   const {
     locales: { language },
   } = useLocales();
+  const UI_ONLY = true;
+  const SAFE_LOCALE = 'en';
+
+  const effectiveLocale = UI_ONLY ? SAFE_LOCALE : language;
+  const messages = translationMessages[effectiveLocale] ?? {};
 
   useEffect(() => {
-    if (language && params.lang === undefined) {
+    if (!UI_ONLY && language && params.lang === undefined) {
       const url = `/${language}/${params['*']}`;
       navigate(url, { replace: true });
     }
-  }, [language, params, navigate]);
+  }, [UI_ONLY, language, params, navigate]);
 
-  return !language ? null : (
-    <IntlProvider key={language} locale={language} messages={translationMessages[language]}>
+  return UI_ONLY || language ? (
+    <IntlProvider key={effectiveLocale} locale={effectiveLocale} defaultLocale="en" messages={messages}>
       <>
         <FormattedMessage defaultMessage="Apptension Boilerplate" id="App / Page title">
           {([pageTitle]: [string]) => <Helmet titleTemplate={`%s - ${pageTitle}`} defaultTitle={pageTitle} />}
@@ -55,5 +60,5 @@ export const ValidRoutesProviders = () => {
         <Toaster />
       </>
     </IntlProvider>
-  );
+  ) : null;
 };

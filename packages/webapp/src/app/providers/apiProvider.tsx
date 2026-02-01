@@ -28,10 +28,14 @@ export const ApiProvider: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('LOCALES_LANGUAGE', language || '');
   }, [language]);
-
-  return (
-    <ApolloProvider>
-      <CommonQuery>{children}</CommonQuery>
-    </ApolloProvider>
-  );
+  const UI_ONLY = true;
+  if (UI_ONLY) {
+    return <>{children}</>;
+  } else {
+    return (
+      <ApolloProvider>
+        <CommonQuery>{children}</CommonQuery>
+      </ApolloProvider>
+    );
+  }
 };

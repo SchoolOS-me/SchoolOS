@@ -1,0 +1,75 @@
+.scheduleCard {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+}
+
+.scheduleHeader {
+  margin-bottom: 16px;
+}
+
+.scheduleHeader h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.scheduleList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.scheduleItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  position: relative;
+}
+
+.scheduleItem.active {
+  background: #dcfce7;
+  border-color: #16a34a;
+}
+
+.time {
+  font-weight: 600;
+  min-width: 70px;
+}
+
+.details {
+  flex: 1;
+}
+
+.subject {
+  font-weight: 500;
+}
+
+.meta {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.nowBadge {
+  background: #16a34a;
+  color: white;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.emptyState {
+  padding: 24px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+}
+.emptyState {
+  padding: 24px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+}

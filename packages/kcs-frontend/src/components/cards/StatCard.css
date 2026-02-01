@@ -1,0 +1,16 @@
+.statCard {
+  background: var(--color-bg-card);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.statValue {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.statLabel {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
