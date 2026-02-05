@@ -1,9 +1,382 @@
 .topbar {
-  height: var(--topbar-height);
-  background: var(--color-bg-card);
-  border-bottom: 1px solid var(--color-border);
-  padding: 0 var(--spacing-lg);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  padding: 1rem 1.5rem;
+}
+
+.topbarTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.topbar--teacher {
+  height: 64px;
+  padding: 0 28px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  gap: 18px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.topbar--teacher .topbar__center {
+  max-width: 360px;
+}
+
+.topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar__brandMark {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  background: #2563eb;
+  display: inline-block;
+}
+
+.topbar__brandText {
+  font-weight: 700;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.topbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar__navItem {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.topbar__navItem.is-active {
+  color: #2563eb;
+  position: relative;
+}
+
+.topbar__navItem.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: #2563eb;
+}
+
+.topbar--teacher .topbar__iconButton {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.topbar__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fcd34d;
+  color: #1f2937;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.topbar--student {
+  height: 64px;
+  padding: 0 28px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  gap: 18px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.topbar__roleBadge {
+  background: #f5e8ea;
+  color: #991b1b;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 10px;
+}
+
+.topbar--admin {
+  height: 64px;
+  padding: 0 28px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  gap: 18px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.topbar__school {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.topbar__schoolIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  background: #e6f7ef;
+  display: grid;
+  place-items: center;
+  color: #047857;
+}
+
+.topbar--parent {
+  height: 64px;
+  padding: 0 28px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  gap: 18px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.topbar__switch {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.topbar__switchLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+}
+
+.topbar__switchButton {
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.topbar--superAdmin {
+  height: 64px;
+  padding: 0 28px;
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid #d9e1f2;
+  backdrop-filter: blur(6px);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  gap: 24px;
+}
+
+.topbar--superAdmin .topbarTitle {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.topbar__left {
+  flex: 1;
+}
+
+.topbar__center {
+  flex: 2;
+  max-width: 480px;
+  position: relative;
+}
+
+.topbar__searchInput {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  font-size: 13px;
+  color: #1f2937;
+}
+
+.topbar__searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.topbar__searchIcon svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar__iconButton {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.topbar__iconButton svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.topbar__iconButton:hover {
+  background: #f0f3f9;
+  color: #2563eb;
+}
+
+.topbar__divider {
+  width: 1px;
+  height: 24px;
+  background: #d9e1f2;
+}
+
+.topbar__user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar__userText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.2;
+}
+
+.topbar__userName {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.topbar__userRole {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.topbar__userAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fde68a;
+  color: #1f2937;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+@media (max-width: 1024px) {
+  .topbar--superAdmin {
+    padding: 0 20px;
+  }
+
+  .topbar__center {
+    max-width: 320px;
+  }
+
+  .topbar--teacher {
+    padding: 0 20px;
+  }
+
+  .topbar--student,
+  .topbar--parent,
+  .topbar--admin {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .topbar--superAdmin {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 16px 20px;
+  }
+
+  .topbar__center {
+    order: 3;
+    width: 100%;
+    max-width: none;
+  }
+
+  .topbar__left,
+  .topbar__right {
+    flex: initial;
+  }
+
+  .topbar--teacher {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 16px 20px;
+  }
+
+  .topbar--teacher .topbar__center {
+    order: 3;
+    width: 100%;
+    max-width: none;
+  }
+
+  .topbar__nav {
+    order: 2;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .topbar--student,
+  .topbar--parent,
+  .topbar--admin {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 16px 20px;
+  }
+
+  .topbar--parent .topbar__nav {
+    order: 2;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .topbar--student .topbar__center {
+    order: 3;
+    width: 100%;
+    max-width: none;
+  }
 }

@@ -1,5 +1,5 @@
 import './TeacherTimetable.css';
-import { weeklyTimetable } from '../../mock/teacherDashboard';
+import { weeklyTimetable } from '../../../mock/teacherDashboard';
 
 const TeacherTimetable = () => {
   return (

@@ -16,3 +16,42 @@
   padding: 24px;
 }
 
+.dashboardLayout--superAdmin {
+  background: #f4f6fb;
+}
+
+.dashboardLayout--superAdmin .dashboardMain {
+  background: #f4f6fb;
+}
+
+.dashboardLayout--teacher {
+  background: #f5f7fb;
+}
+
+.dashboardLayout--teacher .dashboardMain {
+  background: #f5f7fb;
+}
+
+.dashboardLayout--student {
+  background: #f5f3f4;
+}
+
+.dashboardLayout--student .dashboardMain {
+  background: #f5f3f4;
+}
+
+.dashboardLayout--parent {
+  background: #f6f5fb;
+}
+
+.dashboardLayout--parent .dashboardMain {
+  background: #f6f5fb;
+}
+
+.dashboardLayout--admin {
+  background: #f5f7fb;
+}
+
+.dashboardLayout--admin .dashboardMain {
+  background: #f5f7fb;
+}

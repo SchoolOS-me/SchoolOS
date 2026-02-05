@@ -1,15 +1,10 @@
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
+import "./MainLayout.css";
 
 export function MainLayout() {
   return (
-    <div>
-      <header style={{ padding: 16, borderBottom: '1px solid #ccc' }}>
-        <Link to="/teacher">Teacher</Link>
-      </header>
-
-      <main style={{ padding: 16 }}>
-        <Outlet />
-      </main>
+    <div className="mainLayout">
+      <Outlet />
     </div>
   );
 }

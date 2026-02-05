@@ -1,6 +1,6 @@
 import './StudentList.css';
-import Skeleton from '../../components/ui/Skeleton';
-import { teacherStudents } from '../../mock/teacherDashboard';
+import { teacherStudents } from '../../../mock/teacherDashboard';
+import Skeleton from '../../../components/ui/Skeleton';
 
 const isLoading = false;
 

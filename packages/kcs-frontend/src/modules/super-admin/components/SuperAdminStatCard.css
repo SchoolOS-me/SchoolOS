@@ -1,0 +1,84 @@
+@import "../../super-admin/pages/SuperAdminTheme.css";
+
+.superAdminStatCard {
+  background: var(--super-admin-card);
+  border: 1px solid var(--super-admin-border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.superAdminStatTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.superAdminStatCard .statCard {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.superAdminStatCard .statLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.superAdminStatCard .statValue {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--super-admin-text);
+  letter-spacing: -0.01em;
+}
+
+.superAdminStatIcon {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  color: var(--super-admin-primary);
+}
+
+.superAdminStatIcon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.superAdminStatTrend {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--super-admin-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.superAdminStatTrend::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.superAdminStatTrend.is-positive {
+  color: var(--super-admin-success);
+}
+
+.superAdminStatTrend.is-negative {
+  color: var(--super-admin-danger);
+}
+
+.superAdminStatTrend.is-neutral {
+  color: #3b82f6;
+}

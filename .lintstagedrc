@@ -1,15 +1,6 @@
 {
   "*.{ts,tsx}": "eslint --fix",
-  "*.{json,md,html}": "prettier --write",
-
-  "packages/webapp/**/*.{ts,tsx,js,jsx}": [
-    "eslint --fix",
-    "prettier --write"
-  ],
-  "packages/webapp/**/*.{json,md,html,css}": [
-    "prettier --write"
-  ],
-  "!packages/backend/**": []
+  "*.{json,md,html}": "prettier --write"
 }
 
 

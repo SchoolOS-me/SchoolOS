@@ -1,0 +1,12 @@
+:root {
+  --super-admin-bg: #f4f6fb;
+  --super-admin-card: #ffffff;
+  --super-admin-border: #d9e1f2;
+  --super-admin-primary: #2563eb;
+  --super-admin-muted: #64748b;
+  --super-admin-text: #0f172a;
+  --super-admin-success: #16a34a;
+  --super-admin-danger: #ef4444;
+  --super-admin-warning: #f59e0b;
+  --super-admin-font: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+}

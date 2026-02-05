@@ -1,0 +1,198 @@
+@import "../pages/SuperAdminTheme.css";
+
+.schoolsEmptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background-color: var(--super-admin-card);
+  border: 1px dashed var(--super-admin-border);
+  border-radius: 16px;
+}
+
+.schoolsEmptyState h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.schoolsEmptyState p {
+  margin-bottom: 1.25rem;
+  font-size: 0.875rem;
+  color: var(--super-admin-muted);
+}
+
+.primaryAction {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background-color: var(--super-admin-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.schoolsTableCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.schoolsTableHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--super-admin-border);
+}
+
+.schoolsTableHeader h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.schoolsTableActions {
+  display: flex;
+  gap: 10px;
+}
+
+.tableHeaderButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--super-admin-border);
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--super-admin-text);
+  cursor: pointer;
+}
+
+.tableHeaderIcon svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.schoolsTableWrapper {
+  overflow-x: auto;
+}
+
+.schoolsTable {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: transparent;
+  min-width: 760px;
+}
+
+.schoolsTable th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #3b5ca3;
+  text-align: left;
+  padding: 16px 24px;
+  background: #f8fafc;
+}
+
+.schoolsTable td {
+  font-size: 14px;
+  padding: 16px 24px;
+  color: var(--super-admin-muted);
+}
+
+.schoolsTable tr:not(:last-child) td {
+  border-bottom: 1px solid var(--super-admin-border);
+}
+
+.cellStrong {
+  font-weight: 600;
+  color: var(--super-admin-text);
+}
+
+.align-right {
+  text-align: right;
+}
+
+.tableAction {
+  background: transparent;
+  border: none;
+  color: var(--super-admin-primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.subscriptionBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.subscription-active {
+  color: var(--super-admin-success);
+  background: rgba(22, 163, 74, 0.1);
+  border: 1px solid rgba(22, 163, 74, 0.2);
+}
+
+.subscription-trial {
+  color: #2563eb;
+  background: rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+}
+
+.subscription-expired {
+  color: var(--super-admin-danger);
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.schoolsTableFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-top: 1px solid var(--super-admin-border);
+  font-size: 12px;
+  color: var(--super-admin-muted);
+}
+
+.pagination {
+  display: flex;
+  gap: 8px;
+}
+
+.paginationButton {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--super-admin-border);
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.paginationButton svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.paginationButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

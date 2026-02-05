@@ -52,10 +52,286 @@
   white-space: nowrap;
 }
 
+.sidebar--teacher {
+  width: 260px;
+  background-color: #ffffff;
+  color: #1f2937;
+  border-right: 1px solid #e2e8f0;
+  padding: 24px 20px;
+  gap: 24px;
+}
+
+.sidebar--teacher .sidebar__nav {
+  gap: 8px;
+}
+
+.sidebar--teacher .sidebar__link {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.sidebar--teacher .sidebar__link:hover {
+  background: #eef4ff;
+  color: #2563eb;
+}
+
+.sidebar--teacher .sidebar__link--active {
+  background: #e7efff;
+  color: #2563eb;
+}
+
+.sidebar--teacher .sidebar__icon {
+  width: 18px;
+  height: 18px;
+}
+
+.sidebar--teacher .sidebar__icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.sidebar__brandIcon--teacher {
+  background: #1d4ed8;
+}
+
+.sidebar--student,
+.sidebar--parent {
+  width: 260px;
+  background-color: #ffffff;
+  color: #1f2937;
+  border-right: 1px solid #e2e8f0;
+  padding: 24px 20px;
+  gap: 24px;
+}
+
+.sidebar--student .sidebar__link,
+.sidebar--parent .sidebar__link {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.sidebar--student .sidebar__link:hover,
+.sidebar--parent .sidebar__link:hover {
+  background: #f1f5f9;
+  color: #1d4ed8;
+}
+
+.sidebar--student .sidebar__link--active {
+  background: #f3e8e8;
+  color: #7f1d1d;
+}
+
+.sidebar--parent .sidebar__link--active {
+  background: #efe7ff;
+  color: #6d28d9;
+}
+
+.sidebar__brandIcon--student {
+  background: #b91c1c;
+}
+
+.sidebar__brandIcon--parent {
+  background: #7c3aed;
+}
+
+.sidebar--admin {
+  width: 260px;
+  background-color: #ffffff;
+  color: #1f2937;
+  border-right: 1px solid #e2e8f0;
+  padding: 24px 20px;
+  gap: 24px;
+}
+
+.sidebar--admin .sidebar__link {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.sidebar--admin .sidebar__link:hover {
+  background: #e6f7ef;
+  color: #047857;
+}
+
+.sidebar--admin .sidebar__link--active {
+  background: #e6f7ef;
+  color: #047857;
+  border-radius: 12px;
+}
+
+.sidebar__brandIcon--admin {
+  background: #047857;
+}
+
+.sidebar__adminActions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar__cta {
+  background: #047857;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sidebar__link--muted {
+  color: #94a3b8;
+}
+
+.sidebar--superAdmin {
+  width: 260px;
+  background-color: #ffffff;
+  color: #0f172a;
+  border-right: 1px solid #d9e1f2;
+  padding: 24px 20px;
+  gap: 28px;
+}
+
+.sidebar--superAdmin .sidebar__nav {
+  gap: 8px;
+}
+
+.sidebar--superAdmin .sidebar__link {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.sidebar--superAdmin .sidebar__link:hover {
+  background: #eef4ff;
+  color: #2563eb;
+}
+
+.sidebar--superAdmin .sidebar__link--active {
+  background: #e7efff;
+  color: #2563eb;
+  box-shadow: inset 3px 0 0 #2563eb;
+}
+
+.sidebar--superAdmin .sidebar__icon {
+  width: 18px;
+  height: 18px;
+}
+
+.sidebar--superAdmin .sidebar__icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar__brandIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #2563eb;
+  display: grid;
+  place-items: center;
+}
+
+.sidebar__brandGlyph {
+  width: 18px;
+  height: 18px;
+  background: #ffffff;
+  mask: linear-gradient(#000, #000);
+  clip-path: polygon(0 0, 42% 0, 42% 42%, 0 42%, 0 0, 58% 0, 100% 0, 100% 42%, 58% 42%, 58% 0, 0 58%, 42% 58%, 42% 100%, 0 100%, 0 58%, 58% 58%, 100% 58%, 100% 100%, 58% 100%, 58% 58%);
+}
+
+.sidebar__brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.sidebar__brandTitle {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.sidebar__brandSubtitle {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.sidebar__user {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #d9e1f2;
+}
+
+.sidebar__avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #fde68a;
+  color: #1f2937;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.sidebar__userName {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sidebar__userRole {
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
 /* Tablet & below */
 @media (max-width: 1024px) {
   .sidebar {
     width: 200px;
+  }
+
+  .sidebar--superAdmin {
+    width: 220px;
+  }
+
+  .sidebar--teacher {
+    width: 220px;
+  }
+
+  .sidebar--student,
+  .sidebar--parent {
+    width: 220px;
+  }
+
+  .sidebar--admin {
+    width: 220px;
   }
 }
 
@@ -74,5 +350,86 @@
 
   .sidebar__label {
     display: none;
+  }
+
+  .sidebar--superAdmin {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sidebar--superAdmin .sidebar__brandText {
+    display: none;
+  }
+
+  .sidebar--superAdmin .sidebar__nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .sidebar--superAdmin .sidebar__user {
+    margin-top: 0;
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .sidebar--teacher {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sidebar--teacher .sidebar__brandText {
+    display: none;
+  }
+
+  .sidebar--teacher .sidebar__nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .sidebar--student,
+  .sidebar--parent {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sidebar--student .sidebar__brandText,
+  .sidebar--parent .sidebar__brandText {
+    display: none;
+  }
+
+  .sidebar--student .sidebar__nav,
+  .sidebar--parent .sidebar__nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .sidebar--admin {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sidebar--admin .sidebar__brandText {
+    display: none;
+  }
+
+  .sidebar--admin .sidebar__nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .sidebar--admin .sidebar__adminActions {
+    width: 100%;
   }
 }

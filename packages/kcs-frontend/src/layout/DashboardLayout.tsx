@@ -1,18 +1,20 @@
-import type { ReactNode } from 'react';
-import Sidebar from './Sidebar';
-import Topbar from './Topbar';
-import './DashboardLayout.css';
+import type { ReactNode } from "react";
+import Sidebar from "./Sidebar";
+import Topbar from "./Topbar";
+import "./DashboardLayout.css";
 
 type Props = {
+  title?: string;
+  variant?: "default" | "superAdmin" | "teacher" | "student" | "parent" | "admin";
   children: ReactNode;
 };
 
-const DashboardLayout = ({ children }: Props) => {
+const DashboardLayout = ({ title, variant = "default", children }: Props) => {
   return (
-    <div className="dashboardLayout">
-      <Sidebar />
+    <div className={`dashboardLayout dashboardLayout--${variant}`}>
+      <Sidebar variant={variant} />
       <div className="dashboardMain">
-        <Topbar />
+        <Topbar title={title} variant={variant} />
         <main className="dashboardContent">{children}</main>
       </div>
     </div>

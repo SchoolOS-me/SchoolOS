@@ -1,5 +1,5 @@
 import './RecentClasses.css';
-import { recentClasses } from '../../mock/teacherDashboard';
+import { recentClasses } from '../../../mock/teacherDashboard';
 
 const RecentClasses = () => {
   return (

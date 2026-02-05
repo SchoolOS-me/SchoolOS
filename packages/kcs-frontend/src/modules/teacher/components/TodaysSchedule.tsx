@@ -1,6 +1,6 @@
 import './TodaysSchedule.css';
-import Skeleton from '../../components/ui/Skeleton';
-import { todaysSchedule } from '../../mock/teacherDashboard';
+import Skeleton from '../../../components/ui/Skeleton';
+import { todaysSchedule } from '../../../mock/teacherDashboard';
 
 const isLoading = false;
 
