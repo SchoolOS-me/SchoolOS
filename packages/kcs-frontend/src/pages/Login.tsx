@@ -1,6 +1,44 @@
 import "./Login.css";
 
+import { useState } from "react";
+import type { FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { login } from "../api/auth";
+
+const ROLE_ROUTES: Record<string, string> = {
+  SUPER_ADMIN: "/super-admin/dashboard",
+  SCHOOL_ADMIN: "/admin/dashboard",
+  TEACHER: "/teacher-dashboard",
+  STUDENT: "/student/dashboard",
+  PARENT: "/parent/dashboard",
+};
+
 export function Login() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    setError("");
+    setIsLoading(true);
+
+    try {
+      const user = await login(email.trim(), password);
+      const route = ROLE_ROUTES[user.role] || "/login";
+      navigate(route);
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Login failed. Try again.";
+      setError(message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="login-page">
       <header className="login-header">
@@ -25,29 +63,47 @@ export function Login() {
             <button type="button">Parent</button>
           </div>
 
-          <label>
+          <form onSubmit={handleSubmit}>
+            <label>
             Email or School ID
             <div className="login-input">
               <span>@</span>
-              <input type="text" placeholder="e.g. j.doe@stmarys.edu" />
+              <input
+                type="email"
+                placeholder="e.g. j.doe@stmarys.edu"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
+              />
             </div>
-          </label>
+            </label>
 
-          <label>
+            <label>
             Password
             <div className="login-input">
               <span>🔒</span>
-              <input type="password" placeholder="Enter your password" />
+              <input
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                required
+              />
               <button type="button" className="login-link">Forgot password?</button>
             </div>
-          </label>
+            </label>
 
-          <label className="login-check">
+            <label className="login-check">
             <input type="checkbox" />
             Keep me signed in
-          </label>
+            </label>
 
-          <button type="button" className="login-primary">Sign In →</button>
+            {error && <div className="login-error">{error}</div>}
+
+            <button type="submit" className="login-primary" disabled={isLoading}>
+              {isLoading ? "Signing In..." : "Sign In →"}
+            </button>
+          </form>
 
           <div className="login-footnote">
             Not from St. Mary's? <button type="button">Select a different school</button>

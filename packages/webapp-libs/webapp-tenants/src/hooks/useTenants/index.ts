@@ -1,1 +1,0 @@
-export * from './useTenants.hook';

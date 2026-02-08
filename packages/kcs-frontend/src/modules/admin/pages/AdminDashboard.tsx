@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import DashboardLayout from "../../../layout/DashboardLayout";
 import {
   adminActivity,
@@ -5,9 +7,68 @@ import {
   adminQuickActions,
   adminStats,
 } from "../../../mock/adminDashboard";
+import { fetchAdminDashboard } from "../../../api/dashboard";
+import { USE_MOCK_DATA } from "../../../config/env";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
+  const [stats, setStats] = useState(adminStats);
+  const [isLoading, setIsLoading] = useState(!USE_MOCK_DATA);
+
+  const activity = adminActivity;
+  const calendar = adminCalendar;
+  const quickActions = adminQuickActions;
+
+  useEffect(() => {
+    if (USE_MOCK_DATA) return;
+
+    let isMounted = true;
+    setIsLoading(true);
+
+    fetchAdminDashboard()
+      .then((data) => {
+        if (!isMounted) return;
+        setStats([
+          {
+            id: "students",
+            label: "Total Students",
+            value: String(data.academics.students),
+            trend: `${data.academics.classes} Classes`,
+          },
+          {
+            id: "attendance",
+            label: "Attendance Rate",
+            value: `${data.attendance.today_percentage}%`,
+            trend: "Today",
+          },
+          {
+            id: "fees",
+            label: "Pending Fees",
+            value: "$0",
+            trend: "Fees API pending",
+          },
+          {
+            id: "teachers",
+            label: "Active Teachers",
+            value: String(data.academics.teachers),
+            trend: `${data.academics.sections} Sections`,
+          },
+        ]);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setStats(adminStats);
+      })
+      .finally(() => {
+        if (!isMounted) return;
+        setIsLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <DashboardLayout title="School Overview" variant="admin">
       <div className="admin-dashboard">
@@ -28,7 +89,7 @@ const AdminDashboard = () => {
         </div>
 
         <div className="admin-dashboard__stats">
-          {adminStats.map((stat) => (
+          {stats.map((stat) => (
             <div key={stat.id} className="admin-stat">
               <div className="admin-stat__header">
                 <span>{stat.label}</span>
@@ -38,6 +99,7 @@ const AdminDashboard = () => {
               <div className="admin-stat__trend">{stat.trend}</div>
             </div>
           ))}
+          {isLoading && <div className="admin-stat">Loading...</div>}
         </div>
 
         <div className="admin-dashboard__grid">
@@ -46,7 +108,7 @@ const AdminDashboard = () => {
               <h3>Recent Student Activity</h3>
               <button type="button" className="link-button">View all</button>
             </div>
-            {adminActivity.map((item) => (
+            {activity.map((item) => (
               <div key={item.id} className="admin-activity">
                 <div className="admin-activity__avatar">{item.initials}</div>
                 <div className="admin-activity__info">
@@ -62,7 +124,7 @@ const AdminDashboard = () => {
             <section className="admin-card admin-card--accent">
               <h3>Academic Calendar</h3>
               <p>Next exam period starts in 12 days.</p>
-              {adminCalendar.map((item) => (
+              {calendar.map((item) => (
                 <div key={item.id} className="admin-calendar__item">
                   <div className="admin-calendar__icon">{item.icon}</div>
                   <div>
@@ -78,7 +140,7 @@ const AdminDashboard = () => {
                 <h3>Quick Actions</h3>
               </div>
               <div className="admin-quick">
-                {adminQuickActions.map((action) => (
+                {quickActions.map((action) => (
                   <button key={action} type="button">
                     {action}
                   </button>

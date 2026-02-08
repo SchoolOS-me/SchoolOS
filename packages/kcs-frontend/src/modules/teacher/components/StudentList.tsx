@@ -1,14 +1,24 @@
 import './StudentList.css';
-import { teacherStudents } from '../../../mock/teacherDashboard';
 import Skeleton from '../../../components/ui/Skeleton';
 
-const isLoading = false;
+type StudentItem = {
+  id: string | number;
+  name: string;
+  rollNo: string;
+  attendance: number;
+};
 
-const StudentsList = () => {
+type StudentsListProps = {
+  title: string;
+  isLoading?: boolean;
+  students: StudentItem[];
+};
+
+const StudentsList = ({ title, isLoading = false, students }: StudentsListProps) => {
   return (
     <div className="studentsCard">
       <div className="studentsHeader">
-        <h3>Grade 8-A Students</h3>
+        <h3>{title}</h3>
         <button className="viewAllBtn">View All</button>
       </div>
 
@@ -18,11 +28,11 @@ const StudentsList = () => {
           <Skeleton height={48} />
           <Skeleton height={48} />
         </div>
-      ) : teacherStudents.length === 0 ? (
+      ) : students.length === 0 ? (
         <div className="emptyState">No students found</div>
       ) : (
         <div className="studentsList">
-          {teacherStudents.map((student) => (
+          {students.map((student) => (
             <div key={student.id} className="studentRow">
               <div className="studentLeft">
                 <div className="avatar">

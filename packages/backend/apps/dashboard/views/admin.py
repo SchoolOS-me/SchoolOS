@@ -4,6 +4,7 @@ from rest_framework import status
 
 from apps.accounts.permissions import is_school_admin, is_super_admin
 from apps.dashboard.admin import get_admin_dashboard_summary
+from apps.dashboard.utils import get_user_tenant
 
 
 
@@ -16,7 +17,7 @@ class AdminDashboardAPI(APIView):
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-        tenant = request.user.school.tenant
+        tenant = get_user_tenant(request.user)
         data = get_admin_dashboard_summary(tenant)
 
         return Response(data)

@@ -1,8 +1,0 @@
-{
-  "name": "webapp-generative-ai",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/webapp-libs/webapp-generative-ai/src",
-  "projectType": "library",
-  "targets": {},
-  "tags": []
-}

@@ -40,6 +40,8 @@ urlpatterns = [
                 path("dashboard/", include("apps.dashboard.urls")),
                 path("academics/", include("apps.academics.urls")),
                 path("attendance/", include("apps.attendance.urls")),
+                path("schools/", include("apps.schools.urls")),
+                path("auth/", include("apps.accounts.urls")),
     
 
             ]

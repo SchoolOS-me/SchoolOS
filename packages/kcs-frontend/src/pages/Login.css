@@ -150,6 +150,17 @@
   cursor: pointer;
 }
 
+.login-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.login-error {
+  margin: 10px 0 6px;
+  color: #b91c1c;
+  font-size: 12px;
+}
+
 .login-footnote {
   font-size: 12px;
   color: #64748b;

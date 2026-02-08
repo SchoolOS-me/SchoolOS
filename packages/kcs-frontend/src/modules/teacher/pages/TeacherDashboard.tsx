@@ -1,5 +1,7 @@
 import "./TeacherDashboard.css";
 
+import { useEffect, useState } from "react";
+
 import DashboardLayout from "../../../layout/DashboardLayout";
 import TeacherStatCard from "../components/TeacherStatCard";
 import RecentClasses from "../components/RecentClasses";
@@ -7,7 +9,81 @@ import QuickActions from "../components/QuickActions";
 import TodaysSchedule from "../components/TodaysSchedule";
 import TeacherTimetable from "../components/TeacherTimetable";
 import StudentsList from "../components/StudentList";
+import {
+  recentClasses,
+  teacherStudents,
+  todaysSchedule,
+  weeklyTimetable,
+} from "../../../mock/teacherDashboard";
+import { fetchTeacherDashboard } from "../../../api/dashboard";
+import { USE_MOCK_DATA } from "../../../config/env";
+
 const TeacherDashboard = () => {
+  const [stats, setStats] = useState({
+    activeClasses: "0 Classes",
+    studentsToday: "0 Students",
+    pendingMarks: "0 Items",
+    avgAttendance: "0%",
+  });
+  const [classesToday, setClassesToday] = useState(recentClasses);
+  const [scheduleToday, setScheduleToday] = useState(todaysSchedule);
+  const [students, setStudents] = useState(teacherStudents);
+  const [timetable, setTimetable] = useState(weeklyTimetable);
+
+  useEffect(() => {
+    if (USE_MOCK_DATA) return;
+
+    let isMounted = true;
+    fetchTeacherDashboard()
+      .then((data) => {
+        if (!isMounted) return;
+
+        setStats({
+          activeClasses: `${data.stats.active_classes} Classes`,
+          studentsToday: `${data.stats.students_today} Students`,
+          pendingMarks: `${data.stats.pending_marks} Items`,
+          avgAttendance: `${data.stats.avg_attendance}%`,
+        });
+
+        const mappedClasses = data.classes.map((item, index) => ({
+          id: item.section_id || index,
+          subject: item.subjects[0] || "Subject",
+          className: `${item.class} ${item.section}`,
+          time: "Today",
+          room: "Room",
+        }));
+        setClassesToday(mappedClasses.length ? mappedClasses : recentClasses);
+
+        const mappedSchedule = data.today_sessions.map((session) => ({
+          id: session.id,
+          time: session.date,
+          subject: "Class Session",
+          class: `${session.class} ${session.section}`,
+          room: "Room",
+          isNow: session.status === "submitted",
+        }));
+        setScheduleToday(
+          mappedSchedule.length ? mappedSchedule : todaysSchedule
+        );
+
+        setStudents(teacherStudents);
+        setTimetable(weeklyTimetable);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setStats({
+          activeClasses: "5 Classes",
+          studentsToday: "0 Students",
+          pendingMarks: "0 Items",
+          avgAttendance: "0%",
+        });
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <DashboardLayout title="Teacher Dashboard" variant="teacher">
       <div className="teacher-dashboard">
@@ -30,7 +106,7 @@ const TeacherDashboard = () => {
         <div className="teacher-dashboard__stats">
           <TeacherStatCard
             label="Active Classes"
-            value="5 Classes"
+            value={stats.activeClasses}
             trend="No change"
             trendVariant="neutral"
             icon={
@@ -41,7 +117,7 @@ const TeacherDashboard = () => {
           />
           <TeacherStatCard
             label="Students Today"
-            value="142 Students"
+            value={stats.studentsToday}
             trend="+5% from avg"
             trendVariant="positive"
             icon={
@@ -52,7 +128,7 @@ const TeacherDashboard = () => {
           />
           <TeacherStatCard
             label="Pending Marks"
-            value="24 Items"
+            value={stats.pendingMarks}
             trend="-12% completion"
             trendVariant="negative"
             icon={
@@ -63,7 +139,7 @@ const TeacherDashboard = () => {
           />
           <TeacherStatCard
             label="Avg. Attendance"
-            value="96%"
+            value={stats.avgAttendance}
             trend="+2% this week"
             trendVariant="positive"
             icon={
@@ -75,13 +151,13 @@ const TeacherDashboard = () => {
         </div>
 
         <div className="teacher-dashboard__grid">
-          <RecentClasses />
+          <RecentClasses items={classesToday} />
           <QuickActions />
-          <StudentsList />
-          <TodaysSchedule />
+          <StudentsList title="Grade 8-A Students" students={students} />
+          <TodaysSchedule items={scheduleToday} />
         </div>
 
-        <TeacherTimetable />
+        <TeacherTimetable timetable={timetable} />
       </div>
     </DashboardLayout>
   );

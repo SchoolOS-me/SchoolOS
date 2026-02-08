@@ -1,13 +1,21 @@
 import './TeacherTimetable.css';
-import { weeklyTimetable } from '../../../mock/teacherDashboard';
 
-const TeacherTimetable = () => {
+type TimetableDay = {
+  day: string;
+  classes: Array<{ time: string; subject: string; className: string }>;
+};
+
+type TeacherTimetableProps = {
+  timetable: TimetableDay[];
+};
+
+const TeacherTimetable = ({ timetable }: TeacherTimetableProps) => {
   return (
     <div className="teacher-timetable">
       <h2 className="teacher-timetable__title">Weekly Schedule</h2>
 
       <div className="teacher-timetable__days">
-        {weeklyTimetable.map((day) => (
+        {timetable.map((day) => (
           <div key={day.day} className="teacher-timetable__day">
             <div className="teacher-timetable__day-name">
               {day.day}

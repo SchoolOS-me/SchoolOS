@@ -1,7 +1,11 @@
+import { useEffect, useState } from "react";
+
 import DashboardLayout from "../../../layout/DashboardLayout";
 import SuperAdminStatCard from "../components/SuperAdminStatCard";
 import SchoolsTable from "../components/SchoolsTable";
 import { superAdminSchools, superAdminStats } from "../../../mock/superAdminDashboard";
+import { fetchSuperAdminDashboard } from "../../../api/dashboard";
+import { USE_MOCK_DATA } from "../../../config/env";
 import "./SuperAdminDashboard.css";
 
 interface School {
@@ -14,11 +18,73 @@ interface School {
 
 const mockSchools: School[] = superAdminSchools;
 const SuperAdminDashboard = () => {
+  const [stats, setStats] = useState(superAdminStats);
+  const [schools, setSchools] = useState(mockSchools);
+
+  useEffect(() => {
+    if (USE_MOCK_DATA) return;
+
+    let isMounted = true;
+    fetchSuperAdminDashboard()
+      .then((data) => {
+        if (!isMounted) return;
+
+        setStats([
+          {
+            id: "totalSchools",
+            label: "Total Schools",
+            value: String(data.stats.total_schools),
+            trend: "All tenants",
+            trendVariant: "positive",
+          },
+          {
+            id: "activeSubscriptions",
+            label: "Active Subscriptions",
+            value: String(data.stats.active_subscriptions),
+            trend: "Active",
+            trendVariant: "positive",
+          },
+          {
+            id: "expiredSubscriptions",
+            label: "Expired Subscriptions",
+            value: String(data.stats.expired_subscriptions),
+            trend: "Expired",
+            trendVariant: "negative",
+          },
+          {
+            id: "trialSchools",
+            label: "Trial Schools",
+            value: String(data.stats.trial_schools),
+            trend: "Trials",
+            trendVariant: "neutral",
+          },
+        ]);
+
+        const mappedSchools = data.schools.map((school) => ({
+          id: String(school.id),
+          name: school.name,
+          adminName: school.admin_name || "—",
+          adminEmail: school.admin_email || "—",
+          subscriptionStatus: school.subscription_status,
+        }));
+
+        setSchools(mappedSchools.length ? mappedSchools : mockSchools);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setStats(superAdminStats);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <DashboardLayout title="Super Admin Dashboard" variant="superAdmin">
       <div className="super-admin-dashboard">
         <div className="super-admin-stats">
-          {superAdminStats.map((stat) => (
+          {stats.map((stat) => (
             <SuperAdminStatCard
               key={stat.id}
               label={stat.label}
@@ -35,7 +101,7 @@ const SuperAdminDashboard = () => {
         </div>
 
         <section className="super-admin-section">
-          <SchoolsTable schools={mockSchools} />
+          <SchoolsTable schools={schools} />
         </section>
       </div>
     </DashboardLayout>

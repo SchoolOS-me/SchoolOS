@@ -1,10 +1,21 @@
 import './TodaysSchedule.css';
 import Skeleton from '../../../components/ui/Skeleton';
-import { todaysSchedule } from '../../../mock/teacherDashboard';
 
-const isLoading = false;
+type ScheduleItem = {
+  id: string | number;
+  time: string;
+  subject: string;
+  class: string;
+  room: string;
+  isNow: boolean;
+};
 
-const TodaysSchedule = () => {
+type TodaysScheduleProps = {
+  isLoading?: boolean;
+  items: ScheduleItem[];
+};
+
+const TodaysSchedule = ({ isLoading = false, items }: TodaysScheduleProps) => {
   return (
     <div className="scheduleCard">
       <div className="scheduleHeader">
@@ -17,11 +28,11 @@ const TodaysSchedule = () => {
           <Skeleton height={56} />
           <Skeleton height={56} />
         </div>
-      ) : todaysSchedule.length === 0 ? (
+      ) : items.length === 0 ? (
         <div className="emptyState">No classes scheduled</div>
       ) : (
         <div className="scheduleList">
-          {todaysSchedule.map((item) => (
+          {items.map((item) => (
             <div
               key={item.id}
               className={`scheduleItem ${

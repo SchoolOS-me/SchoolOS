@@ -1,8 +1,0 @@
-{
-  "name": "webapp-tenants",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/webapp-libs/webapp-tenants/src",
-  "projectType": "library",
-  "targets": {},
-  "tags": []
-}
