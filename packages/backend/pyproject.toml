@@ -88,6 +88,7 @@ authors = [
 dependencies = [
     "boto3~=1.23",
     "django~=5.0",
+    "django-cors-headers~=4.3",
     "djangorestframework~=3.14.0",
     "djangorestframework-simplejwt~=5.2.2",
     "django-environ~=0.9",
@@ -137,4 +138,3 @@ homepage = ""
 [build-system]
 requires = ["pdm-pep517"]
 build-backend = "pdm.pep517.api"
-

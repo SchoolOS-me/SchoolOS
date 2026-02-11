@@ -1,5 +1,6 @@
 import { apiFetch } from "./client";
-import { authStorage, AuthUser } from "./storage";
+import { authStorage } from "./storage";
+import type { AuthUser } from "./storage";
 
 type LoginResponse = {
   access: string;

@@ -42,7 +42,9 @@ def env_list(key, default=None, sep=","):
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ENVIRONMENT_NAME = env_str("ENVIRONMENT_NAME", "")
+# ENVIRONMENT_NAME = env_str("ENVIRONMENT_NAME", "")
+ENVIRONMENT_NAME = env_str("ENVIRONMENT_NAME", "local")
+IS_LOCAL = ENVIRONMENT_NAME.lower() == "local"
 
 DEBUG = env_bool("DJANGO_DEBUG", True)
 SECRET_KEY = env_str("DJANGO_SECRET_KEY", "unsafe-secret")
@@ -86,6 +88,7 @@ DJANGO_CORE_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    "corsheaders",
     "djstripe",
     "django_hosts",
     "drf_yasg",
@@ -124,6 +127,7 @@ if ENABLE_XRAY:
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -137,6 +141,14 @@ ROOT_HOSTCONF = "config.hosts"
 DEFAULT_HOST = "api"
 PARENT_HOST = env_str("PARENT_HOST", "")
 AUTH_USER_MODEL = "accounts.User"
+
+# -------------------------------------------------------------------
+# CORS
+# -------------------------------------------------------------------
+
+CORS_ALLOW_ALL_ORIGINS = IS_LOCAL
+CORS_ALLOWED_ORIGINS = [] if IS_LOCAL else env_list("CORS_ALLOWED_ORIGINS", [])
+CORS_ALLOW_CREDENTIALS = env_bool("CORS_ALLOW_CREDENTIALS", False)
 
 # -------------------------------------------------------------------
 # Templates
