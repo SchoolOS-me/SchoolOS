@@ -1,0 +1,125 @@
+.dashboard-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dashboard-skeleton--table {
+  gap: 14px;
+}
+
+.dashboard-skeleton__title,
+.dashboard-skeleton__subtitle,
+.dashboard-skeleton__stat,
+.dashboard-skeleton__panel,
+.dashboard-skeleton__thead,
+.dashboard-skeleton__row,
+.dashboard-skeleton__search,
+.dashboard-skeleton__filter {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #e6ebf5 0%, #f2f5fb 45%, #e6ebf5 100%);
+  background-size: 200% 100%;
+  animation: dashboardShimmer 1.5s linear infinite;
+}
+
+.dashboard-skeleton__title {
+  height: 30px;
+  width: 280px;
+}
+
+.dashboard-skeleton__subtitle {
+  height: 14px;
+  width: 420px;
+  max-width: 100%;
+}
+
+.dashboard-skeleton__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.dashboard-skeleton__stat {
+  height: 112px;
+}
+
+.dashboard-skeleton__content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+}
+
+.dashboard-skeleton__panel {
+  height: 220px;
+}
+
+.dashboard-skeleton__panel--wide {
+  height: 220px;
+}
+
+.dashboard-skeleton__toolbar {
+  display: flex;
+  gap: 10px;
+}
+
+.dashboard-skeleton__search {
+  height: 40px;
+  width: 280px;
+}
+
+.dashboard-skeleton__filter {
+  height: 40px;
+  width: 140px;
+}
+
+.dashboard-skeleton__table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard-skeleton__thead {
+  height: 46px;
+}
+
+.dashboard-skeleton__row {
+  height: 58px;
+}
+
+@keyframes dashboardShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .dashboard-skeleton__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-skeleton__content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .dashboard-skeleton__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-skeleton__title {
+    width: 80%;
+  }
+
+  .dashboard-skeleton__toolbar {
+    flex-direction: column;
+  }
+
+  .dashboard-skeleton__search,
+  .dashboard-skeleton__filter {
+    width: 100%;
+  }
+}

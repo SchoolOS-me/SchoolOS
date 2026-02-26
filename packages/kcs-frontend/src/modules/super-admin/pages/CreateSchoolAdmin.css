@@ -1,0 +1,122 @@
+.create-school-admin-page {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.create-school-admin-page__header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.create-school-admin-page__crumbs {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.create-school-admin-page__header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #0f172a;
+}
+
+.create-school-admin-page__header p {
+  margin: 0;
+  color: #64748b;
+}
+
+.create-school-admin-card {
+  background: #ffffff;
+  border: 1px solid #dbe3f0;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.create-school-admin-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.create-school-admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.create-school-admin-field--full {
+  grid-column: 1 / -1;
+}
+
+.create-school-admin-field span {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.create-school-admin-field input,
+.create-school-admin-field select {
+  border: 1px solid #d1dae8;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #0f172a;
+  padding: 11px 13px;
+  font-size: 0.95rem;
+}
+
+.create-school-admin-field input:focus,
+.create-school-admin-field select:focus {
+  outline: none;
+  border-color: #2b6cee;
+  box-shadow: 0 0 0 3px rgba(43, 108, 238, 0.12);
+  background: #ffffff;
+}
+
+.create-school-admin-fixed {
+  border: 1px solid #d1dae8;
+  border-radius: 10px;
+  background: #f8fafc;
+  padding: 12px;
+}
+
+.create-school-admin-fixed span {
+  display: block;
+  color: #475569;
+  font-size: 0.82rem;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.create-school-admin-fixed div {
+  color: #0f172a;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.create-school-admin-fixed p {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.create-school-admin-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 12px;
+}
+
+@media (max-width: 820px) {
+  .create-school-admin-grid {
+    grid-template-columns: 1fr;
+  }
+}

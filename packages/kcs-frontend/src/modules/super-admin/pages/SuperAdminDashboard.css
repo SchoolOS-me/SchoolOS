@@ -6,6 +6,11 @@
   gap: 24px;
 }
 
+.super-admin-dashboard--relative {
+  position: relative;
+  min-height: 520px;
+}
+
 .super-admin-stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

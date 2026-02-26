@@ -34,32 +34,47 @@ const Sidebar = ({ variant = "default" }: Props) => {
             <span className="sidebar__label">Home</span>
           </NavLink>
 
-          <button type="button" className="sidebar__link">
+          <NavLink
+            to="/admin/students/create"
+            className={({ isActive }) =>
+              isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"
+            }
+          >
             <span className="sidebar__icon">
               <svg viewBox="0 0 24 24" role="presentation">
                 <path d="M12 5a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm-7 14a7 7 0 0 1 14 0H5z" />
               </svg>
             </span>
-            <span className="sidebar__label">Users</span>
-          </button>
+            <span className="sidebar__label">Students</span>
+          </NavLink>
 
-          <button type="button" className="sidebar__link">
+          <NavLink
+            to="/admin/teachers/create"
+            className={({ isActive }) =>
+              isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"
+            }
+          >
             <span className="sidebar__icon">
               <svg viewBox="0 0 24 24" role="presentation">
                 <path d="M5 4h14v14H5V4zm3 3h8v2H8V7zm0 4h6v2H8v-2z" />
               </svg>
             </span>
-            <span className="sidebar__label">Classes</span>
-          </button>
+            <span className="sidebar__label">Teachers</span>
+          </NavLink>
 
-          <button type="button" className="sidebar__link">
+          <NavLink
+            to="/admin/classes/create"
+            className={({ isActive }) =>
+              isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"
+            }
+          >
             <span className="sidebar__icon">
               <svg viewBox="0 0 24 24" role="presentation">
                 <path d="M4 6h16v12H4V6zm4-3h8v2H8V3z" />
               </svg>
             </span>
-            <span className="sidebar__label">Exams</span>
-          </button>
+            <span className="sidebar__label">Classes</span>
+          </NavLink>
 
           <button type="button" className="sidebar__link">
             <span className="sidebar__icon">
@@ -337,23 +352,47 @@ const Sidebar = ({ variant = "default" }: Props) => {
             <span className="sidebar__label">Dashboard</span>
           </NavLink>
 
-          <button type="button" className="sidebar__link">
+          <NavLink
+            to="/super-admin/schools/create"
+            className={({ isActive }) =>
+              isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"
+            }
+          >
             <span className="sidebar__icon">
               <svg viewBox="0 0 24 24" role="presentation">
                 <path d="M3 7h18v10H3V7zm4-3h10v2H7V4zm0 14h10v2H7v-2z" />
               </svg>
             </span>
-            <span className="sidebar__label">Schools</span>
-          </button>
+            <span className="sidebar__label">Create School</span>
+          </NavLink>
 
-          <button type="button" className="sidebar__link">
+          <NavLink
+            to="/super-admin/schools/admin"
+            className={({ isActive }) =>
+              isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"
+            }
+          >
+            <span className="sidebar__icon">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M12 3v18M5 7h14M7 11h10M9 15h6" />
+              </svg>
+            </span>
+            <span className="sidebar__label">Create Admin</span>
+          </NavLink>
+
+          <NavLink
+            to="/super-admin/schools/subscription"
+            className={({ isActive }) =>
+              isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"
+            }
+          >
             <span className="sidebar__icon">
               <svg viewBox="0 0 24 24" role="presentation">
                 <path d="M12 3v18M5 7h14M7 11h10M9 15h6" />
               </svg>
             </span>
             <span className="sidebar__label">Subscriptions</span>
-          </button>
+          </NavLink>
 
           <button type="button" className="sidebar__link">
             <span className="sidebar__icon">

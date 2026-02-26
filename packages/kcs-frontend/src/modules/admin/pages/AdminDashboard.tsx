@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
 import DashboardLayout from "../../../layout/DashboardLayout";
+import DashboardSkeleton from "../../../components/ui/DashboardSkeleton";
+import SystemLoadingOverlay from "../../../components/ui/SystemLoadingOverlay";
 import {
   adminActivity,
   adminCalendar,
@@ -71,84 +73,95 @@ const AdminDashboard = () => {
 
   return (
     <DashboardLayout title="School Overview" variant="admin">
-      <div className="admin-dashboard">
-        <div className="admin-dashboard__header">
-          <div>
-            <p className="admin-dashboard__breadcrumb">
-              Dashboard <span>/</span> School Overview
-            </p>
-            <h2>School Overview</h2>
-            <p className="admin-dashboard__subtitle">
-              Welcome back. Monitoring activity for Term 2, 2024.
-            </p>
-          </div>
-          <div className="admin-dashboard__actions">
-            <button type="button" className="button-secondary">Export Data</button>
-            <button type="button" className="button-primary">Add Student</button>
-          </div>
-        </div>
-
-        <div className="admin-dashboard__stats">
-          {stats.map((stat) => (
-            <div key={stat.id} className="admin-stat">
-              <div className="admin-stat__header">
-                <span>{stat.label}</span>
-                <span className="admin-stat__icon">◈</span>
+      <div className="admin-dashboard admin-dashboard--relative">
+        {isLoading && <DashboardSkeleton />}
+        {!isLoading && (
+          <>
+            <div className="admin-dashboard__header">
+              <div>
+                <p className="admin-dashboard__breadcrumb">
+                  Dashboard <span>/</span> School Overview
+                </p>
+                <h2>School Overview</h2>
+                <p className="admin-dashboard__subtitle">
+                  Welcome back. Monitoring activity for Term 2, 2024.
+                </p>
               </div>
-              <div className="admin-stat__value">{stat.value}</div>
-              <div className="admin-stat__trend">{stat.trend}</div>
-            </div>
-          ))}
-          {isLoading && <div className="admin-stat">Loading...</div>}
-        </div>
-
-        <div className="admin-dashboard__grid">
-          <section className="admin-card">
-            <div className="admin-card__header">
-              <h3>Recent Student Activity</h3>
-              <button type="button" className="link-button">View all</button>
-            </div>
-            {activity.map((item) => (
-              <div key={item.id} className="admin-activity">
-                <div className="admin-activity__avatar">{item.initials}</div>
-                <div className="admin-activity__info">
-                  <h4>{item.name}</h4>
-                  <p>{item.detail}</p>
-                </div>
-                <span className="admin-activity__time">{item.time}</span>
+              <div className="admin-dashboard__actions">
+                <button type="button" className="button-secondary">Export Data</button>
+                <button type="button" className="button-primary">Add Student</button>
               </div>
-            ))}
-          </section>
+            </div>
 
-          <div className="admin-dashboard__side">
-            <section className="admin-card admin-card--accent">
-              <h3>Academic Calendar</h3>
-              <p>Next exam period starts in 12 days.</p>
-              {calendar.map((item) => (
-                <div key={item.id} className="admin-calendar__item">
-                  <div className="admin-calendar__icon">{item.icon}</div>
-                  <div>
-                    <h4>{item.title}</h4>
-                    <p>{item.time}</p>
+            <div className="admin-dashboard__stats">
+              {stats.map((stat) => (
+                <div key={stat.id} className="admin-stat">
+                  <div className="admin-stat__header">
+                    <span>{stat.label}</span>
+                    <span className="admin-stat__icon">◈</span>
                   </div>
+                  <div className="admin-stat__value">{stat.value}</div>
+                  <div className="admin-stat__trend">{stat.trend}</div>
                 </div>
               ))}
-            </section>
+            </div>
 
-            <section className="admin-card">
-              <div className="admin-card__header">
-                <h3>Quick Actions</h3>
-              </div>
-              <div className="admin-quick">
-                {quickActions.map((action) => (
-                  <button key={action} type="button">
-                    {action}
-                  </button>
+            <div className="admin-dashboard__grid">
+              <section className="admin-card">
+                <div className="admin-card__header">
+                  <h3>Recent Student Activity</h3>
+                  <button type="button" className="link-button">View all</button>
+                </div>
+                {activity.map((item) => (
+                  <div key={item.id} className="admin-activity">
+                    <div className="admin-activity__avatar">{item.initials}</div>
+                    <div className="admin-activity__info">
+                      <h4>{item.name}</h4>
+                      <p>{item.detail}</p>
+                    </div>
+                    <span className="admin-activity__time">{item.time}</span>
+                  </div>
                 ))}
+              </section>
+
+              <div className="admin-dashboard__side">
+                <section className="admin-card admin-card--accent">
+                  <h3>Academic Calendar</h3>
+                  <p>Next exam period starts in 12 days.</p>
+                  {calendar.map((item) => (
+                    <div key={item.id} className="admin-calendar__item">
+                      <div className="admin-calendar__icon">{item.icon}</div>
+                      <div>
+                        <h4>{item.title}</h4>
+                        <p>{item.time}</p>
+                      </div>
+                    </div>
+                  ))}
+                </section>
+
+                <section className="admin-card">
+                  <div className="admin-card__header">
+                    <h3>Quick Actions</h3>
+                  </div>
+                  <div className="admin-quick">
+                    {quickActions.map((action) => (
+                      <button key={action} type="button">
+                        {action}
+                      </button>
+                    ))}
+                  </div>
+                </section>
               </div>
-            </section>
-          </div>
-        </div>
+            </div>
+          </>
+        )}
+
+        {isLoading && (
+          <SystemLoadingOverlay
+            title="Loading school dashboard..."
+            subtitle="Please wait while we sync records"
+          />
+        )}
       </div>
     </DashboardLayout>
   );

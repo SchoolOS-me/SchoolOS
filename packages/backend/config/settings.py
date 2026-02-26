@@ -280,7 +280,7 @@ STORAGES = {
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticated",
+        "rest_framework.permissions.AllowAny",
     ),
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -289,6 +289,7 @@ REST_FRAMEWORK = {
 }
 OPENAI_API_KEY=env_str("OPENAI_API_KEY","")
 DJSTRIPE_WEBHOOK_VALIDATION = "retrieve_event"
+STRIPE_ENABLED = env_bool("STRIPE_ENABLED", False)
 
 
 

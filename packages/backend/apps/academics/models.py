@@ -112,6 +112,7 @@ class Student(models.Model):
 
     admission_number = models.CharField(max_length=50)
     full_name = models.CharField(max_length=255)
+    parent_contact = models.CharField(max_length=30, blank=True)
 
     school_class = models.ForeignKey(
         SchoolClass,
@@ -348,5 +349,4 @@ class ParentStudent(models.Model):
 
     class Meta:
         unique_together = ("parent", "student")
-
 

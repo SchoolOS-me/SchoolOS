@@ -1,0 +1,134 @@
+.sa-create-school {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sa-create-school__breadcrumbs {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sa-create-school__breadcrumbs strong {
+  color: var(--color-text-primary);
+}
+
+.sa-create-school__grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.sa-create-school__intro h1 {
+  font-size: 2.1rem;
+  margin-bottom: 12px;
+}
+
+.sa-create-school__intro p {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.sa-create-school__note {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid #cfe0ff;
+  background: #eaf2ff;
+  display: flex;
+  gap: 12px;
+}
+
+.sa-create-school__noteIcon {
+  background: #2b6cee;
+  color: #fff;
+  font-weight: 700;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin-top: 2px;
+}
+
+.sa-create-school__note h4 {
+  margin: 0 0 4px;
+  color: #1848a0;
+}
+
+.sa-create-school__note p {
+  margin: 0;
+  color: #224070;
+  font-size: 0.9rem;
+}
+
+.sa-create-school__formCard {
+  background: var(--color-bg-card);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.sa-create-school__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.sa-create-school__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.sa-create-school__field label {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.sa-create-school__field input,
+.sa-create-school__field textarea {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #cfd7e7;
+  background: #f8f9fc;
+  font-size: 0.95rem;
+}
+
+.sa-create-school__field input:focus,
+.sa-create-school__field textarea:focus {
+  outline: none;
+  border-color: #2b6cee;
+  box-shadow: 0 0 0 2px rgba(43, 108, 238, 0.15);
+  background: #fff;
+}
+
+.sa-create-school__field small {
+  color: var(--color-text-secondary);
+}
+
+.sa-create-school__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+@media (max-width: 1024px) {
+  .sa-create-school__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .sa-create-school__row {
+    grid-template-columns: 1fr;
+  }
+}

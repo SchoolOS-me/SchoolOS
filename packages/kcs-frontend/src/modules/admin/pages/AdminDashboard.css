@@ -4,6 +4,11 @@
   gap: 24px;
 }
 
+.admin-dashboard--relative {
+  position: relative;
+  min-height: 520px;
+}
+
 .admin-dashboard__header {
   display: flex;
   align-items: center;

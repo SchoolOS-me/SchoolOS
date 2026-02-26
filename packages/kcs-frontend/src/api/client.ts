@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "../config/env";
+import { API_BASE_URL, DISABLE_AUTH_HEADER } from "../config/env";
 import { authStorage } from "./storage";
 
 type RequestOptions = RequestInit & {
@@ -15,7 +15,8 @@ export async function apiFetch<T>(
     headers.set("Content-Type", "application/json");
   }
 
-  if (!options.skipAuth) {
+  const shouldSkipAuth = options.skipAuth || DISABLE_AUTH_HEADER;
+  if (!shouldSkipAuth) {
     const token = authStorage.getAccessToken();
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);

@@ -1,0 +1,84 @@
+.sa-assign-subscription {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sa-assign-subscription header h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.sa-assign-subscription header p {
+  color: var(--color-text-secondary);
+}
+
+.sa-assign-subscription__card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 640px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sa-assign-subscription__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sa-assign-subscription__field label {
+  font-weight: 600;
+}
+
+.sa-assign-subscription__field select {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #cfd7e7;
+  background: #f8f9fc;
+}
+
+.sa-assign-subscription__plans {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.plan-card {
+  border: 1px solid #cfd7e7;
+  border-radius: 12px;
+  padding: 12px;
+  background: #f8f9fc;
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.plan-card input {
+  margin-top: 4px;
+}
+
+.plan-card strong {
+  display: block;
+}
+
+.plan-card span {
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+}
+
+.sa-assign-subscription__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 720px) {
+  .sa-assign-subscription__plans {
+    grid-template-columns: 1fr;
+  }
+}
