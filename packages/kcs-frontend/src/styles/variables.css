@@ -1,10 +1,33 @@
 :root {
+  color-scheme: light dark;
   --color-bg-main: #f9fafb;
   --color-bg-card: #ffffff;
   --color-primary: #16a34a;
   --color-text-primary: #111827;
   --color-text-secondary: #6b7280;
   --color-border: #e5e7eb;
+  --color-surface-muted: #f8fafc;
+  --color-surface-soft: #f1f5f9;
+  --color-overlay-surface: rgba(255, 255, 255, 0.92);
+
+  --dashboard-bg-superadmin: #f4f6fb;
+  --dashboard-bg-teacher: #f5f7fb;
+  --dashboard-bg-student: #f5f3f4;
+  --dashboard-bg-parent: #f6f5fb;
+  --dashboard-bg-admin: #f5f7fb;
+
+  --student-hero-title: #0f172a;
+  --student-hero-subtitle: #64748b;
+  --student-card-bg: #ffffff;
+  --student-card-border: #e2e8f0;
+  --student-card-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+  --student-title: #0f172a;
+  --student-muted: #64748b;
+  --student-dim: #94a3b8;
+  --student-accent: #7f1d1d;
+  --student-accent-soft: #f1f5f9;
+  --student-button-bg: #f8fafc;
+  --student-link: #7f1d1d;
 
   --sidebar-width: 260px;
   --topbar-height: 64px;
@@ -18,6 +41,38 @@
   --spacing-sm: 12px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg-main: #0b1220;
+    --color-bg-card: #111a2c;
+    --color-text-primary: #e5e7eb;
+    --color-text-secondary: #94a3b8;
+    --color-border: #243041;
+    --color-surface-muted: #0f172a;
+    --color-surface-soft: #131f33;
+    --color-overlay-surface: rgba(13, 20, 36, 0.9);
+
+    --dashboard-bg-superadmin: #0a1324;
+    --dashboard-bg-teacher: #0b1528;
+    --dashboard-bg-student: #140e14;
+    --dashboard-bg-parent: #111229;
+    --dashboard-bg-admin: #0b1528;
+
+    --student-hero-title: #e5e7eb;
+    --student-hero-subtitle: #94a3b8;
+    --student-card-bg: #101827;
+    --student-card-border: #233144;
+    --student-card-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    --student-title: #f8fafc;
+    --student-muted: #94a3b8;
+    --student-dim: #7f8ca1;
+    --student-accent: #fca5a5;
+    --student-accent-soft: #1a2436;
+    --student-button-bg: #18243a;
+    --student-link: #fecaca;
+  }
 }
 
 .button-primary {
@@ -37,7 +92,7 @@
 
 .button-secondary {
   background: transparent;
-  border: 1px solid #cfd7e7;
+  border: 1px solid var(--color-border);
   color: var(--color-text-primary);
   padding: 12px 18px;
   border-radius: 10px;

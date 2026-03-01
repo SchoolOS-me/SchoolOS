@@ -14,10 +14,12 @@ import { USE_MOCK_DATA } from "../../../config/env";
 import "./StudentDashboard.css";
 
 const StudentDashboard = () => {
-  const [stats, setStats] = useState(studentStats);
-  const [announcements, setAnnouncements] = useState(studentAnnouncements);
-  const [deadlines, setDeadlines] = useState(studentDeadlines);
-  const [grades, setGrades] = useState(studentGrades);
+  const [stats, setStats] = useState(USE_MOCK_DATA ? studentStats : []);
+  const [announcements, setAnnouncements] = useState(
+    USE_MOCK_DATA ? studentAnnouncements : []
+  );
+  const [deadlines, setDeadlines] = useState(USE_MOCK_DATA ? studentDeadlines : []);
+  const [grades, setGrades] = useState(USE_MOCK_DATA ? studentGrades : []);
   const [isLoading, setIsLoading] = useState(!USE_MOCK_DATA);
 
   useEffect(() => {
@@ -64,11 +66,14 @@ const StudentDashboard = () => {
           },
         ]);
 
-        setGrades(data.grades.length ? data.grades : studentGrades);
-        setAnnouncements(
-          data.announcements.length ? data.announcements : studentAnnouncements
+        setGrades(
+          (data.grades || []).map((grade) => ({
+            ...grade,
+            id: String(grade.id),
+          }))
         );
-        setDeadlines(data.deadlines.length ? data.deadlines : studentDeadlines);
+        setAnnouncements(data.announcements || []);
+        setDeadlines(data.deadlines || []);
       })
       .catch(() => {
         if (!isMounted) return;
@@ -123,16 +128,20 @@ const StudentDashboard = () => {
                   <h3>Announcements</h3>
                   <button type="button" className="link-button">View All</button>
                 </div>
-                {announcements.map((item) => (
-                  <div key={item.id} className="announcement">
-                    <div className="announcement__head">
-                      <h4>{item.title}</h4>
-                      <span>{item.time}</span>
+                {announcements.length ? (
+                  announcements.map((item) => (
+                    <div key={item.id} className="announcement">
+                      <div className="announcement__head">
+                        <h4>{item.title}</h4>
+                        <span>{item.time}</span>
+                      </div>
+                      <p>{item.description}</p>
+                      <span className="announcement__tag">{item.tag}</span>
                     </div>
-                    <p>{item.description}</p>
-                    <span className="announcement__tag">{item.tag}</span>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <p className="student-empty-state">No announcements available.</p>
+                )}
               </section>
 
               <div className="student-dashboard__side">
@@ -140,15 +149,19 @@ const StudentDashboard = () => {
                   <div className="student-card__header">
                     <h3>Deadlines</h3>
                   </div>
-                  {deadlines.map((item) => (
-                    <div key={item.id} className="deadline">
-                      <div className="deadline__date">{item.date}</div>
-                      <div>
-                        <h4>{item.title}</h4>
-                        <p>{item.subtitle}</p>
+                  {deadlines.length ? (
+                    deadlines.map((item) => (
+                      <div key={item.id} className="deadline">
+                        <div className="deadline__date">{item.date}</div>
+                        <div>
+                          <h4>{item.title}</h4>
+                          <p>{item.subtitle}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                  ) : (
+                    <p className="student-empty-state">No upcoming deadlines.</p>
+                  )}
                   <button type="button" className="secondary-button">View Calendar</button>
                 </section>
 
@@ -156,15 +169,19 @@ const StudentDashboard = () => {
                   <div className="student-card__header">
                     <h3>Recent Grades</h3>
                   </div>
-                  {grades.map((grade) => (
-                    <div key={grade.id} className="recent-grade">
-                      <div>
-                        <h4>{grade.subject}</h4>
-                        <p>{grade.course}</p>
+                  {grades.length ? (
+                    grades.map((grade) => (
+                      <div key={grade.id} className="recent-grade">
+                        <div>
+                          <h4>{grade.subject}</h4>
+                          <p>{grade.course}</p>
+                        </div>
+                        <span>{grade.score}</span>
                       </div>
-                      <span>{grade.score}</span>
-                    </div>
-                  ))}
+                    ))
+                  ) : (
+                    <p className="student-empty-state">No grades published yet.</p>
+                  )}
                 </section>
               </div>
             </div>

@@ -21,7 +21,9 @@ interface School {
 const mockSchools: School[] = superAdminSchools;
 const SuperAdminDashboard = () => {
   const [stats, setStats] = useState(superAdminStats);
-  const [schools, setSchools] = useState(mockSchools);
+  const [schools, setSchools] = useState<School[]>(
+    USE_MOCK_DATA ? mockSchools : []
+  );
   const [isLoading, setIsLoading] = useState(!USE_MOCK_DATA);
 
   useEffect(() => {
@@ -73,11 +75,12 @@ const SuperAdminDashboard = () => {
           subscriptionStatus: school.subscription_status,
         }));
 
-        setSchools(mappedSchools.length ? mappedSchools : mockSchools);
+        setSchools(mappedSchools);
       })
       .catch(() => {
         if (!isMounted) return;
         setStats(superAdminStats);
+        setSchools(mockSchools);
       })
       .finally(() => {
         if (!isMounted) return;

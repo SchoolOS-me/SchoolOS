@@ -279,6 +279,69 @@
   margin-top: 2px;
 }
 
+@media (prefers-color-scheme: dark) {
+  .sidebar--teacher,
+  .sidebar--student,
+  .sidebar--parent,
+  .sidebar--admin,
+  .sidebar--superAdmin {
+    background-color: #0f172a;
+    color: #e5e7eb;
+    border-right-color: #1f2b3d;
+  }
+
+  .sidebar--teacher .sidebar__link,
+  .sidebar--student .sidebar__link,
+  .sidebar--parent .sidebar__link,
+  .sidebar--admin .sidebar__link,
+  .sidebar--superAdmin .sidebar__link {
+    color: #94a3b8;
+  }
+
+  .sidebar--teacher .sidebar__link:hover,
+  .sidebar--superAdmin .sidebar__link:hover {
+    background: #13233c;
+    color: #93c5fd;
+  }
+
+  .sidebar--student .sidebar__link:hover,
+  .sidebar--parent .sidebar__link:hover {
+    background: #1a2436;
+    color: #bfdbfe;
+  }
+
+  .sidebar--admin .sidebar__link:hover {
+    background: #113127;
+    color: #6ee7b7;
+  }
+
+  .sidebar--teacher .sidebar__link--active,
+  .sidebar--superAdmin .sidebar__link--active {
+    background: #142a4d;
+    color: #bfdbfe;
+  }
+
+  .sidebar--student .sidebar__link--active {
+    background: #3b1518;
+    color: #fecaca;
+  }
+
+  .sidebar--parent .sidebar__link--active {
+    background: #2b1d4a;
+    color: #ddd6fe;
+  }
+
+  .sidebar--admin .sidebar__link--active {
+    background: #12382c;
+    color: #86efac;
+  }
+
+  .sidebar__brandSubtitle,
+  .sidebar__link--muted {
+    color: #7f8ca1;
+  }
+}
+
 .sidebar__user {
   margin-top: auto;
   display: flex;
