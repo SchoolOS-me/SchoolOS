@@ -1,5 +1,14 @@
 # 🍔 Saas backend application
 
+## Local env setup
+
+1. Copy env template:
+   - `cp .env.example .env`
+2. Update DB/CORS/CSRF values in `.env`.
+3. Start backend.
+
+See `CLEANUP_AUDIT.md` for endpoint/table cleanup candidates.
+
 ### `saas backend test`
 
 Runs tests and linters inside docker container.

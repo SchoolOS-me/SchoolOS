@@ -14,12 +14,13 @@ import { USE_MOCK_DATA } from "../../../config/env";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
-  const [stats, setStats] = useState(adminStats);
+  const [stats, setStats] = useState(USE_MOCK_DATA ? adminStats : []);
+  const [activity, setActivity] = useState(USE_MOCK_DATA ? adminActivity : []);
+  const [calendar, setCalendar] = useState(USE_MOCK_DATA ? adminCalendar : []);
+  const [quickActions, setQuickActions] = useState(
+    USE_MOCK_DATA ? adminQuickActions : []
+  );
   const [isLoading, setIsLoading] = useState(!USE_MOCK_DATA);
-
-  const activity = adminActivity;
-  const calendar = adminCalendar;
-  const quickActions = adminQuickActions;
 
   useEffect(() => {
     if (USE_MOCK_DATA) return;
@@ -56,10 +57,18 @@ const AdminDashboard = () => {
             trend: `${data.academics.sections} Sections`,
           },
         ]);
+
+        // Backend summary currently returns only top stats.
+        setActivity([]);
+        setCalendar([]);
+        setQuickActions([]);
       })
       .catch(() => {
         if (!isMounted) return;
         setStats(adminStats);
+        setActivity(adminActivity);
+        setCalendar(adminCalendar);
+        setQuickActions(adminQuickActions);
       })
       .finally(() => {
         if (!isMounted) return;
@@ -122,6 +131,9 @@ const AdminDashboard = () => {
                     <span className="admin-activity__time">{item.time}</span>
                   </div>
                 ))}
+                {!activity.length && (
+                  <p className="admin-empty-state">No recent activity available.</p>
+                )}
               </section>
 
               <div className="admin-dashboard__side">
@@ -137,6 +149,11 @@ const AdminDashboard = () => {
                       </div>
                     </div>
                   ))}
+                  {!calendar.length && (
+                    <p className="admin-empty-state admin-empty-state--on-accent">
+                      No calendar items available.
+                    </p>
+                  )}
                 </section>
 
                 <section className="admin-card">
@@ -149,6 +166,9 @@ const AdminDashboard = () => {
                         {action}
                       </button>
                     ))}
+                    {!quickActions.length && (
+                      <p className="admin-empty-state">No quick actions available.</p>
+                    )}
                   </div>
                 </section>
               </div>

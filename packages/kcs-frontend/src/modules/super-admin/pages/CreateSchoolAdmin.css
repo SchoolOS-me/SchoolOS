@@ -14,24 +14,24 @@
 
 .create-school-admin-page__crumbs {
   margin: 0;
-  color: #6b7280;
+  color: var(--color-text-secondary);
   font-size: 0.85rem;
 }
 
 .create-school-admin-page__header h1 {
   margin: 0;
   font-size: 2rem;
-  color: #0f172a;
+  color: var(--color-text-primary);
 }
 
 .create-school-admin-page__header p {
   margin: 0;
-  color: #64748b;
+  color: var(--color-text-secondary);
 }
 
 .create-school-admin-card {
-  background: #ffffff;
-  border: 1px solid #dbe3f0;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
   padding: 24px;
@@ -59,17 +59,21 @@
 .create-school-admin-field span {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #334155;
+  color: var(--color-text-primary);
 }
 
 .create-school-admin-field input,
 .create-school-admin-field select {
-  border: 1px solid #d1dae8;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
-  background: #f8fafc;
-  color: #0f172a;
+  background: var(--color-surface-muted);
+  color: var(--color-text-primary);
   padding: 11px 13px;
   font-size: 0.95rem;
+}
+
+.create-school-admin-field input::placeholder {
+  color: var(--color-text-secondary);
 }
 
 .create-school-admin-field input:focus,
@@ -77,26 +81,26 @@
   outline: none;
   border-color: #2b6cee;
   box-shadow: 0 0 0 3px rgba(43, 108, 238, 0.12);
-  background: #ffffff;
+  background: var(--color-bg-card);
 }
 
 .create-school-admin-fixed {
-  border: 1px solid #d1dae8;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
-  background: #f8fafc;
+  background: var(--color-surface-muted);
   padding: 12px;
 }
 
 .create-school-admin-fixed span {
   display: block;
-  color: #475569;
+  color: var(--color-text-secondary);
   font-size: 0.82rem;
   margin-bottom: 6px;
   font-weight: 600;
 }
 
 .create-school-admin-fixed div {
-  color: #0f172a;
+  color: var(--color-text-primary);
   font-weight: 700;
   margin-bottom: 4px;
 }
@@ -104,14 +108,14 @@
 .create-school-admin-fixed p {
   margin: 0;
   font-size: 0.78rem;
-  color: #64748b;
+  color: var(--color-text-secondary);
 }
 
 .create-school-admin-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--color-border);
   padding-top: 12px;
 }
 

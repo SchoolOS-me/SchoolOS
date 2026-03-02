@@ -31,20 +31,11 @@ urlpatterns = [
     re_path(r"doc/", schema_view.with_ui("swagger")),
     re_path(r"redoc/", schema_view.with_ui("redoc")),
     re_path(r"admin/", admin.site.urls),
-    path(
-        "api/",
-        include(
-            [
-                path("content/", include("apps.content.urls")),
-                path("finances/", include("apps.finances.urls")),
-                path("dashboard/", include("apps.dashboard.urls")),
-                path("academics/", include("apps.academics.urls")),
-                path("attendance/", include("apps.attendance.urls")),
-                path("schools/", include("apps.schools.urls")),
-                path("auth/", include("apps.accounts.urls")),
-    
-
-            ]
-        ),
-    ),
+    path("api/content/", include("apps.content.urls")),
+    path("api/finances/", include("apps.finances.urls")),
+    path("api/dashboard/", include("apps.dashboard.urls")),
+    path("api/academics/", include("apps.academics.urls")),
+    path("api/attendance/", include("apps.attendance.urls")),
+    path("api/schools/", include("apps.schools.urls")),
+    path("api/auth/", include("apps.accounts.urls")),
 ]

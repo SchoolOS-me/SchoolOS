@@ -135,6 +135,6 @@ export function fetchParentDashboard() {
 
 export function fetchSuperAdminDashboard() {
   return apiFetch<SuperAdminDashboardSummary>(
-    "/dashboard/super-admin/summary/"
+    "/dashboard/super-admin/summary"
   );
 }

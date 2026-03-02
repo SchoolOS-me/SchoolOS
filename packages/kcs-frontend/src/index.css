@@ -14,3 +14,15 @@ body,
   color: var(--color-text-primary);
   background: var(--color-bg-main);
 }
+
+input,
+textarea,
+select {
+  color: var(--color-text-primary);
+  caret-color: var(--color-text-primary);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-secondary);
+}

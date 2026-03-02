@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.shortcuts import get_object_or_404
+from django.utils.text import slugify
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -38,7 +39,30 @@ def _resolve_tenant_creator(request):
     creator = user_model.objects.filter(role=UserRole.SUPER_ADMIN).order_by("id").first()
     if creator:
         return creator
-    return user_model.objects.order_by("id").first()
+
+    creator = user_model.objects.order_by("id").first()
+    if creator:
+        return creator
+
+    raw_seed = request.data.get("code") or request.data.get("name") or "school"
+    seed = slugify(str(raw_seed)).replace("-", "")[:20] or "school"
+    email = f"bootstrap.superadmin+{seed}@kcs.local"
+
+    suffix = 1
+    while user_model.objects.filter(email__iexact=email).exists():
+        suffix += 1
+        email = f"bootstrap.superadmin+{seed}{suffix}@kcs.local"
+
+    bootstrap_user = user_model.objects.create_user(
+        email=email,
+        password=None,
+        role=UserRole.SUPER_ADMIN,
+        is_staff=True,
+        is_superuser=True,
+    )
+    bootstrap_user.set_unusable_password()
+    bootstrap_user.save(update_fields=["password"])
+    return bootstrap_user
 
 
 class SchoolListCreateAPI(APIView):
@@ -60,11 +84,6 @@ class SchoolListCreateAPI(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         creator = _resolve_tenant_creator(request)
-        if creator is None:
-            return Response(
-                {"detail": "Create at least one user (preferably SUPER_ADMIN) before creating schools."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
 
         with transaction.atomic():
             contact_email = serializer.validated_data.get("contact_email") or getattr(creator, "email", "")

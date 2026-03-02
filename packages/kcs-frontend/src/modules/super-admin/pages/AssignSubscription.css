@@ -38,8 +38,9 @@
 .sa-assign-subscription__field select {
   padding: 12px 14px;
   border-radius: 10px;
-  border: 1px solid #cfd7e7;
-  background: #f8f9fc;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-muted);
+  color: var(--color-text-primary);
 }
 
 .sa-assign-subscription__plans {
@@ -49,10 +50,10 @@
 }
 
 .plan-card {
-  border: 1px solid #cfd7e7;
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 12px;
-  background: #f8f9fc;
+  background: var(--color-surface-muted);
   cursor: pointer;
   display: flex;
   gap: 10px;

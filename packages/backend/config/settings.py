@@ -7,9 +7,6 @@ from dotenv import load_dotenv
 
 from . import monitoring
 
-# -------------------------------------------------------------------
-# Environment helpers (replacement for django-environ)
-# -------------------------------------------------------------------
 
 load_dotenv()
 
@@ -36,13 +33,8 @@ def env_list(key, default=None, sep=","):
     return [v.strip() for v in value.split(sep) if v.strip()]
 
 
-# -------------------------------------------------------------------
-# Base
-# -------------------------------------------------------------------
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# ENVIRONMENT_NAME = env_str("ENVIRONMENT_NAME", "")
 ENVIRONMENT_NAME = env_str("ENVIRONMENT_NAME", "local")
 IS_LOCAL = ENVIRONMENT_NAME.lower() == "local"
 
@@ -53,11 +45,6 @@ ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", [])
 
 ASGI_APPLICATION = "config.asgi.application"
 WSGI_APPLICATION = "config.wsgi.application"
-
-# -------------------------------------------------------------------
-# Monitoring / Sentry
-# -------------------------------------------------------------------
-
 SENTRY_DSN = env_str("SENTRY_DSN")
 SENTRY_TRACES_SAMPLE_RATE = float(env_str("SENTRY_TRACES_SAMPLE_RATE", 0.2))
 LAMBDA_TASKS_BASE_HANDLER = env_str(
@@ -74,9 +61,6 @@ monitoring.init(
     SENTRY_TRACES_SAMPLE_RATE,
 )
 
-# -------------------------------------------------------------------
-# Applications
-# -------------------------------------------------------------------
 
 DJANGO_CORE_APPS = [
     "django.contrib.admin",
@@ -135,6 +119,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+APPEND_SLASH = False
 
 ROOT_URLCONF = "config.urls_api"
 ROOT_HOSTCONF = "config.hosts"
@@ -146,9 +131,18 @@ AUTH_USER_MODEL = "accounts.User"
 # CORS
 # -------------------------------------------------------------------
 
-CORS_ALLOW_ALL_ORIGINS = IS_LOCAL
-CORS_ALLOWED_ORIGINS = [] if IS_LOCAL else env_list("CORS_ALLOWED_ORIGINS", [])
-CORS_ALLOW_CREDENTIALS = env_bool("CORS_ALLOW_CREDENTIALS", False)
+LOCAL_CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+CORS_ALLOW_ALL_ORIGINS = env_bool("CORS_ALLOW_ALL_ORIGINS", False)
+CORS_ALLOWED_ORIGINS = env_list(
+    "CORS_ALLOWED_ORIGINS",
+    LOCAL_CORS_ALLOWED_ORIGINS if IS_LOCAL else [],
+)
+CORS_ALLOW_CREDENTIALS = env_bool("CORS_ALLOW_CREDENTIALS", IS_LOCAL)
 
 # -------------------------------------------------------------------
 # Templates
@@ -210,10 +204,10 @@ WORKERS_EVENT_BUS_NAME = env_str(
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": env_str("POSTGRES_DB", "kcs_db"),
-        "USER": env_str("POSTGRES_USER", "kcs"),
-        "PASSWORD": env_str("POSTGRES_PASSWORD", "Kcs123@#"),
-        "HOST": env_str("POSTGRES_HOST", "127.0.0.1"),
+        "NAME": env_str("POSTGRES_DB", "neondb"),
+        "USER": env_str("POSTGRES_USER", "neondb_owner"),
+        "PASSWORD": env_str("POSTGRES_PASSWORD", "npg_5EDOlhYq1FAx"),
+        "HOST": env_str("POSTGRES_HOST", "ep-gentle-snow-a18wj0mo-pooler.ap-southeast-1.aws.neon.tech"),
         "PORT": env_str("POSTGRES_PORT", "5432"),
     }
 }
@@ -332,6 +326,15 @@ CELERY_BROKER_TRANSPORT_OPTIONS = {"visibility_timeout": 3600}
 # Security
 # -------------------------------------------------------------------
 
-CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS", [])
+LOCAL_CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+CSRF_TRUSTED_ORIGINS = env_list(
+    "CSRF_TRUSTED_ORIGINS",
+    LOCAL_CSRF_TRUSTED_ORIGINS if IS_LOCAL else [],
+)
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"

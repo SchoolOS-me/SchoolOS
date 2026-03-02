@@ -97,9 +97,15 @@
 .sa-create-school__field textarea {
   padding: 12px 14px;
   border-radius: 10px;
-  border: 1px solid #cfd7e7;
-  background: #f8f9fc;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-muted);
+  color: var(--color-text-primary);
   font-size: 0.95rem;
+}
+
+.sa-create-school__field input::placeholder,
+.sa-create-school__field textarea::placeholder {
+  color: var(--color-text-secondary);
 }
 
 .sa-create-school__field input:focus,
@@ -107,7 +113,7 @@
   outline: none;
   border-color: #2b6cee;
   box-shadow: 0 0 0 2px rgba(43, 108, 238, 0.15);
-  background: #fff;
+  background: var(--color-bg-card);
 }
 
 .sa-create-school__field small {

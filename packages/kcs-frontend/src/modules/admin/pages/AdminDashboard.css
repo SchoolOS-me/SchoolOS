@@ -240,6 +240,16 @@
   cursor: pointer;
 }
 
+.admin-empty-state {
+  margin: 8px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.admin-empty-state--on-accent {
+  color: #d1fae5;
+}
+
 @media (max-width: 1024px) {
   .admin-dashboard__grid {
     grid-template-columns: 1fr;
