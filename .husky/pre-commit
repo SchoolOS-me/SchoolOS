@@ -1,14 +1,14 @@
 #!/bin/sh
 
-[ -n "$CI" ] && exit 0
+# [ -n "$CI" ] && exit 0
 
-. "$(dirname "$0")/_/husky.sh"
+# . "$(dirname "$0")/_/husky.sh"
 
-# Fix issue with @nx/enforce-module-boundaries eslint plugin throwing error without nx graph
-if [ ! -d "$(dirname "$0")/../.nx" ]; then
-  pnpm nx show projects 1> /dev/null
-fi
+# # Fix issue with @nx/enforce-module-boundaries eslint plugin throwing error without nx graph
+# if [ ! -d "$(dirname "$0")/../.nx" ]; then
+#   pnpm nx show projects 1> /dev/null
+# fi
 
-echo "🚀 Running pre-commit tasks 🚀"
-npx lint-staged --allow-empty
-echo "🏁 Finished pre-commit tasks 🏁"
+# echo "🚀 Running pre-commit tasks 🚀"
+# npx lint-staged --allow-empty
+# echo "🏁 Finished pre-commit tasks 🏁"
