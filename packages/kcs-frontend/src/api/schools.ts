@@ -1,7 +1,7 @@
 import { apiFetch } from "./client";
 
 export type School = {
-  id: number;
+  uuid: string;
   name: string;
   code: string;
   contact_email?: string | null;
@@ -39,16 +39,16 @@ export function createSchool(payload: CreateSchoolPayload) {
   });
 }
 
-export function updateSchool(id: number, payload: Partial<CreateSchoolPayload>) {
-  return apiFetch<School>(`/schools/${id}/`, {
+export function updateSchool(schoolUuid: string, payload: Partial<CreateSchoolPayload>) {
+  return apiFetch<School>(`/schools/${schoolUuid}/`, {
     method: "PATCH",
     body: JSON.stringify(payload),
   });
 }
 
-export function createSchoolAdmin(schoolId: number, payload: CreateSchoolAdminPayload) {
-  return apiFetch<{ id: number; email: string; role: string; school_id: number }>(
-    `/schools/${schoolId}/admin/`,
+export function createSchoolAdmin(schoolUuid: string, payload: CreateSchoolAdminPayload) {
+  return apiFetch<{ uuid: string; email: string; role: string; school_uuid: string }>(
+    `/schools/${schoolUuid}/admin/`,
     {
       method: "POST",
       body: JSON.stringify(payload),
@@ -56,9 +56,9 @@ export function createSchoolAdmin(schoolId: number, payload: CreateSchoolAdminPa
   );
 }
 
-export function assignSubscription(schoolId: number, payload: AssignSubscriptionPayload) {
+export function assignSubscription(schoolUuid: string, payload: AssignSubscriptionPayload) {
   return apiFetch<{ detail: string; schedule_id: string; plan: string }>(
-    `/schools/${schoolId}/subscription/`,
+    `/schools/${schoolUuid}/subscription/`,
     {
       method: "POST",
       body: JSON.stringify(payload),

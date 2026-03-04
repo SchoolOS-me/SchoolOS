@@ -18,17 +18,17 @@ class AttendanceSessionCreateAPI(APIView):
     def post(self, request):
         check_attendance_access(request.user)
 
-        section_id = request.data.get("section")
-        school_class_id = request.data.get("school_class")
+        section_uuid = request.data.get("section_uuid")
+        school_class_uuid = request.data.get("school_class_uuid")
         date = request.data.get("date")
 
-        if not section_id or not school_class_id or not date:
+        if not section_uuid or not school_class_uuid or not date:
             return Response(
                 {"detail": "Missing required fields"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        if not teacher_can_access_section(request.user, section_id):
+        if not teacher_can_access_section(request.user, section_uuid):
             return Response(
                 {"detail": "Not assigned to this section"},
                 status=status.HTTP_403_FORBIDDEN,
@@ -37,8 +37,8 @@ class AttendanceSessionCreateAPI(APIView):
         session, created = AttendanceSession.objects.get_or_create(
             tenant=request.user.school.tenant,
             date=date,
-            school_class_id=school_class_id,
-            section_id=section_id,
+            school_class__uuid=school_class_uuid,
+            section__uuid=section_uuid,
             defaults={
                 "teacher_id": request.user.teacher_profile.id,
             },
@@ -51,7 +51,7 @@ class AttendanceSessionCreateAPI(APIView):
             )
 
         return Response(
-            {"id": session.id},
+            {"uuid": str(session.uuid)},
             status=status.HTTP_201_CREATED,
         )
 
@@ -61,15 +61,15 @@ class MarkAttendanceAPI(APIView):
         check_attendance_access(request.user)
 
         data = request.data
-        session_id = data["session_id"]
-        records = data["records"]  # list of {student_id, is_present}
+        session_uuid = data["session_uuid"]
+        records = data["records"]  # list of {student_uuid, is_present}
 
-        session = AttendanceSession.objects.get(id=session_id)
+        session = AttendanceSession.objects.get(uuid=session_uuid)
 
         for record in records:
             StudentAttendance.objects.update_or_create(
                 session=session,
-                student_id=record["student_id"],
+                student__uuid=record["student_uuid"],
                 defaults={
                     "is_present": record["is_present"],
                     "remarks": record.get("remarks", ""),
@@ -92,10 +92,12 @@ class AttendanceSessionListAPI(APIView):
 
         data = [
             {
-                "id": s.id,
+                "uuid": str(s.uuid),
                 "date": s.date,
                 "class": s.school_class.name,
+                "class_uuid": str(s.school_class.uuid),
                 "section": s.section.name,
+                "section_uuid": str(s.section.uuid),
             }
             for s in qs
         ]
@@ -115,15 +117,12 @@ class SectionAttendanceReportAPI(APIView):
         data = request.query_params
 
         report = get_section_attendance_report(
-            school_class_id=data["school_class"],
-            section_id=data["section"],
+            school_class_uuid=data["school_class_uuid"],
+            section_uuid=data["section_uuid"],
             start_date=data["start_date"],
             end_date=data["end_date"],
         )
 
         return Response(report)
-
-
-
 
 

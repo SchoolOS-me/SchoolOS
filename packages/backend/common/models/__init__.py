@@ -1,9 +1,12 @@
-from django.db import models
 from django.core.files.base import ContentFile
-from io import BytesIO
-from common.graphql import exceptions as graphql_exceptions
-from PIL import Image
+from django.db import models
 from django.utils.translation import gettext as _
+from io import BytesIO
+from PIL import Image
+
+from common.graphql import exceptions as graphql_exceptions
+
+from .base_model import BaseModel
 
 
 class ImageWithThumbnailMixin:

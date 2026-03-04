@@ -12,8 +12,8 @@ const CreateStudent = () => {
   const [fullName, setFullName] = useState("");
   const [admissionNumber, setAdmissionNumber] = useState("");
   const [parentContact, setParentContact] = useState("");
-  const [schoolClassId, setSchoolClassId] = useState<number | "">("");
-  const [sectionId, setSectionId] = useState<number | "">("");
+  const [schoolClassUuid, setSchoolClassUuid] = useState<string>("");
+  const [sectionUuid, setSectionUuid] = useState<string>("");
 
   const [dob, setDob] = useState("");
   const [gender, setGender] = useState<"Male" | "Female" | "Other" | "">("");
@@ -33,22 +33,22 @@ const CreateStudent = () => {
   }, []);
 
   useEffect(() => {
-    if (!schoolClassId) {
+    if (!schoolClassUuid) {
       setSections([]);
       return;
     }
 
-    listSections(Number(schoolClassId))
+    listSections(schoolClassUuid)
       .then(setSections)
       .catch(() => setSections([]));
-  }, [schoolClassId]);
+  }, [schoolClassUuid]);
 
   const resetForm = () => {
     setFullName("");
     setAdmissionNumber("");
     setParentContact("");
-    setSchoolClassId("");
-    setSectionId("");
+    setSchoolClassUuid("");
+    setSectionUuid("");
     setDob("");
     setGender("");
     setGuardianName("");
@@ -57,11 +57,11 @@ const CreateStudent = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!schoolClassId) {
+    if (!schoolClassUuid) {
       setError("Please select a class.");
       return;
     }
-    if (!sectionId) {
+    if (!sectionUuid) {
       setError("Please select a section.");
       return;
     }
@@ -75,8 +75,8 @@ const CreateStudent = () => {
         full_name: fullName.trim(),
         admission_number: admissionNumber.trim(),
         parent_contact: parentContact.trim() || undefined,
-        school_class_id: Number(schoolClassId),
-        section_id: Number(sectionId),
+        school_class_uuid: schoolClassUuid,
+        section_uuid: sectionUuid,
       });
 
       setSuccess("Student created successfully.");
@@ -170,15 +170,13 @@ const CreateStudent = () => {
                   <span>Class</span>
                   <select
                     id="student-class"
-                    value={schoolClassId}
-                    onChange={(event) =>
-                      setSchoolClassId(event.target.value ? Number(event.target.value) : "")
-                    }
+                    value={schoolClassUuid}
+                    onChange={(event) => setSchoolClassUuid(event.target.value)}
                     required
                   >
                     <option value="">Select class</option>
                     {classes.map((item) => (
-                      <option key={item.id} value={item.id}>
+                      <option key={item.uuid} value={item.uuid}>
                         {item.name} ({item.academic_year})
                       </option>
                     ))}
@@ -189,15 +187,13 @@ const CreateStudent = () => {
                   <span>Section</span>
                   <select
                     id="student-section"
-                    value={sectionId}
-                    onChange={(event) =>
-                      setSectionId(event.target.value ? Number(event.target.value) : "")
-                    }
+                    value={sectionUuid}
+                    onChange={(event) => setSectionUuid(event.target.value)}
                     required
                   >
                     <option value="">Select section</option>
                     {sections.map((item) => (
-                      <option key={item.id} value={item.id}>
+                      <option key={item.uuid} value={item.uuid}>
                         {item.name}
                       </option>
                     ))}

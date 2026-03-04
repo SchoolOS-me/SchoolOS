@@ -3,7 +3,6 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from drf_yasg.generators import OpenAPISchemaGenerator
 from rest_framework import permissions
-from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 
@@ -29,7 +28,7 @@ urlpatterns = [
     re_path(r'swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r"doc/", schema_view.with_ui("swagger")),
     re_path(r"redoc/", schema_view.with_ui("redoc")),
-    re_path(r"admin/", admin.site.urls),
+    path("admin/", admin.site.urls),
     path("api/content/", include("apps.content.urls")),
     path("api/finances/", include("apps.finances.urls")),
     path("api/dashboard/", include("apps.dashboard.urls")), 

@@ -25,7 +25,7 @@ class ParentChildrenAPI(APIView):
 
         data = [
             {
-                "student_id": l.student.id,
+                "student_uuid": str(l.student.uuid),
                 "name": l.student.full_name,
                 "class": l.student.school_class.name,
                 "section": l.student.section.name,

@@ -47,10 +47,16 @@ class StudentCreateSerializer(serializers.Serializer):
     admission_number = serializers.CharField(max_length=50)
     full_name = serializers.CharField(max_length=255)
     parent_contact = serializers.CharField(max_length=30, required=False, allow_blank=True)
-    school_class_id = serializers.PrimaryKeyRelatedField(
-        queryset=SchoolClass.objects.all(), source="school_class"
+    school_class_uuid = serializers.SlugRelatedField(
+        slug_field="uuid",
+        queryset=SchoolClass.objects.all(),
+        source="school_class",
     )
-    section_id = serializers.PrimaryKeyRelatedField(queryset=Section.objects.all(), source="section")
+    section_uuid = serializers.SlugRelatedField(
+        slug_field="uuid",
+        queryset=Section.objects.all(),
+        source="section",
+    )
 
     def validate(self, attrs):
         school = self.context["school"]
@@ -58,11 +64,11 @@ class StudentCreateSerializer(serializers.Serializer):
         section = attrs["section"]
 
         if school_class.tenant_id != school.tenant_id:
-            raise serializers.ValidationError({"school_class_id": "Class does not belong to your school."})
+            raise serializers.ValidationError({"school_class_uuid": "Class does not belong to your school."})
         if section.tenant_id != school.tenant_id:
-            raise serializers.ValidationError({"section_id": "Section does not belong to your school."})
+            raise serializers.ValidationError({"section_uuid": "Section does not belong to your school."})
         if section.school_class_id != school_class.id:
-            raise serializers.ValidationError({"section_id": "Section does not belong to selected class."})
+            raise serializers.ValidationError({"section_uuid": "Section does not belong to selected class."})
         return attrs
 
     def create(self, validated_data):
@@ -80,15 +86,19 @@ class StudentCreateSerializer(serializers.Serializer):
 class SchoolClassCreateSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=50)
     order = serializers.IntegerField(min_value=0)
-    academic_year_id = serializers.PrimaryKeyRelatedField(
-        queryset=AcademicYear.objects.all(), source="academic_year", required=False, allow_null=True
+    academic_year_uuid = serializers.SlugRelatedField(
+        slug_field="uuid",
+        queryset=AcademicYear.objects.all(),
+        source="academic_year",
+        required=False,
+        allow_null=True,
     )
 
     def validate(self, attrs):
         school = self.context["school"]
         academic_year = attrs.get("academic_year")
         if academic_year and academic_year.tenant_id != school.tenant_id:
-            raise serializers.ValidationError({"academic_year_id": "Academic year does not belong to your school."})
+            raise serializers.ValidationError({"academic_year_uuid": "Academic year does not belong to your school."})
         return attrs
 
     def create(self, validated_data):
@@ -113,8 +123,10 @@ class SchoolClassCreateSerializer(serializers.Serializer):
 
 
 class SectionCreateSerializer(serializers.Serializer):
-    school_class_id = serializers.PrimaryKeyRelatedField(
-        queryset=SchoolClass.objects.all(), source="school_class"
+    school_class_uuid = serializers.SlugRelatedField(
+        slug_field="uuid",
+        queryset=SchoolClass.objects.all(),
+        source="school_class",
     )
     name = serializers.CharField(max_length=10)
 
@@ -122,7 +134,7 @@ class SectionCreateSerializer(serializers.Serializer):
         school = self.context["school"]
         school_class = attrs["school_class"]
         if school_class.tenant_id != school.tenant_id:
-            raise serializers.ValidationError({"school_class_id": "Class does not belong to your school."})
+            raise serializers.ValidationError({"school_class_uuid": "Class does not belong to your school."})
         return attrs
 
     def create(self, validated_data):
@@ -136,37 +148,156 @@ class SectionCreateSerializer(serializers.Serializer):
 
 class TeacherListSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source="user.email", read_only=True)
+    uuid = serializers.UUIDField(read_only=True)
 
     class Meta:
         model = Teacher
-        fields = ["id", "full_name", "employee_id", "is_active", "email"]
+        fields = ["uuid", "full_name", "employee_id", "is_active", "email"]
 
 
 class StudentListSerializer(serializers.ModelSerializer):
+    class_name = serializers.CharField(source="school_class.name", read_only=True)
+    section_name = serializers.CharField(source="section.name", read_only=True)
+    school_class_uuid = serializers.UUIDField(source="school_class.uuid", read_only=True)
+    section_uuid = serializers.UUIDField(source="section.uuid", read_only=True)
+
+    class Meta:
+        model = Student
+        fields = [
+            "uuid",
+            "full_name",
+            "admission_number",
+            "is_active",
+            "class_name",
+            "section_name",
+            "school_class_uuid",
+            "section_uuid",
+        ]
+
+
+class SchoolClassListSerializer(serializers.ModelSerializer):
+    academic_year = serializers.CharField(source="academic_year.name", read_only=True)
+    academic_year_uuid = serializers.UUIDField(source="academic_year.uuid", read_only=True)
+
+    class Meta:
+        model = SchoolClass
+        fields = ["uuid", "name", "order", "academic_year", "academic_year_uuid"]
+
+
+class SectionListSerializer(serializers.ModelSerializer):
+    school_class_uuid = serializers.UUIDField(source="school_class.uuid", read_only=True)
+
+    class Meta:
+        model = Section
+        fields = ["uuid", "name", "school_class_uuid"]
+
+
+class TeacherDetailSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(source="user.email")
+    uuid = serializers.UUIDField(read_only=True)
+
+    class Meta:
+        model = Teacher
+        fields = ["uuid", "full_name", "employee_id", "is_active", "email"]
+
+    def validate_email(self, value):
+        teacher = self.instance
+        if User.objects.filter(email__iexact=value).exclude(id=teacher.user_id).exists():
+            raise serializers.ValidationError("Email already exists.")
+        return value
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop("user", {})
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        email = user_data.get("email")
+        if email and instance.user.email != email:
+            instance.user.email = email
+            instance.user.save(update_fields=["email"])
+
+        return instance
+
+
+class StudentDetailSerializer(serializers.ModelSerializer):
+    school_class_uuid = serializers.SlugRelatedField(
+        slug_field="uuid",
+        queryset=SchoolClass.objects.all(),
+        source="school_class",
+    )
+    section_uuid = serializers.SlugRelatedField(
+        slug_field="uuid",
+        queryset=Section.objects.all(),
+        source="section",
+    )
     class_name = serializers.CharField(source="school_class.name", read_only=True)
     section_name = serializers.CharField(source="section.name", read_only=True)
 
     class Meta:
         model = Student
         fields = [
-            "id",
+            "uuid",
             "full_name",
             "admission_number",
+            "parent_contact",
             "is_active",
+            "school_class_uuid",
+            "section_uuid",
             "class_name",
             "section_name",
         ]
 
+    def validate(self, attrs):
+        school = self.context["school"]
+        school_class = attrs.get("school_class") or self.instance.school_class
+        section = attrs.get("section") or self.instance.section
 
-class SchoolClassListSerializer(serializers.ModelSerializer):
+        if school_class.tenant_id != school.tenant_id:
+            raise serializers.ValidationError({"school_class_uuid": "Class does not belong to your school."})
+        if section.tenant_id != school.tenant_id:
+            raise serializers.ValidationError({"section_uuid": "Section does not belong to your school."})
+        if section.school_class_id != school_class.id:
+            raise serializers.ValidationError({"section_uuid": "Section does not belong to selected class."})
+        return attrs
+
+
+class SchoolClassDetailSerializer(serializers.ModelSerializer):
+    academic_year_uuid = serializers.SlugRelatedField(
+        slug_field="uuid",
+        queryset=AcademicYear.objects.all(),
+        source="academic_year",
+        required=False,
+    )
     academic_year = serializers.CharField(source="academic_year.name", read_only=True)
 
     class Meta:
         model = SchoolClass
-        fields = ["id", "name", "order", "academic_year"]
+        fields = ["uuid", "name", "order", "academic_year_uuid", "academic_year"]
+
+    def validate(self, attrs):
+        school = self.context["school"]
+        academic_year = attrs.get("academic_year")
+        if academic_year and academic_year.tenant_id != school.tenant_id:
+            raise serializers.ValidationError({"academic_year_uuid": "Academic year does not belong to your school."})
+        return attrs
 
 
-class SectionListSerializer(serializers.ModelSerializer):
+class SectionDetailSerializer(serializers.ModelSerializer):
+    school_class_uuid = serializers.SlugRelatedField(
+        slug_field="uuid",
+        queryset=SchoolClass.objects.all(),
+        source="school_class",
+        required=False,
+    )
+
     class Meta:
         model = Section
-        fields = ["id", "name", "school_class_id"]
+        fields = ["uuid", "name", "school_class_uuid"]
+
+    def validate(self, attrs):
+        school = self.context["school"]
+        school_class = attrs.get("school_class")
+        if school_class and school_class.tenant_id != school.tenant_id:
+            raise serializers.ValidationError({"school_class_uuid": "Class does not belong to your school."})
+        return attrs

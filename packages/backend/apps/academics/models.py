@@ -1,9 +1,10 @@
 from django.db import models
 from apps.multitenancy.models import Tenant
 from apps.accounts.models import User
+from common.models.base_model import BaseModel
 
 
-class AcademicYear(models.Model):
+class AcademicYear(BaseModel):
     tenant = models.ForeignKey(
         Tenant,
         on_delete=models.CASCADE,
@@ -21,7 +22,7 @@ class AcademicYear(models.Model):
         return self.name
 
 
-class SchoolClass(models.Model):
+class SchoolClass(BaseModel):
     tenant = models.ForeignKey(
         Tenant,
         on_delete=models.CASCADE,
@@ -43,7 +44,7 @@ class SchoolClass(models.Model):
         return self.name
 
 
-class Section(models.Model):
+class Section(BaseModel):
     tenant = models.ForeignKey(
         Tenant,
         on_delete=models.CASCADE,
@@ -63,7 +64,7 @@ class Section(models.Model):
         return f"{self.school_class.name} - {self.name}"
 
 
-class Subject(models.Model):
+class Subject(BaseModel):
     tenant = models.ForeignKey(
         Tenant,
         on_delete=models.CASCADE,
@@ -79,7 +80,7 @@ class Subject(models.Model):
         return self.name
 
 
-class SectionSubject(models.Model):
+class SectionSubject(BaseModel):
     section = models.ForeignKey(
         Section,
         on_delete=models.CASCADE,
@@ -96,7 +97,7 @@ class SectionSubject(models.Model):
 
 
 
-class Student(models.Model):
+class Student(BaseModel):
     tenant = models.ForeignKey(
         Tenant,
         on_delete=models.CASCADE,
@@ -134,7 +135,7 @@ class Student(models.Model):
     def __str__(self):
         return self.full_name
 
-class Teacher(models.Model):
+class Teacher(BaseModel):
     tenant = models.ForeignKey(
         Tenant,
         on_delete=models.CASCADE,
@@ -159,7 +160,7 @@ class Teacher(models.Model):
         return self.full_name
 
 
-class TeachingAssignment(models.Model):
+class TeachingAssignment(BaseModel):
     teacher = models.ForeignKey(
         Teacher,
         on_delete=models.CASCADE,
@@ -181,7 +182,7 @@ class TeachingAssignment(models.Model):
     def __str__(self):
         return f"{self.teacher} - {self.subject}"
 
-class Exam(models.Model):
+class Exam(BaseModel):
     tenant = models.ForeignKey(
         Tenant,
         on_delete=models.CASCADE,
@@ -213,7 +214,7 @@ class Exam(models.Model):
     def __str__(self):
         return self.name
 
-class ExamSubject(models.Model):
+class ExamSubject(BaseModel):
     exam = models.ForeignKey(
         Exam,
         on_delete=models.CASCADE,
@@ -234,7 +235,7 @@ class ExamSubject(models.Model):
         return f"{self.exam.name} - {self.subject.name}"
 
 
-class StudentExam(models.Model):
+class StudentExam(BaseModel):
     student = models.ForeignKey(
         Student,
         on_delete=models.CASCADE,
@@ -255,7 +256,7 @@ class StudentExam(models.Model):
         return f"{self.student} - {self.exam}"
 
 
-class StudentMark(models.Model):
+class StudentMark(BaseModel):
     student_exam = models.ForeignKey(
         StudentExam,
         on_delete=models.CASCADE,
@@ -275,7 +276,7 @@ class StudentMark(models.Model):
         return f"{self.student_exam} - {self.exam_subject.subject}"
 
 
-class StudentResult(models.Model):
+class StudentResult(BaseModel):
     student_exam = models.OneToOneField(
         StudentExam,
         on_delete=models.CASCADE,
@@ -294,7 +295,7 @@ class StudentResult(models.Model):
     def __str__(self):
         return f"{self.student_exam} - {self.percentage}%"
     
-class GradingRule(models.Model):
+class GradingRule(BaseModel):
     tenant = models.ForeignKey(
         Tenant,
         on_delete=models.CASCADE,
@@ -303,7 +304,7 @@ class GradingRule(models.Model):
     min_percentage = models.FloatField()
     grade = models.CharField(max_length=5)
 
-class ClassTeacher(models.Model):
+class ClassTeacher(BaseModel):
     tenant = models.ForeignKey(
         Tenant,
         on_delete=models.CASCADE,
@@ -329,7 +330,7 @@ class ClassTeacher(models.Model):
         unique_together = ("tenant", "school_class", "section")
 
 
-class ParentStudent(models.Model):
+class ParentStudent(BaseModel):
     tenant = models.ForeignKey(
         Tenant,
         on_delete=models.CASCADE,
@@ -349,4 +350,3 @@ class ParentStudent(models.Model):
 
     class Meta:
         unique_together = ("parent", "student")
-

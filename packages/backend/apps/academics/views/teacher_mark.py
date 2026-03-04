@@ -25,19 +25,19 @@ class TeacherMarksEntryAPI(APIView):
             )
 
         data = request.data
-        exam_id = data.get("exam")
-        section_id = data.get("section")
-        subject_id = data.get("subject")
-        marks = data.get("marks")  # [{student_id, marks_obtained}]
+        exam_uuid = data.get("exam_uuid")
+        section_uuid = data.get("section_uuid")
+        subject_uuid = data.get("subject_uuid")
+        marks = data.get("marks")  # [{student_uuid, marks_obtained}]
 
-        if not all([exam_id, section_id, subject_id, marks]):
+        if not all([exam_uuid, section_uuid, subject_uuid, marks]):
             return Response(
                 {"detail": "Missing required fields"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         # 2️⃣ Teaching assignment check (MOST IMPORTANT)
-        if not teacher_can_enter_marks(request.user, section_id, subject_id):
+        if not teacher_can_enter_marks(request.user, section_uuid, subject_uuid):
             return Response(
                 {"detail": "Not assigned to this subject/section"},
                 status=status.HTTP_403_FORBIDDEN,
@@ -45,10 +45,10 @@ class TeacherMarksEntryAPI(APIView):
 
         # 3️⃣ Validate exam & subject mapping
         try:
-            exam = Exam.objects.get(id=exam_id)
+            exam = Exam.objects.get(uuid=exam_uuid)
             exam_subject = ExamSubject.objects.get(
                 exam=exam,
-                subject_id=subject_id,
+                subject__uuid=subject_uuid,
             )
         except (Exam.DoesNotExist, ExamSubject.DoesNotExist):
             return Response(
@@ -58,13 +58,13 @@ class TeacherMarksEntryAPI(APIView):
 
         # 4️⃣ Save marks
         for item in marks:
-            student_id = item.get("student_id")
+            student_uuid = item.get("student_uuid")
             marks_obtained = item.get("marks_obtained")
 
             try:
                 student = Student.objects.get(
-                    id=student_id,
-                    section_id=section_id,
+                    uuid=student_uuid,
+                    section__uuid=section_uuid,
                 )
             except Student.DoesNotExist:
                 continue  # skip invalid students safely
@@ -84,4 +84,3 @@ class TeacherMarksEntryAPI(APIView):
             {"detail": "Marks saved successfully"},
             status=status.HTTP_200_OK,
         )
-

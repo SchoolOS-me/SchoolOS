@@ -1,10 +1,11 @@
 from django.db import models, transaction, IntegrityError
 from apps.multitenancy.models import Tenant
 from apps.academics.models import SchoolClass, Section, Student, Teacher
+from common.models.base_model import BaseModel
 
 
 
-class AttendanceSession(models.Model):
+class AttendanceSession(BaseModel):
     tenant = models.ForeignKey(
         Tenant,
         on_delete=models.CASCADE,
@@ -29,7 +30,6 @@ class AttendanceSession(models.Model):
         related_name="attendance_sessions",
     )
 
-    created_at = models.DateTimeField(auto_now_add=True)
     STATUS_DRAFT = "draft"
     STATUS_SUBMITTED = "submitted"
 
@@ -51,7 +51,7 @@ class AttendanceSession(models.Model):
         return f"{self.date} - {self.school_class} {self.section}"
 
 
-class StudentAttendance(models.Model):
+class StudentAttendance(BaseModel):
     session = models.ForeignKey(
         AttendanceSession,
         on_delete=models.CASCADE,
@@ -71,4 +71,3 @@ class StudentAttendance(models.Model):
 
     def __str__(self):
         return f"{self.student} - {'P' if self.is_present else 'A'}"
-

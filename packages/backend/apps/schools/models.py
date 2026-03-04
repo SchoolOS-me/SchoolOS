@@ -1,7 +1,9 @@
 from django.db import models
 from apps.multitenancy.models import Tenant
+from common.models.base_model import BaseModel
 
-class School(models.Model):
+
+class School(BaseModel):
     tenant = models.ForeignKey(
         Tenant,
         on_delete=models.CASCADE,
@@ -16,8 +18,6 @@ class School(models.Model):
     address = models.TextField(blank=True)
 
     is_active = models.BooleanField(default=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name

@@ -6,7 +6,7 @@ import "./CreateSchoolAdmin.css";
 
 const CreateSchoolAdmin = () => {
   const [schools, setSchools] = useState<School[]>([]);
-  const [schoolId, setSchoolId] = useState<number | "">("");
+  const [schoolUuid, setSchoolUuid] = useState<string>("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -20,7 +20,7 @@ const CreateSchoolAdmin = () => {
       .then((data) => {
         setSchools(data);
         if (data.length) {
-          setSchoolId(data[0].id);
+          setSchoolUuid(data[0].uuid);
         }
       })
       .catch(() => {
@@ -29,13 +29,13 @@ const CreateSchoolAdmin = () => {
   }, []);
 
   const selectedSchool = useMemo(
-    () => schools.find((school) => school.id === schoolId),
-    [schoolId, schools]
+    () => schools.find((school) => school.uuid === schoolUuid),
+    [schoolUuid, schools]
   );
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!schoolId) {
+    if (!schoolUuid) {
       setError("Please select a school.");
       return;
     }
@@ -45,7 +45,7 @@ const CreateSchoolAdmin = () => {
     setSuccess(null);
 
     try {
-      await createSchoolAdmin(Number(schoolId), {
+      await createSchoolAdmin(schoolUuid, {
         email: email.trim(),
         password,
       });
@@ -77,15 +77,13 @@ const CreateSchoolAdmin = () => {
               <span>School</span>
               <select
                 id="admin-school"
-                value={schoolId}
-                onChange={(event) =>
-                  setSchoolId(event.target.value ? Number(event.target.value) : "")
-                }
+                value={schoolUuid}
+                onChange={(event) => setSchoolUuid(event.target.value)}
                 required
               >
                 <option value="">Select a school</option>
                 {schools.map((school) => (
-                  <option key={school.id} value={school.id}>
+                  <option key={school.uuid} value={school.uuid}>
                     {school.name} ({school.code})
                   </option>
                 ))}

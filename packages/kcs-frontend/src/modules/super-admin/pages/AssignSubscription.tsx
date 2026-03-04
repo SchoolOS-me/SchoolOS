@@ -6,7 +6,7 @@ import "./AssignSubscription.css";
 
 const AssignSubscription = () => {
   const [schools, setSchools] = useState<School[]>([]);
-  const [schoolId, setSchoolId] = useState<number | "">("");
+  const [schoolUuid, setSchoolUuid] = useState<string>("");
   const [plan, setPlan] = useState<"free" | "monthly" | "yearly">("free");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +20,7 @@ const AssignSubscription = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!schoolId) {
+    if (!schoolUuid) {
       setError("Please select a school.");
       return;
     }
@@ -29,7 +29,7 @@ const AssignSubscription = () => {
     setSuccess(null);
 
     try {
-      await assignSubscription(Number(schoolId), { plan });
+      await assignSubscription(schoolUuid, { plan });
       setSuccess("Subscription updated.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update subscription.");
@@ -51,15 +51,13 @@ const AssignSubscription = () => {
             <label htmlFor="schoolSelect">School</label>
             <select
               id="schoolSelect"
-              value={schoolId}
-              onChange={(event) =>
-                setSchoolId(event.target.value ? Number(event.target.value) : "")
-              }
+              value={schoolUuid}
+              onChange={(event) => setSchoolUuid(event.target.value)}
               required
             >
               <option value="">Select a school</option>
               {schools.map((school) => (
-                <option key={school.id} value={school.id}>
+                <option key={school.uuid} value={school.uuid}>
                   {school.name} ({school.code})
                 </option>
               ))}

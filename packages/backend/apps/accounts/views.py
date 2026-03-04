@@ -59,10 +59,10 @@ class MeAPI(APIView):
         school = getattr(user, "school", None)
         return Response(
             {
-                "id": user.id,
+                "uuid": str(user.uuid),
                 "email": user.email,
                 "role": user.role,
-                "school_id": school.id if school else None,
+                "school_uuid": str(school.uuid) if school else None,
                 "school_name": school.name if school else None,
             }
         )

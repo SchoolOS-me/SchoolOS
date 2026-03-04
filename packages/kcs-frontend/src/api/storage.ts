@@ -3,10 +3,10 @@ const REFRESH_TOKEN_KEY = "kcs_refresh_token";
 const USER_KEY = "kcs_user";
 
 export type AuthUser = {
-  id: number | string;
+  uuid: string;
   email: string;
   role: string;
-  school_id?: number | null;
+  school_uuid?: string | null;
   school_name?: string | null;
 };
 

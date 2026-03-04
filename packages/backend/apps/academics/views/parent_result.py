@@ -14,13 +14,16 @@ class ParentResultsAPI(APIView):
         if not is_parent(request.user):
             return Response({"detail": "Not allowed"}, status=403)
 
-        student_id = request.query_params.get("student")
+        student_uuid = request.query_params.get("student_uuid")
 
-        if not parent_can_access_student(request.user, student_id):
+        if not student_uuid:
+            return Response({"detail": "student_uuid is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not parent_can_access_student(request.user, student_uuid):
             return Response({"detail": "Not allowed"}, status=403)
 
         exams = StudentExam.objects.filter(
-            student_id=student_id,
+            student__uuid=student_uuid,
             exam__is_published=True,
         ).select_related("exam")
 

@@ -29,7 +29,7 @@ def get_student_attendance_summary(
     )
 
     return {
-        "student_id": student.id,
+        "student_uuid": str(student.uuid),
         "student_name": student.full_name,
         "total_days": total_sessions,
         "present_days": present_count,
@@ -39,14 +39,14 @@ def get_student_attendance_summary(
 
 def get_section_attendance_report(
     *,
-    school_class,
-    section,
+    school_class_uuid,
+    section_uuid,
     start_date,
     end_date,
 ):
     students = Student.objects.filter(
-        school_class=school_class,
-        section=section,
+        school_class__uuid=school_class_uuid,
+        section__uuid=section_uuid,
         is_active=True,
     )
 
@@ -62,15 +62,15 @@ def get_section_attendance_report(
 
 def get_attendance_defaulters(
     *,
-    school_class,
-    section,
+    school_class_uuid,
+    section_uuid,
     start_date,
     end_date,
     threshold_percentage=75,
 ):
     report = get_section_attendance_report(
-        school_class=school_class,
-        section=section,
+        school_class_uuid=school_class_uuid,
+        section_uuid=section_uuid,
         start_date=start_date,
         end_date=end_date,
     )

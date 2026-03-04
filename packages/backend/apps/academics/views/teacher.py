@@ -21,10 +21,12 @@ class TeacherClassesAPI(APIView):
         data = {}
 
         for a in assignments:
-            key = str(a.section.id)
+            key = str(a.section.uuid)
 
             if key not in data:
                 data[key] = {
+                    "section_uuid": str(a.section.uuid),
+                    "class_uuid": str(a.section.school_class.uuid),
                     "class": a.section.school_class.name,
                     "section": a.section.name,
                     "subjects": [],

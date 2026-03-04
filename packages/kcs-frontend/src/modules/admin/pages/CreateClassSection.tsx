@@ -9,7 +9,7 @@ const CreateClassSection = () => {
   const [className, setClassName] = useState("");
   const [classOrder, setClassOrder] = useState<number | "">("");
   const [sectionName, setSectionName] = useState("");
-  const [sectionClassId, setSectionClassId] = useState<number | "">("");
+  const [sectionClassUuid, setSectionClassUuid] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [isSubmittingClass, setIsSubmittingClass] = useState(false);
@@ -49,7 +49,7 @@ const CreateClassSection = () => {
 
   const handleCreateSection = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!sectionClassId) {
+    if (!sectionClassUuid) {
       setError("Please select a class for the section.");
       return;
     }
@@ -59,12 +59,12 @@ const CreateClassSection = () => {
 
     try {
       await createSection({
-        school_class_id: Number(sectionClassId),
+        school_class_uuid: sectionClassUuid,
         name: sectionName.trim(),
       });
       setSuccess("Section created.");
       setSectionName("");
-      setSectionClassId("");
+      setSectionClassUuid("");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create section.");
     } finally {
@@ -119,15 +119,13 @@ const CreateClassSection = () => {
               <label htmlFor="sectionClass">Class</label>
               <select
                 id="sectionClass"
-                value={sectionClassId}
-                onChange={(event) =>
-                  setSectionClassId(event.target.value ? Number(event.target.value) : "")
-                }
+                value={sectionClassUuid}
+                onChange={(event) => setSectionClassUuid(event.target.value)}
                 required
               >
                 <option value="">Select Class</option>
                 {classes.map((item) => (
-                  <option key={item.id} value={item.id}>
+                  <option key={item.uuid} value={item.uuid}>
                     {item.name} ({item.academic_year})
                   </option>
                 ))}

@@ -23,10 +23,10 @@ class LoginSerializer(TokenObtainPairSerializer):
 
         school = getattr(self.user, "school", None)
         data["user"] = {
-            "id": self.user.id,
+            "uuid": str(self.user.uuid),
             "email": self.user.email,
             "role": self.user.role,
-            "school_id": school.id if school else None,
+            "school_uuid": str(school.uuid) if school else None,
             "school_name": school.name if school else None,
         }
 

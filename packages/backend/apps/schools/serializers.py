@@ -14,7 +14,7 @@ class SchoolSerializer(serializers.ModelSerializer):
     class Meta:
         model = School
         fields = [
-            "id",
+            "uuid",
             "name",
             "code",
             "contact_email",
@@ -24,7 +24,7 @@ class SchoolSerializer(serializers.ModelSerializer):
             "created_at",
             "admin_email",
         ]
-        read_only_fields = ["id", "created_at", "admin_email"]
+        read_only_fields = ["uuid", "created_at", "admin_email"]
 
     def get_admin_email(self, obj):
         admin = obj.users.filter(role=UserRole.SCHOOL_ADMIN).order_by("created_at").first()

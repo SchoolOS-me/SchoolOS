@@ -100,18 +100,18 @@ class SchoolListCreateAPI(APIView):
 
 class SchoolDetailAPI(APIView):
 
-    def get(self, request, school_id):
+    def get(self, request, school_uuid):
         if not _is_super_admin_or_open(request.user):
             return Response({"detail": "Not allowed"}, status=status.HTTP_403_FORBIDDEN)
 
-        school = get_object_or_404(School, id=school_id)
+        school = get_object_or_404(School, uuid=school_uuid)
         return Response(SchoolSerializer(school).data)
 
-    def patch(self, request, school_id):
+    def patch(self, request, school_uuid):
         if not _is_super_admin_or_open(request.user):
             return Response({"detail": "Not allowed"}, status=status.HTTP_403_FORBIDDEN)
 
-        school = get_object_or_404(School, id=school_id)
+        school = get_object_or_404(School, uuid=school_uuid)
         serializer = SchoolCreateSerializer(school, data=request.data, partial=True)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -121,28 +121,28 @@ class SchoolDetailAPI(APIView):
 
 
 class SchoolAdminCreateAPI(APIView):
-    def post(self, request, school_id):
+    def post(self, request, school_uuid):
         if not _is_super_admin_or_open(request.user):
             return Response({"detail": "Not allowed"}, status=status.HTTP_403_FORBIDDEN)
 
-        school = get_object_or_404(School, id=school_id)
+        school = get_object_or_404(School, uuid=school_uuid)
         serializer = SchoolAdminCreateSerializer(data=request.data, context={"school": school})
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         user = serializer.save()
         return Response(
-            {"id": user.id, "email": user.email, "role": user.role, "school_id": school.id},
+            {"uuid": str(user.uuid), "email": user.email, "role": user.role, "school_uuid": str(school.uuid)},
             status=status.HTTP_201_CREATED,
         )
 
 
 class SchoolSubscriptionAssignAPI(APIView):
-    def post(self, request, school_id):
+    def post(self, request, school_uuid):
         if not _is_super_admin_or_open(request.user):
             return Response({"detail": "Not allowed"}, status=status.HTTP_403_FORBIDDEN)
 
-        school = get_object_or_404(School, id=school_id)
+        school = get_object_or_404(School, uuid=school_uuid)
         if not school.tenant:
             return Response({"detail": "School tenant is not configured."}, status=status.HTTP_400_BAD_REQUEST)
 
