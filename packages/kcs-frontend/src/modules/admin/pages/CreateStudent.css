@@ -215,3 +215,69 @@
     grid-template-columns: 1fr;
   }
 }
+
+:root[data-theme="dark"] .student-form-page__header h1,
+:root[data-theme="dark"] .student-form-card__head h2,
+:root[data-theme="dark"] .student-form-side__card h3 {
+  color: #e5e7eb;
+}
+
+:root[data-theme="dark"] .student-form-page__header p,
+:root[data-theme="dark"] .student-form-card__head p,
+:root[data-theme="dark"] .student-form-side__card p {
+  color: #94a3b8;
+}
+
+:root[data-theme="dark"] .student-form-card,
+:root[data-theme="dark"] .student-form-side__card {
+  background: #111a2c;
+  border-color: #243041;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+:root[data-theme="dark"] .student-form-card__head {
+  border-bottom-color: #243041;
+  background: #0f172a;
+}
+
+:root[data-theme="dark"] .student-field span,
+:root[data-theme="dark"] .student-gender-chip span {
+  color: #cbd5e1;
+}
+
+:root[data-theme="dark"] .student-field input,
+:root[data-theme="dark"] .student-field select,
+:root[data-theme="dark"] .student-gender-chip,
+:root[data-theme="dark"] .student-form-side__status {
+  border-color: #334155;
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+:root[data-theme="dark"] .student-field input:focus,
+:root[data-theme="dark"] .student-field select:focus {
+  background: #111a2c;
+}
+
+:root[data-theme="dark"] .student-gender-chip.is-active {
+  background: rgba(59, 130, 246, 0.22);
+  border-color: #3b82f6;
+}
+
+:root[data-theme="dark"] .student-gender-chip.is-active span {
+  color: #bfdbfe;
+}
+
+:root[data-theme="dark"] .student-form-side__status {
+  color: #cbd5e1;
+}
+
+:root[data-theme="dark"] .student-form-side__status strong {
+  color: #6ee7b7;
+}
+
+:root[data-theme="dark"] .student-form-side__note {
+  border-color: #1d4ed8;
+  background: #172554;
+  color: #bfdbfe;
+}

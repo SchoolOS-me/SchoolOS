@@ -1,11 +1,14 @@
 import "./Sidebar.css";
 import { NavLink } from "react-router-dom";
+import { getCurrentUserDisplay } from "../utils/userDisplay";
 
 type Props = {
   variant?: "default" | "superAdmin" | "teacher" | "student" | "parent" | "admin";
 };
 
 const Sidebar = ({ variant = "default" }: Props) => {
+  const currentUser = getCurrentUserDisplay();
+
   if (variant === "admin") {
     return (
       <aside className="sidebar sidebar--admin">
@@ -99,22 +102,36 @@ const Sidebar = ({ variant = "default" }: Props) => {
           <button type="button" className="sidebar__cta">
             New Announcement
           </button>
-          <button type="button" className="sidebar__link sidebar__link--muted">
+          <NavLink
+            to="/settings"
+            className={({ isActive }) =>
+              isActive
+                ? "sidebar__link sidebar__link--muted sidebar__link--active"
+                : "sidebar__link sidebar__link--muted"
+            }
+          >
             <span className="sidebar__icon">
               <svg viewBox="0 0 24 24" role="presentation">
                 <path d="M12 3l2 3h3l1 3 3 2-3 2-1 3h-3l-2 3-2-3H7l-1-3-3-2 3-2 1-3h3l2-3z" />
               </svg>
             </span>
             <span className="sidebar__label">Settings</span>
-          </button>
-          <button type="button" className="sidebar__link sidebar__link--muted">
+          </NavLink>
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              isActive
+                ? "sidebar__link sidebar__link--muted sidebar__link--active"
+                : "sidebar__link sidebar__link--muted"
+            }
+          >
             <span className="sidebar__icon">
               <svg viewBox="0 0 24 24" role="presentation">
-                <path d="M4 5h16v10H6l-2 2V5zm3 4h10" />
+                <path d="M12 5a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm-7 14a7 7 0 0 1 14 0H5z" />
               </svg>
             </span>
-            <span className="sidebar__label">Support</span>
-          </button>
+            <span className="sidebar__label">Profile</span>
+          </NavLink>
         </div>
       </aside>
     );
@@ -183,6 +200,30 @@ const Sidebar = ({ variant = "default" }: Props) => {
             </span>
             <span className="sidebar__label">Schedule</span>
           </button>
+
+          <NavLink
+            to="/profile"
+            className={({ isActive }) => (isActive ? "sidebar__link sidebar__link--active" : "sidebar__link")}
+          >
+            <span className="sidebar__icon">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M12 5a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm-7 14a7 7 0 0 1 14 0H5z" />
+              </svg>
+            </span>
+            <span className="sidebar__label">Profile</span>
+          </NavLink>
+
+          <NavLink
+            to="/settings"
+            className={({ isActive }) => (isActive ? "sidebar__link sidebar__link--active" : "sidebar__link")}
+          >
+            <span className="sidebar__icon">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M12 3l2 3h3l1 3 3 2-3 2-1 3h-3l-2 3-2-3H7l-1-3-3-2 3-2 1-3h3l2-3z" />
+              </svg>
+            </span>
+            <span className="sidebar__label">Settings</span>
+          </NavLink>
         </nav>
       </aside>
     );
@@ -242,6 +283,30 @@ const Sidebar = ({ variant = "default" }: Props) => {
             </span>
             <span className="sidebar__label">Communication</span>
           </button>
+
+          <NavLink
+            to="/profile"
+            className={({ isActive }) => (isActive ? "sidebar__link sidebar__link--active" : "sidebar__link")}
+          >
+            <span className="sidebar__icon">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M12 5a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm-7 14a7 7 0 0 1 14 0H5z" />
+              </svg>
+            </span>
+            <span className="sidebar__label">Profile</span>
+          </NavLink>
+
+          <NavLink
+            to="/settings"
+            className={({ isActive }) => (isActive ? "sidebar__link sidebar__link--active" : "sidebar__link")}
+          >
+            <span className="sidebar__icon">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M12 3l2 3h3l1 3 3 2-3 2-1 3h-3l-2 3-2-3H7l-1-3-3-2 3-2 1-3h3l2-3z" />
+              </svg>
+            </span>
+            <span className="sidebar__label">Settings</span>
+          </NavLink>
         </nav>
       </aside>
     );
@@ -319,6 +384,30 @@ const Sidebar = ({ variant = "default" }: Props) => {
             </span>
             <span className="sidebar__label">Resources</span>
           </button>
+
+          <NavLink
+            to="/profile"
+            className={({ isActive }) => (isActive ? "sidebar__link sidebar__link--active" : "sidebar__link")}
+          >
+            <span className="sidebar__icon">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M12 5a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm-7 14a7 7 0 0 1 14 0H5z" />
+              </svg>
+            </span>
+            <span className="sidebar__label">Profile</span>
+          </NavLink>
+
+          <NavLink
+            to="/settings"
+            className={({ isActive }) => (isActive ? "sidebar__link sidebar__link--active" : "sidebar__link")}
+          >
+            <span className="sidebar__icon">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M12 3l2 3h3l1 3 3 2-3 2-1 3h-3l-2 3-2-3H7l-1-3-3-2 3-2 1-3h3l2-3z" />
+              </svg>
+            </span>
+            <span className="sidebar__label">Settings</span>
+          </NavLink>
         </nav>
       </aside>
     );
@@ -394,21 +483,36 @@ const Sidebar = ({ variant = "default" }: Props) => {
             <span className="sidebar__label">Subscriptions</span>
           </NavLink>
 
-          <button type="button" className="sidebar__link">
+          <NavLink
+            to="/settings"
+            className={({ isActive }) => (isActive ? "sidebar__link sidebar__link--active" : "sidebar__link")}
+          >
             <span className="sidebar__icon">
               <svg viewBox="0 0 24 24" role="presentation">
                 <path d="M12 3l2 3h3l1 3 3 2-3 2-1 3h-3l-2 3-2-3H7l-1-3-3-2 3-2 1-3h3l2-3z" />
               </svg>
             </span>
             <span className="sidebar__label">Settings</span>
-          </button>
+          </NavLink>
+
+          <NavLink
+            to="/profile"
+            className={({ isActive }) => (isActive ? "sidebar__link sidebar__link--active" : "sidebar__link")}
+          >
+            <span className="sidebar__icon">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M12 5a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm-7 14a7 7 0 0 1 14 0H5z" />
+              </svg>
+            </span>
+            <span className="sidebar__label">Profile</span>
+          </NavLink>
         </nav>
 
         <div className="sidebar__user">
-          <div className="sidebar__avatar">AJ</div>
+          <div className="sidebar__avatar">{currentUser.initials}</div>
           <div>
-            <div className="sidebar__userName">Alex Johnson</div>
-            <div className="sidebar__userRole">Platform Owner</div>
+            <div className="sidebar__userName">{currentUser.name}</div>
+            <div className="sidebar__userRole">{currentUser.role}</div>
           </div>
         </div>
       </aside>

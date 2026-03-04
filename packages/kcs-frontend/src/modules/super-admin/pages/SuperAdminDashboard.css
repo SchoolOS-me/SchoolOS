@@ -25,6 +25,10 @@
   overflow: hidden;
 }
 
+:root[data-theme="dark"] .super-admin-section {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
 @media (max-width: 1024px) {
   .super-admin-stats {
     grid-template-columns: repeat(2, minmax(220px, 1fr));

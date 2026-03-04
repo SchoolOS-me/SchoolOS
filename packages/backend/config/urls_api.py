@@ -11,7 +11,6 @@ from common.graphql.views import DRFAuthenticatedGraphQLView
 
 api_info = openapi.Info(title="Documentation", default_version="v1")
 
-
 class HttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
     def get_schema(self, request=None, public=False):
         schema = super().get_schema(request, public)
@@ -33,7 +32,7 @@ urlpatterns = [
     re_path(r"admin/", admin.site.urls),
     path("api/content/", include("apps.content.urls")),
     path("api/finances/", include("apps.finances.urls")),
-    path("api/dashboard/", include("apps.dashboard.urls")),
+    path("api/dashboard/", include("apps.dashboard.urls")), 
     path("api/academics/", include("apps.academics.urls")),
     path("api/attendance/", include("apps.attendance.urls")),
     path("api/schools/", include("apps.schools.urls")),

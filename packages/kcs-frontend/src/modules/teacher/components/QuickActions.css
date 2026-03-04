@@ -41,3 +41,27 @@
   font-size: 12px;
   color: #6b7280;
 }
+
+:root[data-theme="dark"] .quick-actions {
+  background: #111a2c;
+  border: 1px solid #243041;
+}
+
+:root[data-theme="dark"] .quick-actions__title,
+:root[data-theme="dark"] .quick-actions__label {
+  color: #e5e7eb;
+}
+
+:root[data-theme="dark"] .quick-actions__description {
+  color: #94a3b8;
+}
+
+:root[data-theme="dark"] .quick-actions__card {
+  border-color: #334155;
+  background: #0f172a;
+}
+
+:root[data-theme="dark"] .quick-actions__card:hover {
+  background: #172036;
+  box-shadow: none;
+}

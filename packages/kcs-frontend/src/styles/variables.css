@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   --color-bg-main: #f9fafb;
   --color-bg-card: #ffffff;
   --color-primary: #16a34a;
@@ -43,36 +43,35 @@
   --spacing-lg: 24px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg-main: #0b1220;
-    --color-bg-card: #111a2c;
-    --color-text-primary: #e5e7eb;
-    --color-text-secondary: #94a3b8;
-    --color-border: #243041;
-    --color-surface-muted: #0f172a;
-    --color-surface-soft: #131f33;
-    --color-overlay-surface: rgba(13, 20, 36, 0.9);
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg-main: #0b1220;
+  --color-bg-card: #111a2c;
+  --color-text-primary: #e5e7eb;
+  --color-text-secondary: #94a3b8;
+  --color-border: #243041;
+  --color-surface-muted: #0f172a;
+  --color-surface-soft: #131f33;
+  --color-overlay-surface: rgba(13, 20, 36, 0.9);
 
-    --dashboard-bg-superadmin: #0a1324;
-    --dashboard-bg-teacher: #0b1528;
-    --dashboard-bg-student: #140e14;
-    --dashboard-bg-parent: #111229;
-    --dashboard-bg-admin: #0b1528;
+  --dashboard-bg-superadmin: #0a1324;
+  --dashboard-bg-teacher: #0b1528;
+  --dashboard-bg-student: #140e14;
+  --dashboard-bg-parent: #111229;
+  --dashboard-bg-admin: #0b1528;
 
-    --student-hero-title: #e5e7eb;
-    --student-hero-subtitle: #94a3b8;
-    --student-card-bg: #101827;
-    --student-card-border: #233144;
-    --student-card-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-    --student-title: #f8fafc;
-    --student-muted: #94a3b8;
-    --student-dim: #7f8ca1;
-    --student-accent: #fca5a5;
-    --student-accent-soft: #1a2436;
-    --student-button-bg: #18243a;
-    --student-link: #fecaca;
-  }
+  --student-hero-title: #e5e7eb;
+  --student-hero-subtitle: #94a3b8;
+  --student-card-bg: #101827;
+  --student-card-border: #233144;
+  --student-card-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  --student-title: #f8fafc;
+  --student-muted: #94a3b8;
+  --student-dim: #7f8ca1;
+  --student-accent: #fca5a5;
+  --student-accent-soft: #1a2436;
+  --student-button-bg: #18243a;
+  --student-link: #fecaca;
 }
 
 .button-primary {

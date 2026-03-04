@@ -122,6 +122,22 @@
   flex: 1;
   font-size: 14px;
   outline: none;
+  background: #ffffff;
+  color: #0f172a;
+  color-scheme: light;
+  -webkit-text-fill-color: #0f172a;
+}
+
+.login-input input::placeholder {
+  color: #94a3b8;
+}
+
+.login-input input:-webkit-autofill,
+.login-input input:-webkit-autofill:hover,
+.login-input input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  -webkit-text-fill-color: #0f172a;
+  transition: background-color 9999s ease-in-out 0s;
 }
 
 .login-link {
@@ -173,6 +189,16 @@
   color: #2563eb;
   font-weight: 600;
   cursor: pointer;
+}
+
+.login-inline-link {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-inline-link:hover {
+  text-decoration: underline;
 }
 
 .login-divider {
@@ -230,4 +256,172 @@
   .login-alt {
     grid-template-columns: 1fr;
   }
+}
+
+@media (prefers-color-scheme: dark) {
+  .login-page {
+    background: #0b1220;
+    color: #e2e8f0;
+  }
+
+  .login-card {
+    background: #0f172a;
+    border-color: #1f2b3d;
+    box-shadow: none;
+  }
+
+  .login-brand,
+  .login-card h1,
+  .login-card label {
+    color: #f8fafc;
+  }
+
+  .login-card p,
+  .login-check,
+  .login-footnote,
+  .login-footer button {
+    color: #94a3b8;
+  }
+
+  .login-tabs {
+    background: #111c30;
+  }
+
+  .login-tabs button {
+    color: #cbd5e1;
+  }
+
+  .login-tabs .is-active {
+    background: #1b2a44;
+    box-shadow: none;
+  }
+
+  .login-input {
+    background: #111c30;
+    border-color: #263244;
+  }
+
+  .login-input span {
+    color: #7f8ca1;
+  }
+
+  .login-input input {
+    background: transparent;
+    color: #f8fafc;
+    color-scheme: dark;
+    -webkit-text-fill-color: #f8fafc;
+  }
+
+  .login-input input::placeholder {
+    color: #7f8ca1;
+  }
+
+  .login-input input:-webkit-autofill,
+  .login-input input:-webkit-autofill:hover,
+  .login-input input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #111c30 inset;
+    -webkit-text-fill-color: #f8fafc;
+  }
+
+  .login-divider {
+    color: #64748b;
+  }
+
+  .login-divider::before,
+  .login-divider::after {
+    background: #1f2b3d;
+  }
+
+  .login-alt button {
+    background: #111c30;
+    border-color: #263244;
+    color: #cbd5e1;
+  }
+
+  .login-inline-link {
+    color: #93c5fd;
+  }
+}
+
+:root[data-theme="dark"] .login-page {
+  background: #0b1220;
+  color: #e2e8f0;
+}
+
+:root[data-theme="dark"] .login-card {
+  background: #0f172a;
+  border-color: #1f2b3d;
+  box-shadow: none;
+}
+
+:root[data-theme="dark"] .login-brand,
+:root[data-theme="dark"] .login-card h1,
+:root[data-theme="dark"] .login-card label {
+  color: #f8fafc;
+}
+
+:root[data-theme="dark"] .login-card p,
+:root[data-theme="dark"] .login-check,
+:root[data-theme="dark"] .login-footnote,
+:root[data-theme="dark"] .login-footer button {
+  color: #94a3b8;
+}
+
+:root[data-theme="dark"] .login-tabs {
+  background: #111c30;
+}
+
+:root[data-theme="dark"] .login-tabs button {
+  color: #cbd5e1;
+}
+
+:root[data-theme="dark"] .login-tabs .is-active {
+  background: #1b2a44;
+  box-shadow: none;
+}
+
+:root[data-theme="dark"] .login-input {
+  background: #111c30;
+  border-color: #263244;
+}
+
+:root[data-theme="dark"] .login-input span {
+  color: #7f8ca1;
+}
+
+:root[data-theme="dark"] .login-input input {
+  background: transparent;
+  color: #f8fafc;
+  color-scheme: dark;
+  -webkit-text-fill-color: #f8fafc;
+}
+
+:root[data-theme="dark"] .login-input input::placeholder {
+  color: #7f8ca1;
+}
+
+:root[data-theme="dark"] .login-input input:-webkit-autofill,
+:root[data-theme="dark"] .login-input input:-webkit-autofill:hover,
+:root[data-theme="dark"] .login-input input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #111c30 inset;
+  -webkit-text-fill-color: #f8fafc;
+}
+
+:root[data-theme="dark"] .login-divider {
+  color: #64748b;
+}
+
+:root[data-theme="dark"] .login-divider::before,
+:root[data-theme="dark"] .login-divider::after {
+  background: #1f2b3d;
+}
+
+:root[data-theme="dark"] .login-alt button {
+  background: #111c30;
+  border-color: #263244;
+  color: #cbd5e1;
+}
+
+:root[data-theme="dark"] .login-inline-link {
+  color: #93c5fd;
 }

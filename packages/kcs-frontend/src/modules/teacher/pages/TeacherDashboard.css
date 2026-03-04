@@ -92,3 +92,12 @@
     align-items: flex-start;
   }
 }
+
+:root[data-theme="dark"] .teacher-dashboard__hero h2 {
+  color: #e5e7eb;
+}
+
+:root[data-theme="dark"] .teacher-dashboard__subtitle,
+:root[data-theme="dark"] .teacher-dashboard__breadcrumb {
+  color: #94a3b8;
+}

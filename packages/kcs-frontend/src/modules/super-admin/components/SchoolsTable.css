@@ -64,7 +64,7 @@
   align-items: center;
   gap: 6px;
   border: 1px solid var(--super-admin-border);
-  background: #ffffff;
+  background: var(--super-admin-card);
   border-radius: 10px;
   padding: 8px 12px;
   font-size: 12px;
@@ -96,10 +96,10 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #3b5ca3;
+  color: var(--super-admin-muted);
   text-align: left;
   padding: 16px 24px;
-  background: #f8fafc;
+  background: var(--color-surface-muted);
 }
 
 .schoolsTable td {
@@ -177,10 +177,10 @@
   height: 32px;
   border-radius: 8px;
   border: 1px solid var(--super-admin-border);
-  background: #ffffff;
+  background: var(--super-admin-card);
   display: grid;
   place-items: center;
-  color: #64748b;
+  color: var(--super-admin-muted);
   cursor: pointer;
 }
 
@@ -195,4 +195,13 @@
 .paginationButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+:root[data-theme="dark"] .schoolsTable th {
+  color: #cbd5e1;
+}
+
+:root[data-theme="dark"] .tableHeaderButton:hover,
+:root[data-theme="dark"] .paginationButton:hover:not(:disabled) {
+  background: #172036;
 }

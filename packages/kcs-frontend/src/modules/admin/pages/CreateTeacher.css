@@ -172,3 +172,57 @@
     grid-template-columns: 1fr;
   }
 }
+
+:root[data-theme="dark"] .teacher-form-header h1 {
+  color: #e5e7eb;
+}
+
+:root[data-theme="dark"] .teacher-form-breadcrumb,
+:root[data-theme="dark"] .teacher-form-header p,
+:root[data-theme="dark"] .teacher-subjects__header span,
+:root[data-theme="dark"] .teacher-subjects p {
+  color: #94a3b8;
+}
+
+:root[data-theme="dark"] .teacher-form-card {
+  border-color: #243041;
+  background: #111a2c;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+:root[data-theme="dark"] .teacher-field span,
+:root[data-theme="dark"] .teacher-subjects__header label {
+  color: #cbd5e1;
+}
+
+:root[data-theme="dark"] .teacher-field input,
+:root[data-theme="dark"] .teacher-field select,
+:root[data-theme="dark"] .teacher-subjects {
+  border-color: #334155;
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+:root[data-theme="dark"] .teacher-field input:focus,
+:root[data-theme="dark"] .teacher-field select:focus {
+  background: #111a2c;
+}
+
+:root[data-theme="dark"] .teacher-tags {
+  border-color: #334155;
+  background: #111a2c;
+}
+
+:root[data-theme="dark"] .teacher-tags input {
+  color: #e5e7eb;
+}
+
+:root[data-theme="dark"] .teacher-tag {
+  background: rgba(59, 130, 246, 0.2);
+  color: #bfdbfe;
+  border-color: rgba(59, 130, 246, 0.35);
+}
+
+:root[data-theme="dark"] .teacher-form-actions {
+  border-top-color: #243041;
+}

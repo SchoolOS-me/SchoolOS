@@ -1,4 +1,5 @@
 import "./Topbar.css";
+import { getCurrentUserDisplay } from "../utils/userDisplay";
 
 type Props = {
   title?: string;
@@ -6,6 +7,8 @@ type Props = {
 };
 
 const Topbar = ({ title, variant = "default" }: Props) => {
+  const currentUser = getCurrentUserDisplay();
+
   if (variant === "admin") {
     return (
       <header className="topbar topbar--admin">
@@ -41,10 +44,10 @@ const Topbar = ({ title, variant = "default" }: Props) => {
           <div className="topbar__divider" aria-hidden="true" />
           <div className="topbar__user">
             <div className="topbar__userText">
-              <span className="topbar__userName">Alex Thompson</span>
-              <span className="topbar__userRole">Super Admin</span>
+              <span className="topbar__userName">{currentUser.name}</span>
+              <span className="topbar__userRole">{currentUser.role}</span>
             </div>
-            <div className="topbar__userAvatar">AT</div>
+            <div className="topbar__userAvatar">{currentUser.initials}</div>
           </div>
         </div>
       </header>
@@ -57,7 +60,7 @@ const Topbar = ({ title, variant = "default" }: Props) => {
         <div className="topbar__switch">
           <span className="topbar__switchLabel">Switch Student</span>
           <button type="button" className="topbar__switchButton">
-            Alex Johnson · Grade 4
+            {currentUser.name} · Active Student
             <span aria-hidden="true">▾</span>
           </button>
         </div>
@@ -77,10 +80,10 @@ const Topbar = ({ title, variant = "default" }: Props) => {
           </button>
           <div className="topbar__user">
             <div className="topbar__userText">
-              <span className="topbar__userName">Sarah Johnson</span>
-              <span className="topbar__userRole">Primary Parent</span>
+              <span className="topbar__userName">{currentUser.name}</span>
+              <span className="topbar__userRole">{currentUser.role}</span>
             </div>
-            <div className="topbar__userAvatar">SJ</div>
+            <div className="topbar__userAvatar">{currentUser.initials}</div>
           </div>
         </div>
       </header>
@@ -106,13 +109,13 @@ const Topbar = ({ title, variant = "default" }: Props) => {
           />
         </div>
         <div className="topbar__right">
-          <span className="topbar__roleBadge">Student Role</span>
+          <span className="topbar__roleBadge">{currentUser.role}</span>
           <button type="button" className="topbar__iconButton" aria-label="Notifications">
             <svg viewBox="0 0 24 24" role="presentation">
               <path d="M12 3a5 5 0 0 0-5 5v2.2c0 .7-.3 1.3-.8 1.8l-1.2 1.2h14l-1.2-1.2c-.5-.5-.8-1.1-.8-1.8V8a5 5 0 0 0-5-5zm0 18a2.5 2.5 0 0 0 2.4-2h-4.8A2.5 2.5 0 0 0 12 21z" />
             </svg>
           </button>
-          <div className="topbar__userAvatar">AT</div>
+          <div className="topbar__userAvatar">{currentUser.initials}</div>
         </div>
       </header>
     );
@@ -156,7 +159,7 @@ const Topbar = ({ title, variant = "default" }: Props) => {
               <path d="M4 5h16v10H6l-2 2V5zm3 4h10" />
             </svg>
           </button>
-          <div className="topbar__avatar">PS</div>
+          <div className="topbar__avatar">{currentUser.initials}</div>
         </div>
       </header>
     );
@@ -189,10 +192,10 @@ const Topbar = ({ title, variant = "default" }: Props) => {
           <span className="topbar__divider" aria-hidden="true" />
           <div className="topbar__user">
             <div className="topbar__userText">
-              <span className="topbar__userName">Alex Thompson</span>
-              <span className="topbar__userRole">Super Admin</span>
+              <span className="topbar__userName">{currentUser.name}</span>
+              <span className="topbar__userRole">{currentUser.role}</span>
             </div>
-            <div className="topbar__userAvatar">AT</div>
+            <div className="topbar__userAvatar">{currentUser.initials}</div>
           </div>
         </div>
       </header>

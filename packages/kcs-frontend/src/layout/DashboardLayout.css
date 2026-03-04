@@ -55,3 +55,18 @@
 .dashboardLayout--admin .dashboardMain {
   background: var(--dashboard-bg-admin);
 }
+
+@media (max-width: 768px) {
+  .dashboardLayout {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .dashboardMain {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+
+  .dashboardContent {
+    padding: 16px;
+  }
+}

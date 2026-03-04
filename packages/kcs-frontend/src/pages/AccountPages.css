@@ -1,0 +1,114 @@
+.account-page {
+  max-width: 840px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.account-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
+.account-card h1,
+.account-card h2 {
+  margin: 0 0 10px;
+  color: var(--color-text-primary);
+}
+
+.account-card p {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.account-meta {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.account-meta__item {
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: var(--color-surface-muted);
+}
+
+.account-meta__label {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.account-meta__value {
+  margin-top: 4px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  word-break: break-word;
+}
+
+.theme-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.theme-option {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-muted);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.theme-option.is-active {
+  border-color: #2b6cee;
+  background: rgba(43, 108, 238, 0.14);
+  color: #1f4ea8;
+}
+
+.account-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.danger-button {
+  border: 1px solid #ef4444;
+  background: #ef4444;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.danger-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+:root[data-theme="dark"] .account-card {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+:root[data-theme="dark"] .theme-option.is-active {
+  color: #bfdbfe;
+}
+
+@media (max-width: 760px) {
+  .account-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-options {
+    grid-template-columns: 1fr;
+  }
+}

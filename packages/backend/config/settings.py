@@ -95,6 +95,7 @@ LOCAL_APPS = [
     "apps.integrations",
     "apps.multitenancy",
     "apps.academics",
+    "apps.dashboard",
    
 ]
 

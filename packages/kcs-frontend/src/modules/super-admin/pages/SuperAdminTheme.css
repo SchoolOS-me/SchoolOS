@@ -10,3 +10,15 @@
   --super-admin-warning: #f59e0b;
   --super-admin-font: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
 }
+
+:root[data-theme="dark"] {
+  --super-admin-bg: #0a1324;
+  --super-admin-card: #111a2c;
+  --super-admin-border: #243041;
+  --super-admin-primary: #60a5fa;
+  --super-admin-muted: #94a3b8;
+  --super-admin-text: #e5e7eb;
+  --super-admin-success: #4ade80;
+  --super-admin-danger: #f87171;
+  --super-admin-warning: #fbbf24;
+}

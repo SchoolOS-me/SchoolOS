@@ -118,23 +118,21 @@ export type SuperAdminDashboardSummary = {
 };
 
 export function fetchAdminDashboard() {
-  return apiFetch<AdminDashboardSummary>("/dashboard/admin/summary/");
+  return apiFetch<AdminDashboardSummary>("/dashboard/admin");
 }
 
 export function fetchTeacherDashboard() {
-  return apiFetch<TeacherDashboardSummary>("/dashboard/teacher/summary/");
+  return apiFetch<TeacherDashboardSummary>("/dashboard/teacher");
 }
 
 export function fetchStudentDashboard() {
-  return apiFetch<StudentDashboardSummary>("/dashboard/student/summary/");
+  return apiFetch<StudentDashboardSummary>("/dashboard/student");
 }
 
 export function fetchParentDashboard() {
-  return apiFetch<ParentDashboardSummary>("/dashboard/parent/summary/");
+  return apiFetch<ParentDashboardSummary>("/dashboard/parent");
 }
 
 export function fetchSuperAdminDashboard() {
-  return apiFetch<SuperAdminDashboardSummary>(
-    "/dashboard/super-admin/summary"
-  );
+  return apiFetch<SuperAdminDashboardSummary>("/dashboard/super-admin");
 }

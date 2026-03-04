@@ -67,9 +67,29 @@
   color: #6b7280;
   font-size: 14px;
 }
-.emptyState {
-  padding: 24px;
-  text-align: center;
-  color: #6b7280;
-  font-size: 14px;
+
+:root[data-theme="dark"] .scheduleCard {
+  background: #111a2c;
+  border-color: #243041;
+}
+
+:root[data-theme="dark"] .scheduleHeader h3,
+:root[data-theme="dark"] .time,
+:root[data-theme="dark"] .subject {
+  color: #e5e7eb;
+}
+
+:root[data-theme="dark"] .scheduleItem {
+  border-color: #334155;
+  background: #0f172a;
+}
+
+:root[data-theme="dark"] .scheduleItem.active {
+  background: #12382c;
+  border-color: #16a34a;
+}
+
+:root[data-theme="dark"] .meta,
+:root[data-theme="dark"] .emptyState {
+  color: #94a3b8;
 }

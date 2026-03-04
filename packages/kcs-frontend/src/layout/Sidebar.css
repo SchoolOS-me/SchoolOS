@@ -46,6 +46,19 @@
   font-size: 16px;
   width: 20px;
   text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar__icon svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .sidebar__label {
@@ -279,67 +292,65 @@
   margin-top: 2px;
 }
 
-@media (prefers-color-scheme: dark) {
-  .sidebar--teacher,
-  .sidebar--student,
-  .sidebar--parent,
-  .sidebar--admin,
-  .sidebar--superAdmin {
-    background-color: #0f172a;
-    color: #e5e7eb;
-    border-right-color: #1f2b3d;
-  }
+:root[data-theme="dark"] .sidebar--teacher,
+:root[data-theme="dark"] .sidebar--student,
+:root[data-theme="dark"] .sidebar--parent,
+:root[data-theme="dark"] .sidebar--admin,
+:root[data-theme="dark"] .sidebar--superAdmin {
+  background-color: #0f172a;
+  color: #e5e7eb;
+  border-right-color: #1f2b3d;
+}
 
-  .sidebar--teacher .sidebar__link,
-  .sidebar--student .sidebar__link,
-  .sidebar--parent .sidebar__link,
-  .sidebar--admin .sidebar__link,
-  .sidebar--superAdmin .sidebar__link {
-    color: #94a3b8;
-  }
+:root[data-theme="dark"] .sidebar--teacher .sidebar__link,
+:root[data-theme="dark"] .sidebar--student .sidebar__link,
+:root[data-theme="dark"] .sidebar--parent .sidebar__link,
+:root[data-theme="dark"] .sidebar--admin .sidebar__link,
+:root[data-theme="dark"] .sidebar--superAdmin .sidebar__link {
+  color: #94a3b8;
+}
 
-  .sidebar--teacher .sidebar__link:hover,
-  .sidebar--superAdmin .sidebar__link:hover {
-    background: #13233c;
-    color: #93c5fd;
-  }
+:root[data-theme="dark"] .sidebar--teacher .sidebar__link:hover,
+:root[data-theme="dark"] .sidebar--superAdmin .sidebar__link:hover {
+  background: #13233c;
+  color: #93c5fd;
+}
 
-  .sidebar--student .sidebar__link:hover,
-  .sidebar--parent .sidebar__link:hover {
-    background: #1a2436;
-    color: #bfdbfe;
-  }
+:root[data-theme="dark"] .sidebar--student .sidebar__link:hover,
+:root[data-theme="dark"] .sidebar--parent .sidebar__link:hover {
+  background: #1a2436;
+  color: #bfdbfe;
+}
 
-  .sidebar--admin .sidebar__link:hover {
-    background: #113127;
-    color: #6ee7b7;
-  }
+:root[data-theme="dark"] .sidebar--admin .sidebar__link:hover {
+  background: #113127;
+  color: #6ee7b7;
+}
 
-  .sidebar--teacher .sidebar__link--active,
-  .sidebar--superAdmin .sidebar__link--active {
-    background: #142a4d;
-    color: #bfdbfe;
-  }
+:root[data-theme="dark"] .sidebar--teacher .sidebar__link--active,
+:root[data-theme="dark"] .sidebar--superAdmin .sidebar__link--active {
+  background: #142a4d;
+  color: #bfdbfe;
+}
 
-  .sidebar--student .sidebar__link--active {
-    background: #3b1518;
-    color: #fecaca;
-  }
+:root[data-theme="dark"] .sidebar--student .sidebar__link--active {
+  background: #3b1518;
+  color: #fecaca;
+}
 
-  .sidebar--parent .sidebar__link--active {
-    background: #2b1d4a;
-    color: #ddd6fe;
-  }
+:root[data-theme="dark"] .sidebar--parent .sidebar__link--active {
+  background: #2b1d4a;
+  color: #ddd6fe;
+}
 
-  .sidebar--admin .sidebar__link--active {
-    background: #12382c;
-    color: #86efac;
-  }
+:root[data-theme="dark"] .sidebar--admin .sidebar__link--active {
+  background: #12382c;
+  color: #86efac;
+}
 
-  .sidebar__brandSubtitle,
-  .sidebar__link--muted {
-    color: #7f8ca1;
-  }
+:root[data-theme="dark"] .sidebar__brandSubtitle,
+:root[data-theme="dark"] .sidebar__link--muted {
+  color: #7f8ca1;
 }
 
 .sidebar__user {
@@ -374,6 +385,14 @@
   margin-top: 2px;
 }
 
+:root[data-theme="dark"] .sidebar__user {
+  border-top-color: #263244;
+}
+
+:root[data-theme="dark"] .sidebar__userRole {
+  color: #94a3b8;
+}
+
 /* Tablet & below */
 @media (max-width: 1024px) {
   .sidebar {
@@ -400,99 +419,65 @@
 
 /* Mobile (future collapse support) */
 @media (max-width: 768px) {
-  .sidebar {
+  .sidebar,
+  .sidebar--superAdmin,
+  .sidebar--teacher,
+  .sidebar--student,
+  .sidebar--parent,
+  .sidebar--admin {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
     width: 100%;
-    flex-direction: row;
-    align-items: center;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    border-right: none;
+    border-top: 1px solid var(--color-border);
+    display: block;
+    background: var(--color-bg-card);
+    box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.12);
+  }
+
+  .sidebar__brand,
+  .sidebar__user,
+  .sidebar__adminActions {
+    display: none;
   }
 
   .sidebar__nav {
     flex-direction: row;
-    gap: 4px;
+    flex-wrap: nowrap;
+    gap: 8px;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .sidebar__nav::-webkit-scrollbar {
+    display: none;
   }
 
   .sidebar__label {
     display: none;
   }
 
-  .sidebar--superAdmin {
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
+  .sidebar__link {
+    min-width: 40px;
+    min-height: 40px;
+    padding: 8px;
+    justify-content: center;
+    border-radius: 10px;
   }
 
-  .sidebar--superAdmin .sidebar__brandText {
-    display: none;
-  }
-
-  .sidebar--superAdmin .sidebar__nav {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .sidebar--superAdmin .sidebar__user {
-    margin-top: 0;
-    border-top: none;
-    padding-top: 0;
-  }
-
-  .sidebar--teacher {
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .sidebar--teacher .sidebar__brandText {
-    display: none;
-  }
-
-  .sidebar--teacher .sidebar__nav {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .sidebar--student,
-  .sidebar--parent {
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .sidebar--student .sidebar__brandText,
-  .sidebar--parent .sidebar__brandText {
-    display: none;
-  }
-
-  .sidebar--student .sidebar__nav,
-  .sidebar--parent .sidebar__nav {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .sidebar--admin {
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .sidebar--admin .sidebar__brandText {
-    display: none;
-  }
-
-  .sidebar--admin .sidebar__nav {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .sidebar--admin .sidebar__adminActions {
-    width: 100%;
+  :root[data-theme="dark"] .sidebar,
+  :root[data-theme="dark"] .sidebar--superAdmin,
+  :root[data-theme="dark"] .sidebar--teacher,
+  :root[data-theme="dark"] .sidebar--student,
+  :root[data-theme="dark"] .sidebar--parent,
+  :root[data-theme="dark"] .sidebar--admin {
+    border-top-color: #243041;
+    box-shadow: 0 -10px 28px rgba(0, 0, 0, 0.38);
   }
 }

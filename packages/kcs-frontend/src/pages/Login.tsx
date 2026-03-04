@@ -2,7 +2,7 @@ import "./Login.css";
 
 import { useState } from "react";
 import type { FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { login } from "../api/auth";
 
@@ -28,6 +28,10 @@ export function Login() {
 
     try {
       const user = await login(email.trim(), password);
+      if (user.role === "SUPER_ADMIN") {
+        setError("Super Admin users must login from the Super Admin screen.");
+        return;
+      }
       const route = ROLE_ROUTES[user.role] || "/login";
       navigate(route);
     } catch (err) {
@@ -42,7 +46,7 @@ export function Login() {
   return (
     <div className="login-page">
       <header className="login-header">
-        <div className="login-brand">SchoolCloud SaaS</div>
+        <div className="login-brand">KCS School Login</div>
         <nav className="login-nav">
           <button type="button">Support</button>
           <button type="button">School Directory</button>
@@ -54,8 +58,8 @@ export function Login() {
           <div className="login-logo">
             <span>🎓</span>
           </div>
-          <h1>St. Mary's High School</h1>
-          <p>Sign in to your student, staff, or parent account.</p>
+          <h1>School / Tenant Login</h1>
+          <p>Sign in to your student, staff, admin, teacher, or parent account.</p>
 
           <div className="login-tabs">
             <button type="button" className="is-active">Student</button>
@@ -106,7 +110,7 @@ export function Login() {
           </form>
 
           <div className="login-footnote">
-            Not from St. Mary's? <button type="button">Select a different school</button>
+            Platform team? <Link className="login-inline-link" to="/login">Use Super Admin Login</Link>
           </div>
         </div>
 
