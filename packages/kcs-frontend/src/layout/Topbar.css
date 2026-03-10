@@ -30,12 +30,11 @@
   gap: 10px;
 }
 
-.topbar__brandMark {
-  width: 28px;
-  height: 28px;
-  border-radius: 10px;
-  background: #2563eb;
-  display: inline-block;
+.topbar__brandLogo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  display: block;
 }
 
 .topbar__brandText {
@@ -131,13 +130,10 @@
 }
 
 .topbar__schoolIcon {
-  width: 28px;
-  height: 28px;
-  border-radius: 10px;
-  background: #e6f7ef;
-  display: grid;
-  place-items: center;
-  color: #047857;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  display: block;
 }
 
 .topbar--parent {

@@ -74,8 +74,8 @@ const CreateSchool = () => {
               environment for its administrators, teachers, and students.
             </p>
             <div className="sa-create-school__note">
-              <div className="sa-create-school__noteIcon">i</div>
-              <div>
+              <div className="sa-create-school__noteIcon" aria-hidden="true">i</div>
+              <div className="sa-create-school__noteContent">
                 <h4>Tenant Provisioning</h4>
                 <p>
                   Each school receives its own isolated tenant. Use a unique

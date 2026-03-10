@@ -17,6 +17,12 @@
   font-weight: 700;
 }
 
+.login-brandLogo {
+  height: 48px;
+  width: auto;
+  display: block;
+}
+
 .login-nav button {
   background: transparent;
   border: none;
@@ -48,14 +54,13 @@
 }
 
 .login-logo {
-  width: 54px;
-  height: 54px;
-  border-radius: 16px;
-  background: #eef2ff;
-  display: grid;
-  place-items: center;
-  font-size: 22px;
-  color: #2563eb;
+  width: 190px;
+}
+
+.login-logoImage {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .login-card h1 {

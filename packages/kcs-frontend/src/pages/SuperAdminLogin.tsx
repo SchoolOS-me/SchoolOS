@@ -48,7 +48,7 @@ export function SuperAdminLogin() {
     <div className="super-login-page">
       <main className="super-login-main">
         <div className="super-login-logoWrap">
-          <div className="super-login-logoIcon" aria-hidden="true">🛡</div>
+          <img src="/logo.svg" alt="SchoolOS" className="super-login-logoIcon" />
           <h1>KCS Administration</h1>
         </div>
 
@@ -116,4 +116,3 @@ export function SuperAdminLogin() {
     </div>
   );
 }
-

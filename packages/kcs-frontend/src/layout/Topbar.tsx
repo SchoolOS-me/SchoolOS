@@ -14,7 +14,7 @@ const Topbar = ({ title, variant = "default" }: Props) => {
       <header className="topbar topbar--admin">
         <div className="topbar__left">
           <div className="topbar__school">
-            <span className="topbar__schoolIcon">🏛</span>
+            <img src="/logo.svg" alt="SchoolOS" className="topbar__schoolIcon" />
             <span>Greenwood International</span>
           </div>
         </div>
@@ -125,7 +125,7 @@ const Topbar = ({ title, variant = "default" }: Props) => {
     return (
       <header className="topbar topbar--teacher">
         <div className="topbar__brand">
-          <span className="topbar__brandMark" />
+          <img src="/logo.svg" alt="SchoolOS" className="topbar__brandLogo" />
           <span className="topbar__brandText">SchoolManage SaaS</span>
         </div>
         <nav className="topbar__nav">

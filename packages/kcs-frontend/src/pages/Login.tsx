@@ -46,7 +46,9 @@ export function Login() {
   return (
     <div className="login-page">
       <header className="login-header">
-        <div className="login-brand">KCS School Login</div>
+        <div className="login-brand">
+          <img src="/logo.svg" alt="SchoolOS" className="login-brandLogo" />
+        </div>
         <nav className="login-nav">
           <button type="button">Support</button>
           <button type="button">School Directory</button>
@@ -56,7 +58,7 @@ export function Login() {
       <main className="login-main">
         <div className="login-card">
           <div className="login-logo">
-            <span>🎓</span>
+            <img src="/logo.svg" alt="SchoolOS" className="login-logoImage" />
           </div>
           <h1>School / Tenant Login</h1>
           <p>Sign in to your student, staff, admin, teacher, or parent account.</p>

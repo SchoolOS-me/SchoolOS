@@ -9,9 +9,15 @@
 }
 
 .sidebar__logo {
-  font-size: 18px;
-  font-weight: 700;
+  display: flex;
+  align-items: center;
   margin-bottom: 32px;
+}
+
+.sidebar__defaultLogo {
+  width: 160px;
+  height: auto;
+  display: block;
 }
 
 .sidebar__nav {
@@ -108,10 +114,6 @@
   stroke-width: 2;
 }
 
-.sidebar__brandIcon--teacher {
-  background: #1d4ed8;
-}
-
 .sidebar--student,
 .sidebar--parent {
   width: 260px;
@@ -146,14 +148,6 @@
   color: #6d28d9;
 }
 
-.sidebar__brandIcon--student {
-  background: #b91c1c;
-}
-
-.sidebar__brandIcon--parent {
-  background: #7c3aed;
-}
-
 .sidebar--admin {
   width: 260px;
   background-color: #ffffff;
@@ -179,10 +173,6 @@
   background: #e6f7ef;
   color: #047857;
   border-radius: 12px;
-}
-
-.sidebar__brandIcon--admin {
-  background: #047857;
 }
 
 .sidebar__adminActions {
@@ -256,21 +246,12 @@
   gap: 12px;
 }
 
-.sidebar__brandIcon {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: #2563eb;
-  display: grid;
-  place-items: center;
-}
-
-.sidebar__brandGlyph {
-  width: 18px;
-  height: 18px;
-  background: #ffffff;
-  mask: linear-gradient(#000, #000);
-  clip-path: polygon(0 0, 42% 0, 42% 42%, 0 42%, 0 0, 58% 0, 100% 0, 100% 42%, 58% 42%, 58% 0, 0 58%, 42% 58%, 42% 100%, 0 100%, 0 58%, 58% 58%, 100% 58%, 100% 100%, 58% 100%, 58% 58%);
+.sidebar__brandLogo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
 }
 
 .sidebar__brandText {

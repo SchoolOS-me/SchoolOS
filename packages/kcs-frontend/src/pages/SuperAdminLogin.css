@@ -28,15 +28,11 @@
 }
 
 .super-login-logoIcon {
-  width: 68px;
-  height: 68px;
-  border-radius: 20px;
+  width: 112px;
+  height: 112px;
   margin: 0 auto;
-  display: grid;
-  place-items: center;
-  background: rgba(240, 90, 26, 0.08);
-  border: 1px solid rgba(240, 90, 26, 0.16);
-  font-size: 30px;
+  display: block;
+  object-fit: contain;
 }
 
 .super-login-card {
@@ -204,11 +200,6 @@
     color: #f8fafc;
   }
 
-  .super-login-logoIcon {
-    background: rgba(240, 90, 26, 0.15);
-    border-color: rgba(240, 90, 26, 0.25);
-  }
-
   .super-login-card {
     background: #0f172a;
     border-color: #1f2b3d;
@@ -274,11 +265,6 @@
 
 :root[data-theme="dark"] .super-login-logoWrap h1 {
   color: #f8fafc;
-}
-
-:root[data-theme="dark"] .super-login-logoIcon {
-  background: rgba(240, 90, 26, 0.15);
-  border-color: rgba(240, 90, 26, 0.25);
 }
 
 :root[data-theme="dark"] .super-login-card {

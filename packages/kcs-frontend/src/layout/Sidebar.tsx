@@ -13,9 +13,7 @@ const Sidebar = ({ variant = "default" }: Props) => {
     return (
       <aside className="sidebar sidebar--admin">
         <div className="sidebar__brand">
-          <div className="sidebar__brandIcon sidebar__brandIcon--admin">
-            <span className="sidebar__brandGlyph" />
-          </div>
+          <img src="/logo.svg" alt="SchoolOS" className="sidebar__brandLogo" />
           <div className="sidebar__brandText">
             <span className="sidebar__brandTitle">Greenwood Admin</span>
             <span className="sidebar__brandSubtitle">Management Portal</span>
@@ -141,9 +139,7 @@ const Sidebar = ({ variant = "default" }: Props) => {
     return (
       <aside className="sidebar sidebar--student">
         <div className="sidebar__brand">
-          <div className="sidebar__brandIcon sidebar__brandIcon--student">
-            <span className="sidebar__brandGlyph" />
-          </div>
+          <img src="/logo.svg" alt="SchoolOS" className="sidebar__brandLogo" />
           <div className="sidebar__brandText">
             <span className="sidebar__brandTitle">St. Jude's Academy</span>
             <span className="sidebar__brandSubtitle">Student Portal</span>
@@ -233,9 +229,7 @@ const Sidebar = ({ variant = "default" }: Props) => {
     return (
       <aside className="sidebar sidebar--parent">
         <div className="sidebar__brand">
-          <div className="sidebar__brandIcon sidebar__brandIcon--parent">
-            <span className="sidebar__brandGlyph" />
-          </div>
+          <img src="/logo.svg" alt="SchoolOS" className="sidebar__brandLogo" />
           <div className="sidebar__brandText">
             <span className="sidebar__brandTitle">EduSaaS</span>
             <span className="sidebar__brandSubtitle">Parent Portal</span>
@@ -316,9 +310,7 @@ const Sidebar = ({ variant = "default" }: Props) => {
     return (
       <aside className="sidebar sidebar--teacher">
         <div className="sidebar__brand">
-          <div className="sidebar__brandIcon sidebar__brandIcon--teacher">
-            <span className="sidebar__brandGlyph" />
-          </div>
+          <img src="/logo.svg" alt="SchoolOS" className="sidebar__brandLogo" />
           <div className="sidebar__brandText">
             <span className="sidebar__brandTitle">Academic Blue</span>
             <span className="sidebar__brandSubtitle">Teacher Portal</span>
@@ -417,12 +409,9 @@ const Sidebar = ({ variant = "default" }: Props) => {
     return (
       <aside className="sidebar sidebar--superAdmin">
         <div className="sidebar__brand">
-          <div className="sidebar__brandIcon">
-            <span className="sidebar__brandGlyph" />
-          </div>
+          <img src="/logo.svg" alt="SchoolOS" className="sidebar__brandLogo" />
           <div className="sidebar__brandText">
-            <span className="sidebar__brandTitle">SaaS Admin</span>
-            <span className="sidebar__brandSubtitle">Multi-tenant Platform</span>
+            <span className="sidebar__brandTitle">SchoolOS</span>
           </div>
         </div>
 
@@ -522,7 +511,7 @@ const Sidebar = ({ variant = "default" }: Props) => {
   return (
     <aside className="sidebar">
       <div className="sidebar__logo">
-        School Panel
+        <img src="/logo.svg" alt="SchoolOS" className="sidebar__defaultLogo" />
       </div>
 
       <nav className="sidebar__nav">
