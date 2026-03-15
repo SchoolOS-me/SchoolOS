@@ -5,6 +5,7 @@ import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { login } from "../api/auth";
+import ThemedCompleteLogo from "../components/ui/ThemedCompleteLogo";
 
 const ROLE_ROUTES: Record<string, string> = {
   SUPER_ADMIN: "/super-admin/dashboard",
@@ -47,15 +48,10 @@ export function SuperAdminLogin() {
   return (
     <div className="super-login-page">
       <main className="super-login-main">
-        <div className="super-login-logoWrap">
-          <img src="/logo.svg" alt="SchoolOS" className="super-login-logoIcon" />
-          <h1>KCS Administration</h1>
-        </div>
-
         <section className="super-login-card">
           <header className="super-login-cardHead">
-            <h2>Platform Login</h2>
-            <p>Access the KCS Administration Panel</p>
+            <ThemedCompleteLogo className="super-login-logoIcon" />
+            <p>Welcome back, please sign in to your account.</p>
           </header>
 
           <form className="super-login-form" onSubmit={handleSubmit}>
@@ -67,7 +63,7 @@ export function SuperAdminLogin() {
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder="superadmin@kcs.com"
+                placeholder="admin@schoolos.com"
                 autoComplete="email"
                 required
               />
@@ -96,22 +92,20 @@ export function SuperAdminLogin() {
                 checked={remember}
                 onChange={(event) => setRemember(event.target.checked)}
               />
-              Remember session for 30 days
+              Remember me
             </label>
 
             {error && <div className="super-login-error">{error}</div>}
 
             <button className="super-login-submit" type="submit" disabled={isLoading}>
-              {isLoading ? "Signing in..." : "Login to Console"}
+              {isLoading ? "Signing in..." : "Sign In"}
             </button>
           </form>
 
           <footer className="super-login-footer">
-            <Link to="/school-login">Login to your School instead</Link>
+            <Link to="/login">Back to School Login</Link>
           </footer>
         </section>
-
-        <p className="super-login-copy">© 2024 KCS International • Security Standard Verified</p>
       </main>
     </div>
   );

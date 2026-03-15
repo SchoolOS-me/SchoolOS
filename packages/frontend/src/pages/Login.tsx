@@ -5,6 +5,7 @@ import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { login } from "../api/auth";
+import ThemedCompleteLogo from "../components/ui/ThemedCompleteLogo";
 
 const ROLE_ROUTES: Record<string, string> = {
   SUPER_ADMIN: "/super-admin/dashboard",
@@ -45,50 +46,32 @@ export function Login() {
 
   return (
     <div className="login-page">
-      <header className="login-header">
-        <div className="login-brand">
-          <img src="/logo.svg" alt="SchoolOS" className="login-brandLogo" />
-        </div>
-        <nav className="login-nav">
-          <button type="button">Support</button>
-          <button type="button">School Directory</button>
-        </nav>
-      </header>
-
       <main className="login-main">
-        <div className="login-card">
-          <div className="login-logo">
-            <img src="/logo.svg" alt="SchoolOS" className="login-logoImage" />
-          </div>
-          <h1>School / Tenant Login</h1>
-          <p>Sign in to your student, staff, admin, teacher, or parent account.</p>
+        <section className="login-card">
+          <header className="login-card-head">
+            <ThemedCompleteLogo className="login-logoImage" />
+            <p>Welcome back, please sign in to your account.</p>
+          </header>
 
-          <div className="login-tabs">
-            <button type="button" className="is-active">Student</button>
-            <button type="button">Staff</button>
-            <button type="button">Parent</button>
-          </div>
-
-          <form onSubmit={handleSubmit}>
-            <label>
-            Email or School ID
+          <form className="login-form" onSubmit={handleSubmit}>
+            <label htmlFor="school-login-email">Email Address</label>
             <div className="login-input">
-              <span>@</span>
+              <span aria-hidden="true">✉</span>
               <input
+                id="school-login-email"
                 type="email"
-                placeholder="e.g. j.doe@stmarys.edu"
+                placeholder="user@school.edu"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 required
               />
             </div>
-            </label>
 
-            <label>
-            Password
+            <label htmlFor="school-login-password">Password</label>
             <div className="login-input">
-              <span>🔒</span>
+              <span aria-hidden="true">🔒</span>
               <input
+                id="school-login-password"
                 type="password"
                 placeholder="Enter your password"
                 value={password}
@@ -97,40 +80,24 @@ export function Login() {
               />
               <button type="button" className="login-link">Forgot password?</button>
             </div>
-            </label>
 
             <label className="login-check">
-            <input type="checkbox" />
-            Keep me signed in
+              <input type="checkbox" />
+              Remember me
             </label>
 
             {error && <div className="login-error">{error}</div>}
 
             <button type="submit" className="login-primary" disabled={isLoading}>
-              {isLoading ? "Signing In..." : "Sign In →"}
+              {isLoading ? "Signing In..." : "Sign In"}
             </button>
           </form>
 
           <div className="login-footnote">
-            Platform team? <Link className="login-inline-link" to="/login">Use Super Admin Login</Link>
+            Don&apos;t have an account? <Link className="login-inline-link" to="/super-admin/login">Contact Administrator</Link>
           </div>
-        </div>
-
-        <div className="login-divider">
-          <span>OR LOGIN WITH</span>
-        </div>
-
-        <div className="login-alt">
-          <button type="button">Google</button>
-          <button type="button">Azure AD</button>
-        </div>
+        </section>
       </main>
-
-      <footer className="login-footer">
-        <button type="button">Privacy Policy</button>
-        <button type="button">Terms of Service</button>
-        <button type="button">Contact Support</button>
-      </footer>
     </div>
   );
 }

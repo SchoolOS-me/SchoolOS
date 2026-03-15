@@ -11,6 +11,31 @@ const SystemLoadingOverlay = ({
 }: SystemLoadingOverlayProps) => {
   return (
     <div className="system-loading-overlay" role="status" aria-live="polite">
+      <div className="system-loading-overlay__bg" aria-hidden="true">
+        <div className="system-loading-overlay__topbar">
+          <span />
+          <span />
+        </div>
+        <div className="system-loading-overlay__headerSkeleton">
+          <span />
+          <span />
+        </div>
+        <div className="system-loading-overlay__tabs">
+          <span />
+          <span />
+          <span />
+        </div>
+        <div className="system-loading-overlay__table">
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+      </div>
       <div className="system-loading-overlay__card">
         <div className="system-loading-overlay__spinnerWrap">
           <div className="system-loading-overlay__spinnerBg" />

@@ -1,0 +1,198 @@
+.super-login-page {
+  --auth-bg: #f2f4f7;
+  --auth-card-bg: #ffffff;
+  --auth-card-border: #e3e8f1;
+  --auth-card-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+  --auth-text: #374151;
+  --auth-subtext: #6b7280;
+  --auth-input-bg: #ffffff;
+  --auth-input-border: #d1d5db;
+  --auth-input-text: #111827;
+  --auth-input-placeholder: #9ca3af;
+  --auth-accent: #3b82f6;
+  --auth-link: #2563eb;
+
+  min-height: 100dvh;
+  background: var(--auth-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+:root[data-theme="dark"] .super-login-page {
+  --auth-bg: radial-gradient(circle at 10% 10%, rgba(59, 130, 246, 0.2), transparent 30%), #0b1220;
+  --auth-card-bg: #0f172a;
+  --auth-card-border: #1f2b3d;
+  --auth-card-shadow: 0 16px 40px rgba(2, 6, 16, 0.55);
+  --auth-text: #e2e8f0;
+  --auth-subtext: #94a3b8;
+  --auth-input-bg: #111c30;
+  --auth-input-border: #2b3b54;
+  --auth-input-text: #f8fafc;
+  --auth-input-placeholder: #7f8ca1;
+  --auth-accent: #3b82f6;
+  --auth-link: #60a5fa;
+}
+
+.super-login-main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.super-login-card {
+  width: min(560px, 100%);
+  background: var(--auth-card-bg);
+  border: 1px solid var(--auth-card-border);
+  border-radius: 20px;
+  box-shadow: var(--auth-card-shadow);
+  padding: 30px;
+}
+
+.super-login-cardHead {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.super-login-logoIcon {
+  width: min(320px, 80%);
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.super-login-cardHead p {
+  margin: 0;
+  color: var(--auth-subtext);
+  font-size: 1.05rem;
+}
+
+.super-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.super-login-form label {
+  color: var(--auth-text);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.super-login-inputWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--auth-input-border);
+  border-radius: 12px;
+  background: var(--auth-input-bg);
+  padding: 12px 14px;
+}
+
+.super-login-inputWrap span {
+  color: var(--auth-input-placeholder);
+  font-size: 1.1rem;
+}
+
+.super-login-inputWrap input {
+  border: 0;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  font-size: 1rem;
+  color: var(--auth-input-text);
+}
+
+.super-login-inputWrap input::placeholder {
+  color: var(--auth-input-placeholder);
+}
+
+.super-login-passHead {
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.super-login-passHead button {
+  border: 0;
+  background: transparent;
+  color: var(--auth-accent);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.super-login-check {
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--auth-text);
+  font-size: 0.95rem;
+}
+
+.super-login-check input {
+  accent-color: var(--auth-accent);
+}
+
+.super-login-error {
+  margin-top: 2px;
+  color: #b91c1c;
+  font-size: 0.9rem;
+}
+
+.super-login-submit {
+  margin-top: 12px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--auth-accent);
+  color: #ffffff;
+  width: 100%;
+  padding: 14px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.super-login-submit:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.super-login-footer {
+  margin-top: 22px;
+  text-align: center;
+  color: var(--auth-subtext);
+  font-size: 0.98rem;
+}
+
+.super-login-footer a {
+  color: var(--auth-link);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.super-login-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .super-login-page {
+    padding: 14px;
+  }
+
+  .super-login-card {
+    padding: 22px;
+  }
+
+  .super-login-logoIcon {
+    width: min(270px, 88%);
+    margin-bottom: 16px;
+  }
+
+  .super-login-cardHead p {
+    font-size: 0.96rem;
+  }
+}

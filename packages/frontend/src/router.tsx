@@ -18,6 +18,12 @@ import CreateTeacher from "./modules/admin/pages/CreateTeacher";
 import CreateClassSection from "./modules/admin/pages/CreateClassSection";
 import { Profile } from "./pages/Profile";
 import { Settings } from "./pages/Settings";
+import NewSchoolLandingPage from "./pages/new-school/NewSchoolLandingPage";
+import NewSchoolSignupPage from "./pages/new-school/NewSchoolSignupPage";
+import NewSchoolOnboardingDetailsPage from "./pages/new-school/NewSchoolOnboardingDetailsPage";
+import NewSchoolOnboardingAcademicPage from "./pages/new-school/NewSchoolOnboardingAcademicPage";
+import NewSchoolOnboardingInvitePage from "./pages/new-school/NewSchoolOnboardingInvitePage";
+import NewSchoolOnboardingCompletePage from "./pages/new-school/NewSchoolOnboardingCompletePage";
 import "./styles/variables.css";
 
 const ROLE_ROUTES: Record<string, string> = {
@@ -52,9 +58,21 @@ export const router = createBrowserRouter([
   {
     element: <MainLayout />,
     children: [
-      { path: "/", element: <Navigate to="/login" replace /> },
-      { path: "/login", element: <PublicOnly><SuperAdminLogin /></PublicOnly> },
-      { path: "/school-login", element: <PublicOnly><Login /></PublicOnly> },
+      { path: "/", element: <NewSchoolLandingPage /> },
+      { path: "/signup", element: <PublicOnly><NewSchoolSignupPage /></PublicOnly> },
+      { path: "/login", element: <PublicOnly><Login /></PublicOnly> },
+      { path: "/super-admin/login", element: <PublicOnly><SuperAdminLogin /></PublicOnly> },
+      { path: "/school-login", element: <Navigate to="/login" replace /> },
+      { path: "/new-school", element: <Navigate to="/" replace /> },
+      { path: "/new-school/signup", element: <Navigate to="/signup" replace /> },
+      { path: "/new-school/onboarding/details", element: <Navigate to="/onboarding/details" replace /> },
+      { path: "/new-school/onboarding/academic", element: <Navigate to="/onboarding/academic" replace /> },
+      { path: "/new-school/onboarding/invite", element: <Navigate to="/onboarding/invite" replace /> },
+      { path: "/new-school/onboarding/complete", element: <Navigate to="/onboarding/complete" replace /> },
+      { path: "/onboarding/details", element: <PublicOnly><NewSchoolOnboardingDetailsPage /></PublicOnly> },
+      { path: "/onboarding/academic", element: <PublicOnly><NewSchoolOnboardingAcademicPage /></PublicOnly> },
+      { path: "/onboarding/invite", element: <PublicOnly><NewSchoolOnboardingInvitePage /></PublicOnly> },
+      { path: "/onboarding/complete", element: <PublicOnly><NewSchoolOnboardingCompletePage /></PublicOnly> },
 
       { path: "/teacher-dashboard", element: <RequireAuth><TeacherDashboard /></RequireAuth> },
       { path: "/super-admin/dashboard", element: <RequireAuth><SuperAdminDashboard /></RequireAuth> },

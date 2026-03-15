@@ -1,0 +1,454 @@
+.ns-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-primary) 8%, var(--color-bg-main)) 0%, var(--color-bg-main) 280px);
+  color: var(--color-text-primary);
+}
+
+.ns-page--flat {
+  background: var(--color-bg-main);
+}
+
+.ns-shell {
+  width: min(1180px, 92vw);
+  margin: 0 auto;
+}
+
+.ns-nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--color-bg-card) 85%, transparent);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.ns-navRow {
+  min-height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.ns-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.ns-brand img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+.ns-navLinks {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.ns-navLinks a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.ns-btn {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 11px 18px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.94rem;
+}
+
+.ns-btn--solid {
+  background: #2b6cee;
+  border-color: #2b6cee;
+  color: #fff;
+}
+
+.ns-btn--solid:hover {
+  filter: brightness(1.06);
+}
+
+.ns-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.ns-btn--ghost {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.ns-hero {
+  padding: 72px 0 80px;
+  text-align: center;
+}
+
+.ns-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 7px 12px;
+  background: color-mix(in srgb, #2b6cee 14%, transparent);
+  color: #2b6cee;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+}
+
+.ns-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2b6cee;
+}
+
+.ns-title {
+  margin: 18px auto 0;
+  width: min(860px, 100%);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-size: clamp(2.1rem, 5vw, 4.2rem);
+}
+
+.ns-titleAccent {
+  color: #2b6cee;
+}
+
+.ns-subtitle {
+  width: min(800px, 100%);
+  margin: 18px auto 0;
+  color: var(--color-text-secondary);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.6;
+}
+
+.ns-heroActions {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ns-showcase {
+  margin-top: 34px;
+  border-radius: 22px;
+  padding: 18px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 16px 42px rgba(15, 23, 42, 0.11);
+}
+
+.ns-showcaseGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.ns-showcaseCard {
+  border: 1px solid var(--color-border);
+  background: color-mix(in srgb, var(--color-bg-card) 80%, var(--color-surface-soft));
+  border-radius: 14px;
+  padding: 16px;
+  text-align: left;
+}
+
+.ns-showcaseCard h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.ns-showcaseCard p {
+  margin: 8px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.ns-section {
+  padding: 24px 0 72px;
+}
+
+.ns-sectionTitle {
+  text-align: center;
+  margin-bottom: 22px;
+  font-size: clamp(1.45rem, 2.5vw, 2rem);
+}
+
+.ns-featureGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.ns-featureCard {
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-bg-card);
+  padding: 20px;
+}
+
+.ns-featureCard h4 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+
+.ns-featureCard p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  font-size: 0.92rem;
+}
+
+.ns-authWrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.ns-authHeader {
+  border-bottom: 1px solid var(--color-border);
+  background: color-mix(in srgb, var(--color-bg-card) 88%, transparent);
+}
+
+.ns-authHeader .ns-shell {
+  min-height: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ns-authMain {
+  width: min(520px, 92vw);
+  margin: 34px auto;
+}
+
+.ns-authCard {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  padding: 26px;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.07);
+}
+
+.ns-authBrand {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.ns-authBrand img {
+  width: 82px;
+  height: 82px;
+  object-fit: contain;
+}
+
+.ns-authBrand h1 {
+  margin: 10px 0 8px;
+  font-size: 1.7rem;
+}
+
+.ns-authBrand p {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.ns-formGrid {
+  display: grid;
+  gap: 14px;
+}
+
+.ns-grid2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.ns-gridEmailRole {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(180px, 1fr);
+  gap: 14px;
+}
+
+.ns-field {
+  display: grid;
+  gap: 7px;
+}
+
+.ns-field label {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.ns-field input,
+.ns-field select,
+.ns-field textarea {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  background: color-mix(in srgb, var(--color-bg-card) 75%, var(--color-surface-soft));
+  color: var(--color-text-primary);
+  border-radius: 11px;
+  padding: 12px 14px;
+  font: inherit;
+}
+
+.ns-help {
+  color: var(--color-text-secondary);
+  font-size: 0.82rem;
+  margin-top: 8px;
+}
+
+.ns-alert {
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  border: 1px solid transparent;
+}
+
+.ns-alert--error {
+  background: #ffe8e7;
+  border-color: #fecdca;
+  color: #b42318;
+}
+
+.ns-alert--success {
+  background: #ecfdf3;
+  border-color: #abefc6;
+  color: #027a48;
+}
+
+.ns-progress {
+  margin-bottom: 18px;
+}
+
+.ns-progressTop {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: var(--color-text-secondary);
+  font-size: 0.87rem;
+  font-weight: 700;
+}
+
+.ns-progressBar {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--color-surface-soft);
+  overflow: hidden;
+}
+
+.ns-progressBar span {
+  display: block;
+  height: 100%;
+  background: #2b6cee;
+}
+
+.ns-stepActions {
+  margin-top: 8px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.ns-stepActionsRight {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ns-complete {
+  text-align: center;
+}
+
+.ns-complete .ns-authBrand img {
+  width: 64px;
+  height: 64px;
+}
+
+.ns-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.ns-stats > div {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 12px;
+  background: color-mix(in srgb, var(--color-bg-card) 75%, var(--color-surface-soft));
+}
+
+.ns-stats p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ns-stats strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 1.25rem;
+}
+
+@media (max-width: 1024px) {
+  .ns-navLinks {
+    display: none;
+  }
+
+  .ns-showcaseGrid,
+  .ns-featureGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .ns-hero {
+    padding-top: 50px;
+  }
+
+  .ns-showcaseGrid,
+  .ns-featureGrid,
+  .ns-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-authCard {
+    padding: 20px;
+  }
+
+  .ns-stepActions {
+    flex-direction: column-reverse;
+  }
+
+  .ns-stepActionsRight {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .ns-stepActions .ns-btn,
+  .ns-stepActionsRight .ns-btn {
+    width: 100%;
+  }
+
+  .ns-gridEmailRole {
+    grid-template-columns: 1fr;
+  }
+}
