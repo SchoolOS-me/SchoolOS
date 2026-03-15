@@ -12,6 +12,13 @@
       "cwd": "${workspaceFolder}/packages/backend",
       "envFile": "${workspaceFolder}/packages/backend/.env",
       "console": "integratedTerminal"
+    },
+    {
+      "name": "Frontend Dev Server",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev",
+      "cwd": "${workspaceFolder}/packages/frontend"
     }
   ]
 }
