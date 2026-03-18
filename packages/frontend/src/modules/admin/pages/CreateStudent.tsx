@@ -19,6 +19,10 @@ const CreateStudent = () => {
   const [gender, setGender] = useState<"Male" | "Female" | "Other" | "">("");
   const [guardianName, setGuardianName] = useState("");
   const [guardianEmail, setGuardianEmail] = useState("");
+  const [guardianPassword, setGuardianPassword] = useState("");
+  const [studentEmail, setStudentEmail] = useState("");
+  const [studentPhone, setStudentPhone] = useState("");
+  const [studentPassword, setStudentPassword] = useState("");
 
   const [classes, setClasses] = useState<SchoolClass[]>([]);
   const [sections, setSections] = useState<Section[]>([]);
@@ -53,6 +57,10 @@ const CreateStudent = () => {
     setGender("");
     setGuardianName("");
     setGuardianEmail("");
+    setGuardianPassword("");
+    setStudentEmail("");
+    setStudentPhone("");
+    setStudentPassword("");
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -75,6 +83,13 @@ const CreateStudent = () => {
         full_name: fullName.trim(),
         admission_number: admissionNumber.trim(),
         parent_contact: parentContact.trim() || undefined,
+        student_email: studentEmail.trim() || undefined,
+        student_phone: studentPhone.trim() || undefined,
+        student_password: studentPassword || undefined,
+        guardian_name: guardianName.trim() || undefined,
+        guardian_email: guardianEmail.trim() || undefined,
+        guardian_phone: parentContact.trim() || undefined,
+        guardian_password: guardianPassword || undefined,
         school_class_uuid: schoolClassUuid,
         section_uuid: sectionUuid,
       });
@@ -204,8 +219,50 @@ const CreateStudent = () => {
 
             <article className="student-form-card">
               <div className="student-form-card__head">
+                <h2>Student Portal Access</h2>
+                <p>Optional. Create credentials for direct student login.</p>
+              </div>
+
+              <div className="student-grid student-grid--two">
+                <label className="student-field" htmlFor="student-email">
+                  <span>Student Email</span>
+                  <input
+                    id="student-email"
+                    type="email"
+                    value={studentEmail}
+                    onChange={(event) => setStudentEmail(event.target.value)}
+                    placeholder="student@school.edu"
+                  />
+                </label>
+
+                <label className="student-field" htmlFor="student-phone">
+                  <span>Student Phone</span>
+                  <input
+                    id="student-phone"
+                    type="tel"
+                    value={studentPhone}
+                    onChange={(event) => setStudentPhone(event.target.value)}
+                    placeholder="+1 (555) 123-4567"
+                  />
+                </label>
+
+                <label className="student-field student-field--full" htmlFor="student-password">
+                  <span>Student Portal Password</span>
+                  <input
+                    id="student-password"
+                    type="password"
+                    value={studentPassword}
+                    onChange={(event) => setStudentPassword(event.target.value)}
+                    placeholder="Minimum 8 characters"
+                  />
+                </label>
+              </div>
+            </article>
+
+            <article className="student-form-card">
+              <div className="student-form-card__head">
                 <h2>Parent/Guardian Contact</h2>
-                <p>Emergency and update communication details</p>
+                <p>Emergency details and optional guardian portal access.</p>
               </div>
 
               <div className="student-grid student-grid--two">
@@ -241,6 +298,17 @@ const CreateStudent = () => {
                     placeholder="guardian@example.com"
                   />
                 </label>
+
+                <label className="student-field student-field--full" htmlFor="guardian-password">
+                  <span>Guardian Portal Password</span>
+                  <input
+                    id="guardian-password"
+                    type="password"
+                    value={guardianPassword}
+                    onChange={(event) => setGuardianPassword(event.target.value)}
+                    placeholder="Minimum 8 characters"
+                  />
+                </label>
               </div>
             </article>
           </section>
@@ -256,7 +324,7 @@ const CreateStudent = () => {
               </div>
 
               <div className="student-form-side__note">
-                Guardian contact currently stores the phone number in backend (`parent_contact`).
+                Student and guardian can log in with either email or phone when portal credentials are provided.
               </div>
 
               {error && <div className="form-message form-message--error">{error}</div>}

@@ -1,10 +1,11 @@
 from datetime import date
 
 from django.contrib.auth import get_user_model
+from django.db import transaction
 from rest_framework import serializers
 
 from apps.accounts.constants import UserRole
-from .models import AcademicYear, SchoolClass, Section, Student, Teacher
+from .models import AcademicYear, ParentStudent, SchoolClass, Section, Student, Teacher
 
 User = get_user_model()
 
@@ -47,6 +48,13 @@ class StudentCreateSerializer(serializers.Serializer):
     admission_number = serializers.CharField(max_length=50)
     full_name = serializers.CharField(max_length=255)
     parent_contact = serializers.CharField(max_length=30, required=False, allow_blank=True)
+    student_email = serializers.EmailField(required=False, allow_blank=True)
+    student_phone = serializers.CharField(max_length=30, required=False, allow_blank=True)
+    student_password = serializers.CharField(min_length=8, required=False, allow_blank=True, write_only=True)
+    guardian_name = serializers.CharField(max_length=255, required=False, allow_blank=True)
+    guardian_email = serializers.EmailField(required=False, allow_blank=True)
+    guardian_phone = serializers.CharField(max_length=30, required=False, allow_blank=True)
+    guardian_password = serializers.CharField(min_length=8, required=False, allow_blank=True, write_only=True)
     school_class_uuid = serializers.SlugRelatedField(
         slug_field="uuid",
         queryset=SchoolClass.objects.all(),
@@ -62,6 +70,12 @@ class StudentCreateSerializer(serializers.Serializer):
         school = self.context["school"]
         school_class = attrs["school_class"]
         section = attrs["section"]
+        student_email = (attrs.get("student_email") or "").strip().lower()
+        student_phone = (attrs.get("student_phone") or "").strip()
+        student_password = attrs.get("student_password") or ""
+        guardian_email = (attrs.get("guardian_email") or "").strip().lower()
+        guardian_phone = (attrs.get("guardian_phone") or "").strip()
+        guardian_password = attrs.get("guardian_password") or ""
 
         if school_class.tenant_id != school.tenant_id:
             raise serializers.ValidationError({"school_class_uuid": "Class does not belong to your school."})
@@ -69,18 +83,94 @@ class StudentCreateSerializer(serializers.Serializer):
             raise serializers.ValidationError({"section_uuid": "Section does not belong to your school."})
         if section.school_class_id != school_class.id:
             raise serializers.ValidationError({"section_uuid": "Section does not belong to selected class."})
+
+        if student_password and not (student_email or student_phone):
+            raise serializers.ValidationError({"student_password": "Student email or phone number is required."})
+        if (student_email or student_phone) and not student_password:
+            raise serializers.ValidationError({"student_password": "Student portal password is required."})
+
+        if guardian_password and not (guardian_email or guardian_phone):
+            raise serializers.ValidationError({"guardian_password": "Guardian email or phone number is required."})
+        if (guardian_email or guardian_phone) and not guardian_password:
+            raise serializers.ValidationError({"guardian_password": "Guardian portal password is required."})
+
+        if student_email and User.objects.filter(email__iexact=student_email).exists():
+            raise serializers.ValidationError({"student_email": "Email already exists."})
+        if student_phone and User.objects.filter(phone_number=student_phone).exists():
+            raise serializers.ValidationError({"student_phone": "Phone number already exists."})
+
+        existing_parent = None
+        if guardian_email:
+            existing_parent = User.objects.filter(email__iexact=guardian_email).first()
+        elif guardian_phone:
+            existing_parent = User.objects.filter(phone_number=guardian_phone).first()
+
+        if existing_parent and existing_parent.role != UserRole.PARENT:
+            raise serializers.ValidationError({"guardian_email": "This email or phone belongs to a non-parent user."})
+        if existing_parent and existing_parent.school_id != school.id:
+            raise serializers.ValidationError({"guardian_email": "This parent belongs to another school."})
+        if guardian_email and not existing_parent and User.objects.filter(email__iexact=guardian_email).exists():
+            raise serializers.ValidationError({"guardian_email": "Email already exists."})
+        if guardian_phone and not existing_parent and User.objects.filter(phone_number=guardian_phone).exists():
+            raise serializers.ValidationError({"guardian_phone": "Phone number already exists."})
+
+        attrs["student_email"] = student_email
+        attrs["student_phone"] = student_phone
+        attrs["guardian_email"] = guardian_email
+        attrs["guardian_phone"] = guardian_phone
+        attrs["existing_parent"] = existing_parent
         return attrs
 
     def create(self, validated_data):
         school = self.context["school"]
-        return Student.objects.create(
-            tenant=school.tenant,
-            admission_number=validated_data["admission_number"],
-            full_name=validated_data["full_name"],
-            parent_contact=validated_data.get("parent_contact", ""),
-            school_class=validated_data["school_class"],
-            section=validated_data["section"],
-        )
+        student_email = validated_data.pop("student_email", "")
+        student_phone = validated_data.pop("student_phone", "")
+        student_password = validated_data.pop("student_password", "")
+        validated_data.pop("guardian_name", "")
+        guardian_email = validated_data.pop("guardian_email", "")
+        guardian_phone = validated_data.pop("guardian_phone", "")
+        guardian_password = validated_data.pop("guardian_password", "")
+        existing_parent = validated_data.pop("existing_parent", None)
+
+        with transaction.atomic():
+            student_user = None
+            if student_email or student_phone:
+                student_user = User.objects.create_user(
+                    email=student_email or None,
+                    phone_number=student_phone or None,
+                    password=student_password,
+                    role=UserRole.STUDENT,
+                    school=school,
+                )
+
+            student = Student.objects.create(
+                tenant=school.tenant,
+                user=student_user,
+                admission_number=validated_data["admission_number"],
+                full_name=validated_data["full_name"],
+                parent_contact=validated_data.get("parent_contact", ""),
+                school_class=validated_data["school_class"],
+                section=validated_data["section"],
+            )
+
+            parent_user = existing_parent
+            if not parent_user and (guardian_email or guardian_phone):
+                parent_user = User.objects.create_user(
+                    email=guardian_email or None,
+                    phone_number=guardian_phone or None,
+                    password=guardian_password,
+                    role=UserRole.PARENT,
+                    school=school,
+                )
+
+            if parent_user:
+                ParentStudent.objects.get_or_create(
+                    tenant=school.tenant,
+                    parent=parent_user,
+                    student=student,
+                )
+
+            return student
 
 
 class SchoolClassCreateSerializer(serializers.Serializer):

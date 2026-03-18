@@ -61,6 +61,7 @@ class MeAPI(APIView):
             {
                 "uuid": str(user.uuid),
                 "email": user.email,
+                "phone_number": user.phone_number,
                 "role": user.role,
                 "school_uuid": str(school.uuid) if school else None,
                 "school_name": school.name if school else None,

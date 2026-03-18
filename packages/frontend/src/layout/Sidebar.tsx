@@ -15,7 +15,7 @@ const Sidebar = ({ variant = "default" }: Props) => {
         <div className="sidebar__brand">
           <img src="/logo.svg" alt="SchoolOS" className="sidebar__brandLogo" />
           <div className="sidebar__brandText">
-            <span className="sidebar__brandTitle">Greenwood Admin</span>
+            <span className="sidebar__brandTitle">{currentUser.schoolName}</span>
             <span className="sidebar__brandSubtitle">Management Portal</span>
           </div>
         </div>

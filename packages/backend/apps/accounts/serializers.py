@@ -1,34 +1,55 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from django.db.models import Q
 from rest_framework import serializers
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
 
 User = get_user_model()
 
 
-class LoginSerializer(TokenObtainPairSerializer):
-    """
-    Extends JWT token serializer to include user payload.
-    """
-
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
-        token["role"] = user.role
-        token["email"] = user.email
-        return token
+class LoginSerializer(serializers.Serializer):
+    identifier = serializers.CharField(required=False, allow_blank=True)
+    email = serializers.CharField(required=False, allow_blank=True)
+    password = serializers.CharField(write_only=True)
 
     def validate(self, attrs):
-        data = super().validate(attrs)
+        identifier = (attrs.get("identifier") or attrs.get("email") or "").strip()
+        password = attrs["password"]
+        data = {}
 
-        school = getattr(self.user, "school", None)
+        if not identifier:
+            raise serializers.ValidationError({"identifier": "Email or phone number is required."})
+
+        user = User.objects.filter(
+            Q(email__iexact=identifier) | Q(phone_number=identifier)
+        ).select_related("school").first()
+
+        if not user or not user.check_password(password) or not user.is_active:
+            raise serializers.ValidationError({"detail": "No active account found with those credentials."})
+
+        refresh = RefreshToken.for_user(user)
+        refresh["role"] = user.role
+        refresh["email"] = user.email or ""
+        if user.phone_number:
+            refresh["phone_number"] = user.phone_number
+
+        access = refresh.access_token
+        access["role"] = user.role
+        access["email"] = user.email or ""
+        if user.phone_number:
+            access["phone_number"] = user.phone_number
+
+        school = getattr(user, "school", None)
         data["user"] = {
-            "uuid": str(self.user.uuid),
-            "email": self.user.email,
-            "role": self.user.role,
+            "uuid": str(user.uuid),
+            "email": user.email,
+            "phone_number": user.phone_number,
+            "role": user.role,
             "school_uuid": str(school.uuid) if school else None,
             "school_name": school.name if school else None,
         }
+        data["access"] = str(access)
+        data["refresh"] = str(refresh)
 
         return data
 

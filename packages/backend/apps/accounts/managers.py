@@ -2,11 +2,14 @@ from django.contrib.auth.base_user import BaseUserManager
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError("Email is required")
+    def create_user(self, email=None, password=None, **extra_fields):
+        phone_number = extra_fields.get("phone_number")
+        if not email and not phone_number:
+            raise ValueError("Email or phone number is required")
 
-        email = self.normalize_email(email)
+        email = self.normalize_email(email) if email else None
+        if phone_number == "":
+            extra_fields["phone_number"] = None
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)

@@ -9,7 +9,8 @@ from django.core.exceptions import ValidationError
 
 
 class User(BaseModel, AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, null=True, blank=True)
+    phone_number = models.CharField(max_length=30, unique=True, null=True, blank=True)
 
     role = models.CharField(
         max_length=20,
@@ -33,11 +34,17 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return self.email
+        return self.email or self.phone_number or str(self.uuid)
     
     
 
     def clean(self):
+        self.email = self.email or None
+        self.phone_number = self.phone_number or None
+
+        if not self.email and not self.phone_number:
+            raise ValidationError("User must have either an email or a phone number")
+
         if self.role == UserRole.SUPER_ADMIN and self.school is not None:
             raise ValidationError("SUPER_ADMIN cannot be associated with a school")
 

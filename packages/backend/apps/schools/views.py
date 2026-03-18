@@ -154,8 +154,12 @@ class SchoolSubscriptionAssignAPI(APIView):
         price = Price.objects.get_by_plan(plan_config)
         if not price:
             return Response(
-                {"detail": "Subscription plan is not initialized."},
-                status=status.HTTP_400_BAD_REQUEST,
+                {
+                    "detail": "Subscription skipped because the plan is not initialized yet.",
+                    "schedule_id": None,
+                    "plan": plan_config.name,
+                },
+                status=status.HTTP_200_OK,
             )
 
         schedule = subscriptions.get_schedule(tenant=school.tenant)

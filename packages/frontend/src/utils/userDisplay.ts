@@ -8,8 +8,10 @@ const ROLE_LABELS: Record<string, string> = {
   PARENT: "Parent",
 };
 
-function toNameFromEmail(email?: string | null): string {
-  if (!email) return "User";
+function toNameFromIdentifier(email?: string | null, phoneNumber?: string | null): string {
+  if (!email) {
+    return phoneNumber?.trim() || "User";
+  }
   const localPart = email.split("@")[0] || "user";
   return localPart
     .replace(/[._-]+/g, " ")
@@ -29,11 +31,12 @@ function toInitials(name: string): string {
 
 export function getCurrentUserDisplay() {
   const user = authStorage.getUser();
-  const name = toNameFromEmail(user?.email);
+  const name = toNameFromIdentifier(user?.email, user?.phone_number);
   const role = ROLE_LABELS[user?.role || ""] || "User";
   return {
     name,
     role,
     initials: toInitials(name),
+    schoolName: user?.school_name?.trim() || "SchoolOS",
   };
 }

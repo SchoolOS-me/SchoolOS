@@ -17,7 +17,7 @@ const ROLE_ROUTES: Record<string, string> = {
 
 export function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +28,7 @@ export function Login() {
     setIsLoading(true);
 
     try {
-      const user = await login(email.trim(), password);
+      const user = await login(identifier.trim(), password);
       if (user.role === "SUPER_ADMIN") {
         setError("Super Admin users must login from the Super Admin screen.");
         return;
@@ -54,15 +54,15 @@ export function Login() {
           </header>
 
           <form className="login-form" onSubmit={handleSubmit}>
-            <label htmlFor="school-login-email">Email Address</label>
+            <label htmlFor="school-login-identifier">Email Address or Phone Number</label>
             <div className="login-input">
               <span aria-hidden="true">✉</span>
               <input
-                id="school-login-email"
-                type="email"
-                placeholder="user@school.edu"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                id="school-login-identifier"
+                type="text"
+                placeholder="user@school.edu or +1 555 000 0000"
+                value={identifier}
+                onChange={(event) => setIdentifier(event.target.value)}
                 required
               />
             </div>

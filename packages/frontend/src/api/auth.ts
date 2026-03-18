@@ -8,10 +8,10 @@ type LoginResponse = {
   user: AuthUser;
 };
 
-export async function login(email: string, password: string): Promise<AuthUser> {
+export async function login(identifier: string, password: string): Promise<AuthUser> {
   const data = await apiFetch<LoginResponse>("/auth/login/", {
     method: "POST",
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ identifier, password }),
     skipAuth: true,
   });
 

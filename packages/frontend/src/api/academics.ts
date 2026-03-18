@@ -44,6 +44,13 @@ export type CreateStudentPayload = {
   full_name: string;
   admission_number: string;
   parent_contact?: string;
+  student_email?: string;
+  student_phone?: string;
+  student_password?: string;
+  guardian_name?: string;
+  guardian_email?: string;
+  guardian_phone?: string;
+  guardian_password?: string;
   school_class_uuid: string;
   section_uuid: string;
 };

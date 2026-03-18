@@ -17,7 +17,7 @@ const ROLE_ROUTES: Record<string, string> = {
 
 export function SuperAdminLogin() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState("");
@@ -29,7 +29,7 @@ export function SuperAdminLogin() {
     setIsLoading(true);
 
     try {
-      const user = await login(email.trim(), password);
+      const user = await login(identifier.trim(), password);
       if (user.role !== "SUPER_ADMIN") {
         setError("This screen is only for Super Admin login. Use School Login instead.");
         return;
@@ -55,16 +55,16 @@ export function SuperAdminLogin() {
           </header>
 
           <form className="super-login-form" onSubmit={handleSubmit}>
-            <label htmlFor="super-email">Email Address</label>
+            <label htmlFor="super-email">Email Address or Phone Number</label>
             <div className="super-login-inputWrap">
               <span aria-hidden="true">✉</span>
               <input
                 id="super-email"
-                type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder="admin@schoolos.com"
-                autoComplete="email"
+                type="text"
+                value={identifier}
+                onChange={(event) => setIdentifier(event.target.value)}
+                placeholder="admin@schoolos.com or +1 555 000 0000"
+                autoComplete="username"
                 required
               />
             </div>

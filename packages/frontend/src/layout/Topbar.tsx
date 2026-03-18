@@ -15,7 +15,7 @@ const Topbar = ({ title, variant = "default" }: Props) => {
         <div className="topbar__left">
           <div className="topbar__school">
             <img src="/logo.svg" alt="SchoolOS" className="topbar__schoolIcon" />
-            <span>Greenwood International</span>
+            <span>{currentUser.schoolName}</span>
           </div>
         </div>
         <div className="topbar__center">

@@ -4,7 +4,8 @@ const USER_KEY = "kcs_user";
 
 export type AuthUser = {
   uuid: string;
-  email: string;
+  email?: string | null;
+  phone_number?: string | null;
   role: string;
   school_uuid?: string | null;
   school_name?: string | null;

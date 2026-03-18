@@ -27,7 +27,7 @@
     letter-spacing="-1.5"
   >
     <tspan fill="#F8FAFC">School</tspan>
-    <tspan dx="-8" fill="#67E8F9">OS</tspan>
+    <tspan dx="-18" fill="#67E8F9">OS</tspan>
   </text>
   <defs>
     <linearGradient
