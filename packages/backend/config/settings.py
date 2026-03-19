@@ -52,6 +52,14 @@ LAMBDA_TASKS_BASE_HANDLER = env_str(
     "common.tasks.LambdaTask",
 )
 WORKERS_EVENT_BUS_NAME = env_str("WORKERS_EVENT_BUS_NAME", None)
+OTP_AUTH_TOKEN_COOKIE = env_str("OTP_AUTH_TOKEN_COOKIE", "otp-auth-token-cookie")
+LANGUAGE_CODE = env_str("LANGUAGE_CODE", "en")
+TIME_ZONE = env_str("TIME_ZONE", "UTC")
+STATIC_URL = env_str("STATIC_URL", "/static/")
+DEFAULT_HOST = env_str("DEFAULT_HOST", "api")
+DJSTRIPE_FOREIGN_KEY_TO_FIELD = env_str("DJSTRIPE_FOREIGN_KEY_TO_FIELD", "id")
+DJSTRIPE_WEBHOOK_VALIDATION = env_str("DJSTRIPE_WEBHOOK_VALIDATION", "retrieve_event")
+CELERY_RESULT_BACKEND = env_str("CELERY_RESULT_BACKEND", "django-db")
 
 
 
@@ -124,7 +132,6 @@ APPEND_SLASH = False
 
 ROOT_URLCONF = "config.urls_api"
 ROOT_HOSTCONF = "config.hosts"
-DEFAULT_HOST = "api"
 PARENT_HOST = env_str("PARENT_HOST", "")
 AUTH_USER_MODEL = "accounts.User"
 
@@ -185,20 +192,9 @@ LOGGING = {
 
 DB_CONNECTION = json.loads(env_str("DB_CONNECTION", "{}"))
 DB_PROXY_ENDPOINT = env_str("DB_PROXY_ENDPOINT")
-OTP_AUTH_TOKEN_COOKIE=env_str("OTP_AUTH_TOKEN_COOKIE","otp-auth-token-cookie")
-DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
 HASHID_FIELD_SALT = env_str(
     "HASHID_FIELD_SALT",
     "local-dev-salt-change-me",
-)
-LAMBDA_TASKS_BASE_HANDLER = env_str(
-    "LAMBDA_TASKS_BASE_HANDLER",
-    "common.tasks.LambdaTask",
-)
-
-WORKERS_EVENT_BUS_NAME = env_str(
-    "WORKERS_EVENT_BUS_NAME",
-    None,
 )
 
 
@@ -251,15 +247,12 @@ AUTHENTICATION_BACKENDS = (
 # Internationalization
 # -------------------------------------------------------------------
 
-LANGUAGE_CODE = "en"
-TIME_ZONE = "UTC"
 USE_TZ = True
 
 # -------------------------------------------------------------------
 # Static / Storage
 # -------------------------------------------------------------------
 
-STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 
 STORAGES = {
@@ -282,8 +275,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
     ),
 }
-OPENAI_API_KEY=env_str("OPENAI_API_KEY","")
-DJSTRIPE_WEBHOOK_VALIDATION = "retrieve_event"
+OPENAI_API_KEY = env_str("OPENAI_API_KEY", "")
 STRIPE_ENABLED = env_bool("STRIPE_ENABLED", False)
 
 
@@ -319,7 +311,6 @@ GRAPHENE = {
 # Celery
 # -------------------------------------------------------------------
 
-CELERY_RESULT_BACKEND = "django-db"
 CELERY_BROKER_URL = f"{REDIS_CONNECTION}/0"
 CELERY_BROKER_TRANSPORT_OPTIONS = {"visibility_timeout": 3600}
 
