@@ -9,16 +9,22 @@ type Props = {
 const Sidebar = ({ variant = "default" }: Props) => {
   const currentUser = getCurrentUserDisplay();
 
+  const renderSchoolBrand = (portalLabel: string) => (
+    <div className="sidebar__brand">
+      <img src="/logo.svg" alt="SchoolOS" className="sidebar__brandLogo" />
+      <div className="sidebar__brandText">
+        <span className="sidebar__brandTitle">SchoolOS</span>
+        <span className="sidebar__brandSubtitle">
+          {currentUser.schoolName} · {portalLabel}
+        </span>
+      </div>
+    </div>
+  );
+
   if (variant === "admin") {
     return (
       <aside className="sidebar sidebar--admin">
-        <div className="sidebar__brand">
-          <img src="/logo.svg" alt="SchoolOS" className="sidebar__brandLogo" />
-          <div className="sidebar__brandText">
-            <span className="sidebar__brandTitle">{currentUser.schoolName}</span>
-            <span className="sidebar__brandSubtitle">Management Portal</span>
-          </div>
-        </div>
+        {renderSchoolBrand("Management Portal")}
 
         <nav className="sidebar__nav">
           <NavLink
@@ -138,13 +144,7 @@ const Sidebar = ({ variant = "default" }: Props) => {
   if (variant === "student") {
     return (
       <aside className="sidebar sidebar--student">
-        <div className="sidebar__brand">
-          <img src="/logo.svg" alt="SchoolOS" className="sidebar__brandLogo" />
-          <div className="sidebar__brandText">
-            <span className="sidebar__brandTitle">St. Jude's Academy</span>
-            <span className="sidebar__brandSubtitle">Student Portal</span>
-          </div>
-        </div>
+        {renderSchoolBrand("Student Portal")}
 
         <nav className="sidebar__nav">
           <NavLink
@@ -161,41 +161,41 @@ const Sidebar = ({ variant = "default" }: Props) => {
             <span className="sidebar__label">Dashboard</span>
           </NavLink>
 
-          <button type="button" className="sidebar__link">
+          <NavLink to="/student/dashboard#recent-grades" className="sidebar__link">
             <span className="sidebar__icon">
               <svg viewBox="0 0 24 24" role="presentation">
                 <path d="M5 4h14v14H5V4zm3 3h8v2H8V7zm0 4h6v2H8v-2z" />
               </svg>
             </span>
             <span className="sidebar__label">Subjects</span>
-          </button>
+          </NavLink>
 
-          <button type="button" className="sidebar__link">
+          <NavLink to="/student/dashboard#recent-grades" className="sidebar__link">
             <span className="sidebar__icon">
               <svg viewBox="0 0 24 24" role="presentation">
                 <path d="M5 4h14v16H5V4zm4 4h6v2H9V8zm0 4h6v2H9v-2z" />
               </svg>
             </span>
             <span className="sidebar__label">Grades</span>
-          </button>
+          </NavLink>
 
-          <button type="button" className="sidebar__link">
+          <NavLink to="/student/dashboard#academic-performance" className="sidebar__link">
             <span className="sidebar__icon">
               <svg viewBox="0 0 24 24" role="presentation">
                 <path d="M6 3h12v4H6V3zm-2 6h16v10H4V9z" />
               </svg>
             </span>
             <span className="sidebar__label">Report Cards</span>
-          </button>
+          </NavLink>
 
-          <button type="button" className="sidebar__link">
+          <NavLink to="/student/dashboard#academic-calendar" className="sidebar__link">
             <span className="sidebar__icon">
               <svg viewBox="0 0 24 24" role="presentation">
                 <path d="M7 3v2m10-2v2M4 7h16v12H4V7zm3 4h4m4 0h4m-8 4h4" />
               </svg>
             </span>
             <span className="sidebar__label">Schedule</span>
-          </button>
+          </NavLink>
 
           <NavLink
             to="/profile"
@@ -228,13 +228,7 @@ const Sidebar = ({ variant = "default" }: Props) => {
   if (variant === "parent") {
     return (
       <aside className="sidebar sidebar--parent">
-        <div className="sidebar__brand">
-          <img src="/logo.svg" alt="SchoolOS" className="sidebar__brandLogo" />
-          <div className="sidebar__brandText">
-            <span className="sidebar__brandTitle">EduSaaS</span>
-            <span className="sidebar__brandSubtitle">Parent Portal</span>
-          </div>
-        </div>
+        {renderSchoolBrand("Parent Portal")}
 
         <nav className="sidebar__nav">
           <NavLink
@@ -251,32 +245,32 @@ const Sidebar = ({ variant = "default" }: Props) => {
             <span className="sidebar__label">Dashboard Overview</span>
           </NavLink>
 
-          <button type="button" className="sidebar__link">
+          <NavLink to="/parent/dashboard#academic-progress" className="sidebar__link">
             <span className="sidebar__icon">
               <svg viewBox="0 0 24 24" role="presentation">
                 <path d="M5 4h14v14H5V4zm3 3h8v2H8V7zm0 4h6v2H8v-2z" />
               </svg>
             </span>
             <span className="sidebar__label">Academic Performance</span>
-          </button>
+          </NavLink>
 
-          <button type="button" className="sidebar__link">
+          <NavLink to="/parent/dashboard#fee-status" className="sidebar__link">
             <span className="sidebar__icon">
               <svg viewBox="0 0 24 24" role="presentation">
                 <path d="M7 4h10v2H7V4zm-2 4h14v12H5V8zm4 3h6v2H9v-2zm0 4h6v2H9v-2z" />
               </svg>
             </span>
             <span className="sidebar__label">Fee Management</span>
-          </button>
+          </NavLink>
 
-          <button type="button" className="sidebar__link">
+          <NavLink to="/parent/dashboard#communication-center" className="sidebar__link">
             <span className="sidebar__icon">
               <svg viewBox="0 0 24 24" role="presentation">
                 <path d="M4 5h16v10H6l-2 2V5zm3 4h10" />
               </svg>
             </span>
             <span className="sidebar__label">Communication</span>
-          </button>
+          </NavLink>
 
           <NavLink
             to="/profile"
@@ -309,13 +303,7 @@ const Sidebar = ({ variant = "default" }: Props) => {
   if (variant === "teacher") {
     return (
       <aside className="sidebar sidebar--teacher">
-        <div className="sidebar__brand">
-          <img src="/logo.svg" alt="SchoolOS" className="sidebar__brandLogo" />
-          <div className="sidebar__brandText">
-            <span className="sidebar__brandTitle">Academic Blue</span>
-            <span className="sidebar__brandSubtitle">Teacher Portal</span>
-          </div>
-        </div>
+        {renderSchoolBrand("Teacher Portal")}
 
         <nav className="sidebar__nav">
           <NavLink

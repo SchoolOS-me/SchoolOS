@@ -31,6 +31,8 @@ class ParentDashboardAPI(APIView):
         attendance_percentages = []
         latest_percentages = []
         alerts = []
+        latest_message = None
+        latest_message_at = None
 
         for link in links:
             student = link.student
@@ -47,16 +49,32 @@ class ParentDashboardAPI(APIView):
             latest_result = StudentResult.objects.filter(
                 student_exam__student=student,
                 student_exam__exam__is_published=True,
+            ).select_related(
+                "student_exam",
+                "student_exam__exam",
             ).order_by("-generated_at").first()
 
             latest_percentage = latest_result.percentage if latest_result else None
             if latest_percentage is not None:
                 latest_percentages.append(latest_percentage)
 
+            if latest_result and (
+                latest_message_at is None or latest_result.generated_at > latest_message_at
+            ):
+                latest_message_at = latest_result.generated_at
+                latest_message = {
+                    "sender": latest_result.student_exam.exam.name,
+                    "message": (
+                        f"{student.full_name}'s latest published result is "
+                        f"{latest_result.percentage:.2f}%."
+                    ),
+                }
+
             if attendance_pct < 90:
                 alerts.append(
                     {
                         "student_id": student.id,
+                        "student_uuid": str(student.uuid),
                         "name": student.full_name,
                         "attendance_percentage": attendance_pct,
                     }
@@ -65,6 +83,7 @@ class ParentDashboardAPI(APIView):
             children_data.append(
                 {
                     "id": student.id,
+                    "student_uuid": str(student.uuid),
                     "name": student.full_name,
                     "class": student.school_class.name,
                     "section": student.section.name,
@@ -93,7 +112,7 @@ class ParentDashboardAPI(APIView):
                     "alerts": len(alerts),
                 },
                 "fee_status": {"total": 0, "items": []},
-                "message": None,
+                "message": latest_message,
                 "attendance": {
                     "value": avg_attendance,
                     "title": "Average Attendance",

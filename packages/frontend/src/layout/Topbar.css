@@ -43,6 +43,17 @@
   color: #0f172a;
 }
 
+.topbar__brandStack {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.topbar__brandMeta {
+  font-size: 11px;
+  color: #64748b;
+}
+
 .topbar__nav {
   display: flex;
   align-items: center;
@@ -56,6 +67,7 @@
   font-weight: 600;
   font-size: 13px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .topbar__navItem.is-active {
@@ -137,14 +149,15 @@
 }
 
 .topbar--parent {
-  height: 64px;
+  min-height: 72px;
   padding: 0 28px;
-  background: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
-  gap: 18px;
+  background: rgba(10, 16, 32, 0.92);
+  border-bottom: 1px solid rgba(51, 65, 85, 0.82);
+  gap: 24px;
   position: sticky;
   top: 0;
-  z-index: 5;
+  z-index: 10;
+  backdrop-filter: blur(12px);
 }
 
 .topbar__switch {
@@ -161,17 +174,74 @@
 }
 
 .topbar__switchButton {
-  border: 1px solid #e2e8f0;
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 8px 12px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 14px;
+  padding: 10px 14px;
   font-size: 13px;
   font-weight: 600;
-  color: #0f172a;
+  color: #e2e8f0;
   display: inline-flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
   cursor: pointer;
+  min-width: 270px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.topbar__switchSelect {
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+  min-width: 0;
+  appearance: none;
+}
+
+.topbar--parent .topbar__nav {
+  flex: 1;
+  justify-content: center;
+}
+
+.topbar--parent .topbar__navItem {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  color: #94a3b8;
+}
+
+.topbar--parent .topbar__navItem.is-active {
+  color: #93c5fd;
+}
+
+.topbar--parent .topbar__navItem.is-active::after {
+  background: #3b82f6;
+}
+
+.topbar--parent .topbar__iconButton {
+  color: #94a3b8;
+  text-decoration: none;
+}
+
+.topbar--parent .topbar__iconButton:hover {
+  background: rgba(30, 41, 59, 0.9);
+  color: #93c5fd;
+}
+
+.topbar--parent .topbar__userName {
+  color: #f8fafc;
+}
+
+.topbar--parent .topbar__userRole {
+  color: #94a3b8;
+}
+
+.topbar--parent .topbar__userAvatar {
+  background: #fde68a;
 }
 
 .topbar--superAdmin {
@@ -364,10 +434,24 @@
     padding: 16px 20px;
   }
 
+  .topbar--parent .topbar__switch {
+    width: 100%;
+  }
+
+  .topbar--parent .topbar__switchButton {
+    width: 100%;
+    min-width: 0;
+  }
+
   .topbar--parent .topbar__nav {
     order: 2;
     width: 100%;
     justify-content: flex-start;
+  }
+
+  .topbar--parent .topbar__right {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .topbar--student .topbar__center {
@@ -379,7 +463,6 @@
 
 :root[data-theme="dark"] .topbar--teacher,
 :root[data-theme="dark"] .topbar--student,
-:root[data-theme="dark"] .topbar--parent,
 :root[data-theme="dark"] .topbar--admin {
   background: #0f172a;
   border-bottom-color: #1f2b3d;
@@ -392,7 +475,6 @@
 
 :root[data-theme="dark"] .topbar__brandText,
 :root[data-theme="dark"] .topbar__school,
-:root[data-theme="dark"] .topbar__switchButton,
 :root[data-theme="dark"] .topbar__userName {
   color: #e5e7eb;
 }
@@ -400,6 +482,7 @@
 :root[data-theme="dark"] .topbar__navItem,
 :root[data-theme="dark"] .topbar__iconButton,
 :root[data-theme="dark"] .topbar__userRole,
+:root[data-theme="dark"] .topbar__brandMeta,
 :root[data-theme="dark"] .topbar__switchLabel,
 :root[data-theme="dark"] .topbar__searchIcon {
   color: #94a3b8;

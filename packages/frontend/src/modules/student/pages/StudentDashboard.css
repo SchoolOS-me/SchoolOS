@@ -4,6 +4,15 @@
   gap: 24px;
 }
 
+.student-dashboard__error {
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #ffe8e7;
+  border: 1px solid #fecdca;
+  color: #b42318;
+  font-weight: 600;
+}
+
 .student-dashboard__hero h2 {
   margin: 0 0 6px;
   font-size: 28px;
@@ -80,6 +89,10 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 24px;
+}
+
+.student-dashboard__grid--stacked {
+  grid-template-columns: 1fr 1fr;
 }
 
 .student-dashboard__side {
@@ -238,7 +251,8 @@
 }
 
 @media (max-width: 1024px) {
-  .student-dashboard__grid {
+  .student-dashboard__grid,
+  .student-dashboard__grid--stacked {
     grid-template-columns: 1fr;
   }
 }

@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from apps.accounts.permissions import is_student
-from apps.academics.models import SectionSubject, StudentResult, StudentMark
+from apps.academics.models import Exam, SectionSubject, StudentResult, StudentMark
 from apps.attendance.models import StudentAttendance
 
 
@@ -28,6 +28,10 @@ class StudentDashboardAPI(APIView):
             student_exam__student=student,
             student_exam__exam__is_published=True,
         )
+        latest_result = results_qs.select_related(
+            "student_exam",
+            "student_exam__exam",
+        ).order_by("-generated_at").first()
         avg_percentage = results_qs.aggregate(avg=Avg("percentage"))["avg"]
         gpa = round((avg_percentage / 25), 2) if avg_percentage is not None else None
 
@@ -75,8 +79,59 @@ class StudentDashboardAPI(APIView):
             for mark in marks
         ]
 
+        announcements = []
+        if latest_result is not None:
+            announcements.append(
+                {
+                    "id": f"result-{latest_result.id}",
+                    "title": f"{latest_result.student_exam.exam.name} result published",
+                    "time": latest_result.generated_at.strftime("%b %d"),
+                    "description": (
+                        f"Your latest published result is "
+                        f"{latest_result.percentage:.2f}%."
+                    ),
+                    "tag": "Results",
+                }
+            )
+
+        if attendance_percentage < 90:
+            announcements.append(
+                {
+                    "id": "attendance-alert",
+                    "title": "Attendance needs attention",
+                    "time": today.strftime("%b %d"),
+                    "description": (
+                        f"Your attendance in the last 30 days is "
+                        f"{attendance_percentage:.2f}%."
+                    ),
+                    "tag": "Attendance",
+                }
+            )
+
+        upcoming_exams = Exam.objects.filter(
+            academic_year=student.school_class.academic_year,
+            start_date__gte=today,
+        ).order_by("start_date")[:4]
+
+        deadlines = [
+            {
+                "id": f"exam-{exam.id}",
+                "date": exam.start_date.strftime("%b %d"),
+                "title": exam.name,
+                "subtitle": f"{student.school_class.name} {student.section.name}",
+            }
+            for exam in upcoming_exams
+        ]
+
         return Response(
             {
+                "student": {
+                    "name": student.full_name,
+                    "class": student.school_class.name,
+                    "section": student.section.name,
+                    "school_name": request.user.school.name if request.user.school else None,
+                    "academic_year": student.school_class.academic_year.name,
+                },
                 "stats": {
                     "gpa": gpa,
                     "attendance_percentage": attendance_percentage,
@@ -85,7 +140,7 @@ class StudentDashboardAPI(APIView):
                     "active_courses": active_courses,
                 },
                 "grades": grades,
-                "announcements": [],
-                "deadlines": [],
+                "announcements": announcements,
+                "deadlines": deadlines,
             }
         )

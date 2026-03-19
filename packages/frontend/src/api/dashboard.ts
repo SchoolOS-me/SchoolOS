@@ -39,6 +39,13 @@ export type TeacherDashboardSummary = {
 };
 
 export type StudentDashboardSummary = {
+  student: {
+    name: string;
+    class: string;
+    section: string;
+    school_name: string | null;
+    academic_year: string;
+  };
   stats: {
     gpa: number | null;
     attendance_percentage: number;
@@ -88,11 +95,13 @@ export type ParentDashboardSummary = {
   };
   alerts: Array<{
     student_id: number;
+    student_uuid: string;
     name: string;
     attendance_percentage: number;
   }>;
   children: Array<{
     id: number;
+    student_uuid: string;
     name: string;
     class: string;
     section: string;

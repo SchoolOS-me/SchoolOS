@@ -148,6 +148,37 @@
   color: #6d28d9;
 }
 
+.sidebar--parent {
+  background:
+    linear-gradient(180deg, rgba(11, 18, 32, 0.98), rgba(16, 24, 45, 0.98));
+  color: #e5e7eb;
+  border-right-color: rgba(51, 65, 85, 0.9);
+}
+
+.sidebar--parent .sidebar__brandTitle {
+  color: #f8fafc;
+}
+
+.sidebar--parent .sidebar__brandSubtitle {
+  color: #94a3b8;
+}
+
+.sidebar--parent .sidebar__link {
+  color: #94a3b8;
+  border-radius: 14px;
+}
+
+.sidebar--parent .sidebar__link:hover {
+  background: rgba(37, 51, 79, 0.85);
+  color: #e2e8f0;
+}
+
+.sidebar--parent .sidebar__link--active {
+  background: rgba(91, 33, 182, 0.28);
+  color: #ddd6fe;
+  box-shadow: inset 3px 0 0 #8b5cf6;
+}
+
 .sidebar--admin {
   width: 260px;
   background-color: #ffffff;

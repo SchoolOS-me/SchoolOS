@@ -205,11 +205,11 @@ WORKERS_EVENT_BUS_NAME = env_str(
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": env_str("POSTGRES_DB", "neondb"),
-        "USER": env_str("POSTGRES_USER", "neondb_owner"),
-        "PASSWORD": env_str("POSTGRES_PASSWORD", "npg_5EDOlhYq1FAx"),
-        "HOST": env_str("POSTGRES_HOST", "ep-gentle-snow-a18wj0mo-pooler.ap-southeast-1.aws.neon.tech"),
-        "PORT": env_str("POSTGRES_PORT", "5432"),
+        "NAME": env_str("POSTGRES_DB"),
+        "USER": env_str("POSTGRES_USER"),
+        "PASSWORD": env_str("POSTGRES_PASSWORD"),
+        "HOST": env_str("POSTGRES_HOST"),
+        "PORT": env_str("POSTGRES_PORT"),
     }
 }
 

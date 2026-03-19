@@ -33,6 +33,39 @@ export type Section = {
   school_class_uuid: string;
 };
 
+export type ParentChild = {
+  student_uuid: string;
+  name: string;
+  class: string;
+  section: string;
+};
+
+export type ParentReportCard = {
+  student: {
+    name: string;
+    admission_number: string;
+    class: string;
+    section: string;
+  };
+  exam: {
+    name: string;
+    academic_year: string;
+  };
+  subjects: Array<{
+    subject_name: string;
+    max_marks: number;
+    pass_marks: number;
+    marks_obtained: number | null;
+    is_pass: boolean;
+  }>;
+  summary: {
+    total_marks: number;
+    max_marks: number;
+    percentage: number;
+    is_pass: boolean;
+  };
+};
+
 export type CreateTeacherPayload = {
   full_name: string;
   employee_id: string;
@@ -109,4 +142,14 @@ export function listClasses() {
 export function listSections(schoolClassUuid?: string) {
   const query = schoolClassUuid ? `?school_class_uuid=${schoolClassUuid}` : "";
   return apiFetch<Section[]>(`/academics/admin/sections/${query}`);
+}
+
+export function fetchParentChildren() {
+  return apiFetch<ParentChild[]>("/academics/parent/children/");
+}
+
+export function fetchParentResults(studentUuid: string) {
+  return apiFetch<ParentReportCard[]>(
+    `/academics/parent/results/?student_uuid=${encodeURIComponent(studentUuid)}`
+  );
 }
