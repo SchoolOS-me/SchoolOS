@@ -102,6 +102,11 @@
   font-size: 12px;
 }
 
+.topbar__profileAvatar,
+.topbar__profileLink {
+  text-decoration: none;
+}
+
 .topbar--student {
   height: 64px;
   padding: 0 28px;
@@ -338,6 +343,31 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.topbar__profileLink {
+  border-radius: 999px;
+  padding: 4px 6px 4px 10px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.topbar__profileLink:hover {
+  background: #f8fafc;
+}
+
+.topbar__profileLink:focus-visible,
+.topbar__profileAvatar:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.topbar__profileAvatar {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.topbar__profileAvatar:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.16);
 }
 
 .topbar__userText {

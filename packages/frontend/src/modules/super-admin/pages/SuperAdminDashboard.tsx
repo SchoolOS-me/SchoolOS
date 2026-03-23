@@ -18,9 +18,17 @@ interface School {
   subscriptionStatus: "active" | "trial" | "expired";
 }
 
+type SuperAdminStat = {
+  id: string;
+  label: string;
+  value: string;
+  trend: string;
+  trendVariant: "positive" | "negative" | "neutral";
+};
+
 const mockSchools: School[] = superAdminSchools;
 const SuperAdminDashboard = () => {
-  const [stats, setStats] = useState(superAdminStats);
+  const [stats, setStats] = useState<SuperAdminStat[]>([...superAdminStats]);
   const [schools, setSchools] = useState<School[]>(
     USE_MOCK_DATA ? mockSchools : []
   );

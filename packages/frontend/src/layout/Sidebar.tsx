@@ -485,13 +485,18 @@ const Sidebar = ({ variant = "default" }: Props) => {
           </NavLink>
         </nav>
 
-        <div className="sidebar__user">
+        <NavLink
+          to="/profile"
+          className={({ isActive }) =>
+            isActive ? "sidebar__user sidebar__user--profile sidebar__user--active" : "sidebar__user sidebar__user--profile"
+          }
+        >
           <div className="sidebar__avatar">{currentUser.initials}</div>
           <div>
             <div className="sidebar__userName">{currentUser.name}</div>
             <div className="sidebar__userRole">{currentUser.role}</div>
           </div>
-        </div>
+        </NavLink>
       </aside>
     );
   }

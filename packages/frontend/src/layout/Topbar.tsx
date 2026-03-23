@@ -1,4 +1,5 @@
 import "./Topbar.css";
+import { Link } from "react-router-dom";
 import { getCurrentUserDisplay } from "../utils/userDisplay";
 
 type ParentTopbarStudent = {
@@ -20,6 +21,7 @@ type Props = {
 
 const Topbar = ({ title, variant = "default", parentTopbar }: Props) => {
   const currentUser = getCurrentUserDisplay();
+  const profileAriaLabel = `Open profile for ${currentUser.name}`;
 
   if (variant === "admin") {
     return (
@@ -54,13 +56,13 @@ const Topbar = ({ title, variant = "default", parentTopbar }: Props) => {
             </svg>
           </button>
           <div className="topbar__divider" aria-hidden="true" />
-          <div className="topbar__user">
+          <Link to="/profile" className="topbar__user topbar__profileLink" aria-label={profileAriaLabel}>
             <div className="topbar__userText">
               <span className="topbar__userName">{currentUser.name}</span>
               <span className="topbar__userRole">{currentUser.role}</span>
             </div>
             <div className="topbar__userAvatar">{currentUser.initials}</div>
-          </div>
+          </Link>
         </div>
       </header>
     );
@@ -116,7 +118,7 @@ const Topbar = ({ title, variant = "default", parentTopbar }: Props) => {
               <path d="M12 3a5 5 0 0 0-5 5v2.2c0 .7-.3 1.3-.8 1.8l-1.2 1.2h14l-1.2-1.2c-.5-.5-.8-1.1-.8-1.8V8a5 5 0 0 0-5-5zm0 18a2.5 2.5 0 0 0 2.4-2h-4.8A2.5 2.5 0 0 0 12 21z" />
             </svg>
           </a>
-          <div className="topbar__user">
+          <Link to="/profile" className="topbar__user topbar__profileLink" aria-label={profileAriaLabel}>
             <div className="topbar__userText">
               <span className="topbar__userName">{currentUser.name}</span>
               <span className="topbar__userRole">
@@ -126,7 +128,7 @@ const Topbar = ({ title, variant = "default", parentTopbar }: Props) => {
               </span>
             </div>
             <div className="topbar__userAvatar">{currentUser.initials}</div>
-          </div>
+          </Link>
         </div>
       </header>
     );
@@ -161,7 +163,13 @@ const Topbar = ({ title, variant = "default", parentTopbar }: Props) => {
               <path d="M12 3a5 5 0 0 0-5 5v2.2c0 .7-.3 1.3-.8 1.8l-1.2 1.2h14l-1.2-1.2c-.5-.5-.8-1.1-.8-1.8V8a5 5 0 0 0-5-5zm0 18a2.5 2.5 0 0 0 2.4-2h-4.8A2.5 2.5 0 0 0 12 21z" />
             </svg>
           </a>
-          <div className="topbar__userAvatar">{currentUser.initials}</div>
+          <Link
+            to="/profile"
+            className="topbar__userAvatar topbar__profileAvatar"
+            aria-label={profileAriaLabel}
+          >
+            {currentUser.initials}
+          </Link>
         </div>
       </header>
     );
@@ -208,7 +216,13 @@ const Topbar = ({ title, variant = "default", parentTopbar }: Props) => {
               <path d="M4 5h16v10H6l-2 2V5zm3 4h10" />
             </svg>
           </button>
-          <div className="topbar__avatar">{currentUser.initials}</div>
+          <Link
+            to="/profile"
+            className="topbar__avatar topbar__profileAvatar"
+            aria-label={profileAriaLabel}
+          >
+            {currentUser.initials}
+          </Link>
         </div>
       </header>
     );
@@ -239,13 +253,13 @@ const Topbar = ({ title, variant = "default", parentTopbar }: Props) => {
             </svg>
           </button>
           <span className="topbar__divider" aria-hidden="true" />
-          <div className="topbar__user">
+          <Link to="/profile" className="topbar__user topbar__profileLink" aria-label={profileAriaLabel}>
             <div className="topbar__userText">
               <span className="topbar__userName">{currentUser.name}</span>
               <span className="topbar__userRole">{currentUser.role}</span>
             </div>
             <div className="topbar__userAvatar">{currentUser.initials}</div>
-          </div>
+          </Link>
         </div>
       </header>
     );

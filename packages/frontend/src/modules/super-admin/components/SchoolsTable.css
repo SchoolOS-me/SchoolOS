@@ -73,12 +73,155 @@
   cursor: pointer;
 }
 
+.tableHeaderButton--active,
+.tableHeaderButton:hover {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.28);
+}
+
 .tableHeaderIcon svg {
   width: 14px;
   height: 14px;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
+}
+
+.schoolsImportPanel {
+  margin: 20px 24px 0;
+  padding: 18px;
+  border: 1px solid rgba(59, 130, 246, 0.18);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(15, 23, 42, 0.02)),
+    var(--super-admin-card);
+}
+
+.schoolsImportPanel__intro {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.schoolsImportPanel__eyebrow,
+.schoolsImportPanel__statusLabel,
+.schoolsImportCard__label {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--super-admin-muted);
+}
+
+.schoolsImportPanel h3,
+.schoolsImportPanel p,
+.schoolsImportCard p,
+.schoolsImportCard strong {
+  margin: 0;
+}
+
+.schoolsImportPanel h3 {
+  font-size: 18px;
+  color: var(--super-admin-text);
+}
+
+.schoolsImportPanel__intro p {
+  margin-top: 8px;
+  max-width: 720px;
+  color: var(--super-admin-muted);
+  line-height: 1.55;
+}
+
+.schoolsImportPanel__upload {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 170px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--super-admin-primary);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.schoolsImportPanel__upload input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.schoolsImportPanel__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.schoolsImportCard {
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(15, 23, 42, 0.04);
+}
+
+.schoolsImportCard strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--super-admin-text);
+}
+
+.schoolsImportCard p {
+  color: var(--super-admin-muted);
+  line-height: 1.5;
+}
+
+.schoolsImportPanel__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.schoolsImportPanel__footer strong {
+  color: var(--super-admin-text);
+}
+
+.schoolsImportPanel__footerActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.schoolsImportPanel__templateButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(59, 130, 246, 0.28);
+  border-radius: 12px;
+  background: rgba(59, 130, 246, 0.08);
+  color: var(--super-admin-primary);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.schoolsImportPanel__hint {
+  max-width: 420px;
+  color: var(--super-admin-muted);
+  text-align: right;
+  line-height: 1.5;
 }
 
 .schoolsTableWrapper {
@@ -204,4 +347,25 @@
 :root[data-theme="dark"] .tableHeaderButton:hover,
 :root[data-theme="dark"] .paginationButton:hover:not(:disabled) {
   background: #172036;
+}
+
+@media (max-width: 900px) {
+  .schoolsImportPanel__intro,
+  .schoolsImportPanel__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .schoolsImportPanel__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .schoolsImportPanel__hint {
+    max-width: none;
+    text-align: left;
+  }
+
+  .schoolsImportPanel__footerActions {
+    align-items: stretch;
+  }
 }

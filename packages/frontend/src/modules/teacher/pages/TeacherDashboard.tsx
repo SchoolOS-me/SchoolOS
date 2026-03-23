@@ -55,7 +55,7 @@ const TeacherDashboard = () => {
         setClassesToday(mappedClasses.length ? mappedClasses : recentClasses);
 
         const mappedSchedule = data.today_sessions.map((session) => ({
-          id: session.id,
+          id: String(session.id),
           time: session.date,
           subject: "Class Session",
           class: `${session.class} ${session.section}`,

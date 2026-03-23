@@ -49,7 +49,9 @@ export function Login() {
       <main className="login-main">
         <section className="login-card">
           <header className="login-card-head">
-            <ThemedCompleteLogo className="login-logoImage" />
+            <div className="login-logoWrap">
+              <ThemedCompleteLogo className="login-logoImage" />
+            </div>
             <p>Welcome back, please sign in to your account.</p>
           </header>
 
@@ -91,10 +93,14 @@ export function Login() {
             <button type="submit" className="login-primary" disabled={isLoading}>
               {isLoading ? "Signing In..." : "Sign In"}
             </button>
+
+            <Link to="/super-admin/login" className="login-secondary">
+              Super Admin Login
+            </Link>
           </form>
 
           <div className="login-footnote">
-            Don&apos;t have an account? <Link className="login-inline-link" to="/super-admin/login">Contact Administrator</Link>
+            Don&apos;t have an account? <span className="login-inline-link">Contact Administrator</span>
           </div>
         </section>
       </main>

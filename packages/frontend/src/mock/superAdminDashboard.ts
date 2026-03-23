@@ -1,4 +1,12 @@
-export const superAdminStats = [
+type SuperAdminStat = {
+  id: string;
+  label: string;
+  value: string;
+  trend: string;
+  trendVariant: "positive" | "negative" | "neutral";
+};
+
+export const superAdminStats: SuperAdminStat[] = [
   {
     id: "totalSchools",
     label: "Total Schools",
