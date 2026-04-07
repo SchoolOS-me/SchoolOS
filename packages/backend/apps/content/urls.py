@@ -2,4 +2,7 @@ from django.urls import path
 
 from . import views
 
-urlpatterns = [path("contentful-hook/", views.ContentfulWebhook.as_view(), name="contentful-webhook")]
+urlpatterns = [
+    path("contentful-hook/", views.ContentfulWebhook.as_view(), name="contentful-webhook"),
+    path("contact/", views.ContactRequestAPI.as_view(), name="contact-request"),
+]

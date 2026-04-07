@@ -1483,11 +1483,116 @@
   font-size: 1.25rem;
 }
 
+.nsl-contactGrid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.nsl-contactCopy {
+  display: grid;
+  gap: 18px;
+}
+
+.nsl-contactCopy h2 {
+  margin: 0;
+}
+
+.nsl-contactCopy p {
+  margin: 0;
+  color: var(--nsl-text-muted);
+}
+
+.nsl-contactPoints {
+  display: grid;
+  gap: 14px;
+}
+
+.nsl-contactPoints div {
+  display: grid;
+  gap: 4px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--nsl-border);
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.nsl-contactPoints strong {
+  font-size: 0.92rem;
+}
+
+.nsl-contactPoints span {
+  color: var(--nsl-text-muted);
+}
+
+.nsl-contactCard {
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+  border-radius: 28px;
+  border: 1px solid var(--nsl-border);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 22px 48px rgba(15, 23, 42, 0.08);
+}
+
+.nsl-contactFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.nsl-contactFields label {
+  display: grid;
+  gap: 8px;
+  color: var(--nsl-text-main);
+  font-weight: 600;
+}
+
+.nsl-contactFields span {
+  font-size: 0.92rem;
+}
+
+.nsl-contactFields input,
+.nsl-contactFields select,
+.nsl-contactFields textarea {
+  width: 100%;
+  border-radius: 16px;
+  border: 1px solid var(--nsl-border);
+  background: rgba(255, 255, 255, 0.94);
+  padding: 14px 16px;
+  font: inherit;
+}
+
+.nsl-contactField--full {
+  grid-column: 1 / -1;
+}
+
+.nsl-contactFields textarea {
+  resize: vertical;
+  min-height: 132px;
+}
+
+.nsl-contactStatus {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.nsl-contactStatus--error {
+  color: #b42318;
+}
+
+.nsl-contactStatus--success {
+  color: #047857;
+}
+
 @media (max-width: 1120px) {
   .nsl-heroGrid,
   .nsl-canvasGrid,
   .nsl-securityGrid,
-  .nsl-footerGrid {
+  .nsl-footerGrid,
+  .nsl-contactGrid {
     grid-template-columns: 1fr;
   }
 
@@ -1592,7 +1697,8 @@
   .nsl-dashboard,
   .nsl-statsRow,
   .nsl-footerGrid,
-  .ns-stats {
+  .ns-stats,
+  .nsl-contactFields {
     grid-template-columns: 1fr;
   }
 

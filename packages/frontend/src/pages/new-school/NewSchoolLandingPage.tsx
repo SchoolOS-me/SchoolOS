@@ -1,4 +1,6 @@
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Link } from "react-router-dom";
+import { submitContactRequest } from "../../api/contact";
 import ThemedCompleteLogo from "../../components/ui/ThemedCompleteLogo";
 import { useTheme } from "../../theme/useTheme";
 import "./NewSchoolFlow.css";
@@ -6,7 +8,7 @@ import "./NewSchoolFlow.css";
 const FEATURE_LINKS = [
   { label: "Features", href: "#features" },
   { label: "Pricing", href: "#pricing" },
-  { label: "Documentation", href: "#resources" },
+  { label: "Contact", href: "#contact" },
   { label: "Resources", href: "#resources" },
 ];
 
@@ -95,19 +97,19 @@ const STEPS = [
 const PRICING_PLANS = [
   {
     name: "Starter",
-    price: "$199",
+    price: "Rs 9,999",
     cadence: "/month",
     body: "Perfect for small learning centers.",
-    cta: "Start for Free",
+    cta: "Contact Us",
     featured: false,
     items: ["Up to 250 Students", "Core Admin Features", "Mobile App Access"],
   },
   {
     name: "Growth",
-    price: "$499",
+    price: "Rs 24,999",
     cadence: "/month",
     body: "For mid-sized schools scaling fast.",
-    cta: "Choose Growth",
+    cta: "Contact Us",
     featured: true,
     items: [
       "Up to 1,000 Students",
@@ -121,7 +123,7 @@ const PRICING_PLANS = [
     price: "Custom",
     cadence: "",
     body: "For large institutions and school chains.",
-    cta: "Contact Sales",
+    cta: "Contact Us",
     featured: false,
     items: [
       "Unlimited Students",
@@ -155,6 +157,65 @@ export default function NewSchoolLandingPage() {
   const { resolvedTheme, setMode } = useTheme();
   const nextMode = resolvedTheme === "dark" ? "light" : "dark";
   const themeLabel = resolvedTheme === "dark" ? "Light" : "Dark";
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    school_name: "",
+    role: "",
+    message: "",
+  });
+  const [contactState, setContactState] = useState<{
+    submitting: boolean;
+    error: string;
+    success: string;
+  }>({
+    submitting: false,
+    error: "",
+    success: "",
+  });
+
+  const handleContactField =
+    (field: keyof typeof contactForm) =>
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      const value = event.target.value;
+      setContactForm((current) => ({ ...current, [field]: value }));
+    };
+
+  const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setContactState({ submitting: true, error: "", success: "" });
+
+    try {
+      await submitContactRequest({
+        name: contactForm.name.trim(),
+        email: contactForm.email.trim(),
+        phone: contactForm.phone.trim() || undefined,
+        school_name: contactForm.school_name.trim() || undefined,
+        role: contactForm.role.trim() || undefined,
+        message: contactForm.message.trim(),
+      });
+      setContactForm({
+        name: "",
+        email: "",
+        phone: "",
+        school_name: "",
+        role: "",
+        message: "",
+      });
+      setContactState({
+        submitting: false,
+        error: "",
+        success: "Thanks, your message has been sent. We will get back to you soon.",
+      });
+    } catch (error) {
+      setContactState({
+        submitting: false,
+        error: error instanceof Error ? error.message : "Unable to send your message right now.",
+        success: "",
+      });
+    }
+  };
 
   return (
     <div className="ns-page nsl-page">
@@ -205,7 +266,7 @@ export default function NewSchoolLandingPage() {
                 <Link className="nsl-button nsl-button--primary" to="/signup">
                   Start Your School
                 </Link>
-                <a className="nsl-button nsl-button--secondary" href="#pricing">
+                <a className="nsl-button nsl-button--secondary" href="#contact">
                   <span className="material-symbols-outlined" aria-hidden="true">
                     play_circle
                   </span>
@@ -392,7 +453,7 @@ export default function NewSchoolLandingPage() {
           <div className="nsl-shell">
             <div className="nsl-sectionIntro">
               <h2>Predictable Pricing for Any Scale</h2>
-              <p>Transparent plans designed to grow with your institution.</p>
+              <p>Flexible INR pricing designed to grow with your institution.</p>
             </div>
 
             <div className="nsl-pricingGrid">
@@ -422,15 +483,89 @@ export default function NewSchoolLandingPage() {
                     ))}
                   </ul>
 
-                  <button
+                  <a
                     className={`nsl-button ${plan.featured ? "nsl-button--inverted" : "nsl-button--outline"}`}
-                    type="button"
+                    href="#contact"
                   >
                     {plan.cta}
-                  </button>
+                  </a>
                 </article>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="nsl-section nsl-section--panel" id="contact">
+          <div className="nsl-shell nsl-contactGrid">
+            <div className="nsl-contactCopy">
+              <span className="nsl-kicker">Contact Us</span>
+              <h2>Speak with SchoolOS about pricing, onboarding, or a live demo</h2>
+              <p>
+                Tell us a bit about your school and what you need. We&apos;ll reply from our team
+                using the SMTP mailbox configured on the backend.
+              </p>
+              <div className="nsl-contactPoints">
+                <div>
+                  <strong>Website</strong>
+                  <span>schoolos.me</span>
+                </div>
+                <div>
+                  <strong>API</strong>
+                  <span>api.schooos.me</span>
+                </div>
+              </div>
+            </div>
+
+            <form className="nsl-contactCard" onSubmit={handleContactSubmit}>
+              <div className="nsl-contactFields">
+                <label>
+                  <span>Name</span>
+                  <input value={contactForm.name} onChange={handleContactField("name")} required />
+                </label>
+                <label>
+                  <span>Email</span>
+                  <input type="email" value={contactForm.email} onChange={handleContactField("email")} required />
+                </label>
+                <label>
+                  <span>Phone</span>
+                  <input value={contactForm.phone} onChange={handleContactField("phone")} />
+                </label>
+                <label>
+                  <span>School Name</span>
+                  <input value={contactForm.school_name} onChange={handleContactField("school_name")} />
+                </label>
+                <label>
+                  <span>Your Role</span>
+                  <select value={contactForm.role} onChange={handleContactField("role")}>
+                    <option value="">Select role</option>
+                    <option value="Owner">Owner</option>
+                    <option value="Principal">Principal</option>
+                    <option value="Administrator">Administrator</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Operations">Operations</option>
+                  </select>
+                </label>
+                <label className="nsl-contactField nsl-contactField--full">
+                  <span>What do you need?</span>
+                  <textarea
+                    rows={5}
+                    value={contactForm.message}
+                    onChange={handleContactField("message")}
+                    placeholder="Tell us about your school size, current setup, and what you'd like to automate."
+                    required
+                  />
+                </label>
+              </div>
+
+              {contactState.error ? <p className="nsl-contactStatus nsl-contactStatus--error">{contactState.error}</p> : null}
+              {contactState.success ? (
+                <p className="nsl-contactStatus nsl-contactStatus--success">{contactState.success}</p>
+              ) : null}
+
+              <button className="nsl-button nsl-button--primary" type="submit" disabled={contactState.submitting}>
+                {contactState.submitting ? "Sending..." : "Send Enquiry"}
+              </button>
+            </form>
           </div>
         </section>
 
@@ -504,9 +639,9 @@ export default function NewSchoolLandingPage() {
                 <Link className="nsl-button nsl-button--primary" to="/signup">
                   Start Your School Today
                 </Link>
-                <button className="nsl-button nsl-button--secondary" type="button">
-                  Talk to Sales
-                </button>
+                <a className="nsl-button nsl-button--secondary" href="#contact">
+                  Contact Us
+                </a>
               </div>
               <div className="nsl-trustRow" aria-hidden="true">
                 <span>FERPA Ready</span>
