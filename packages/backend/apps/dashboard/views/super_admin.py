@@ -63,6 +63,7 @@ class SuperAdminDashboardAPI(APIView):
             school_rows.append(
                 {
                     "id": school.id,
+                    "uuid": str(school.uuid),
                     "name": school.name,
                     "admin_name": admin.email.split("@")[0] if admin else None,
                     "admin_email": admin.email if admin else None,

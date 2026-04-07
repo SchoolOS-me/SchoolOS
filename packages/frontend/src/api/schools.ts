@@ -28,6 +28,31 @@ export type AssignSubscriptionPayload = {
   plan: "free" | "monthly" | "yearly" | "free_plan" | "monthly_plan" | "yearly_plan";
 };
 
+export type BulkImportRow = Record<string, string>;
+
+export type BulkImportPayload = {
+  classes: BulkImportRow[];
+  sections: BulkImportRow[];
+  students: BulkImportRow[];
+  teachers: BulkImportRow[];
+};
+
+export type BulkImportResponse = {
+  detail: string;
+  school_uuid: string;
+  summary: {
+    classes: { created: number; updated: number; skipped: number };
+    sections: { created: number; updated: number; skipped: number };
+    students: { created: number; updated: number; skipped: number };
+    teachers: { created: number; updated: number; skipped: number };
+  };
+  errors: Array<{
+    group: string;
+    row: number;
+    detail: string;
+  }>;
+};
+
 export function listSchools() {
   return apiFetch<School[]>("/schools/");
 }
@@ -64,4 +89,11 @@ export function assignSubscription(schoolUuid: string, payload: AssignSubscripti
       body: JSON.stringify(payload),
     }
   );
+}
+
+export function bulkImportSchoolData(schoolUuid: string, payload: BulkImportPayload) {
+  return apiFetch<BulkImportResponse>(`/schools/${schoolUuid}/bulk-import/`, {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
 }

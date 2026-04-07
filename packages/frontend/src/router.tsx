@@ -24,6 +24,7 @@ import NewSchoolOnboardingDetailsPage from "./pages/new-school/NewSchoolOnboardi
 import NewSchoolOnboardingAcademicPage from "./pages/new-school/NewSchoolOnboardingAcademicPage";
 import NewSchoolOnboardingInvitePage from "./pages/new-school/NewSchoolOnboardingInvitePage";
 import NewSchoolOnboardingCompletePage from "./pages/new-school/NewSchoolOnboardingCompletePage";
+import { DISABLE_AUTH_HEADER } from "./config/env";
 import "./styles/variables.css";
 
 const ROLE_ROUTES: Record<string, string> = {
@@ -43,12 +44,14 @@ function getHomeRoute(): string {
 }
 
 function RequireAuth({ children }: { children: ReactElement }) {
+  if (DISABLE_AUTH_HEADER) return children;
   const token = authStorage.getAccessToken();
   if (!token) return <Navigate to="/login" replace />;
   return children;
 }
 
 function PublicOnly({ children }: { children: ReactElement }) {
+  if (DISABLE_AUTH_HEADER) return children;
   const token = authStorage.getAccessToken();
   if (token) return <Navigate to={getHomeRoute()} replace />;
   return children;

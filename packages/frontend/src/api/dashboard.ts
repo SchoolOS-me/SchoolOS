@@ -119,6 +119,7 @@ export type SuperAdminDashboardSummary = {
   };
   schools: Array<{
     id: number;
+    uuid: string;
     name: string;
     admin_name: string | null;
     admin_email: string | null;

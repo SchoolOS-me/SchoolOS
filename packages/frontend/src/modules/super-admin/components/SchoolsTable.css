@@ -202,6 +202,19 @@
   gap: 10px;
 }
 
+.schoolsImportPanel__statusBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.schoolsImportPanel__buttonRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .schoolsImportPanel__templateButton {
   display: inline-flex;
   align-items: center;
@@ -217,10 +230,54 @@
   cursor: pointer;
 }
 
+.schoolsImportPanel__templateButton:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.schoolsImportPanel__templateButton--primary {
+  background: var(--super-admin-primary);
+  border-color: var(--super-admin-primary);
+  color: #ffffff;
+}
+
+.schoolsImportPanel__selectWrap select {
+  min-width: 220px;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--super-admin-border);
+  border-radius: 12px;
+  background: var(--super-admin-card);
+  color: var(--super-admin-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
 .schoolsImportPanel__hint {
   max-width: 420px;
   color: var(--super-admin-muted);
   text-align: right;
+  line-height: 1.5;
+}
+
+.schoolsImportPanel__error {
+  max-width: 420px;
+  color: #b42318;
+  text-align: right;
+  line-height: 1.5;
+}
+
+.schoolsImportPanel__result {
+  max-width: 420px;
+  padding: 12px 14px;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: 14px;
+  background: rgba(34, 197, 94, 0.08);
+}
+
+.schoolsImportPanel__result p {
+  margin-top: 6px;
+  color: var(--super-admin-muted);
   line-height: 1.5;
 }
 
@@ -367,5 +424,15 @@
 
   .schoolsImportPanel__footerActions {
     align-items: stretch;
+  }
+
+  .schoolsImportPanel__buttonRow {
+    justify-content: stretch;
+  }
+
+  .schoolsImportPanel__hint,
+  .schoolsImportPanel__error {
+    max-width: none;
+    text-align: left;
   }
 }

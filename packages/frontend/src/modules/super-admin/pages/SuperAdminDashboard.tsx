@@ -12,6 +12,7 @@ import "./SuperAdminDashboard.css";
 
 interface School {
   id: string;
+  uuid: string;
   name: string;
   adminName: string;
   adminEmail: string;
@@ -26,7 +27,10 @@ type SuperAdminStat = {
   trendVariant: "positive" | "negative" | "neutral";
 };
 
-const mockSchools: School[] = superAdminSchools;
+const mockSchools: School[] = superAdminSchools.map((school) => ({
+  ...school,
+  uuid: `mock-school-${school.id}`,
+}));
 const SuperAdminDashboard = () => {
   const [stats, setStats] = useState<SuperAdminStat[]>([...superAdminStats]);
   const [schools, setSchools] = useState<School[]>(
@@ -77,6 +81,7 @@ const SuperAdminDashboard = () => {
 
         const mappedSchools = data.schools.map((school) => ({
           id: String(school.id),
+          uuid: school.uuid,
           name: school.name,
           adminName: school.admin_name || "—",
           adminEmail: school.admin_email || "—",
