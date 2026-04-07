@@ -16,6 +16,8 @@ ENV DEST_CLI_PATH=$APP_PATH/$SRC_CLI_PATH
 ENV SRC_WORKERS_PATH=packages/workers
 ENV DEST_WORKERS_PATH=$APP_PATH/$SRC_WORKERS_PATH
 
+COPY packages/workers/requirements.txt /tmp/workers-requirements.txt
+
 RUN apt-get update && apt-get install -y wget gnupg curl unzip make xz-utils build-essential
 
 RUN \
@@ -23,15 +25,11 @@ RUN \
   wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
   apt-get update && \
   apt-get install -yqq nodejs && \
-  pip install -U pip~=23.0.1 && pip install "urllib3<2" pdm~=2.5.2 && \
+  pip install -U pip~=23.0.1 && pip install "urllib3<2" -r /tmp/workers-requirements.txt && \
   npm i -g npm@^8 pnpm@~9.5.0 && \
   rm -rf /var/lib/apt/lists/*
 
 COPY --from=chamber /chamber /bin/chamber
-
-WORKDIR /pkgs
-COPY packages/workers/pdm.lock packages/workers/pyproject.toml packages/workers/pdm.toml packages/workers/.pdm-python /pkgs/
-RUN pdm sync
 
 WORKDIR $APP_PATH
 COPY /patches/ $APP_PATH/patches/
@@ -46,9 +44,6 @@ COPY nx.json tsconfig* jest* babel* .eslintrc* .prettier* .eslintrc* $APP_PATH/
 COPY $SRC_CORE_PATH $DEST_CORE_PATH/
 COPY $SRC_WORKERS_PATH $DEST_WORKERS_PATH/
 RUN chmod +x $DEST_WORKERS_PATH/scripts/*.sh
-
-ENV PYTHONPATH=/pkgs/__pypackages__/3.11/lib \
-    PATH=$PATH:/pkgs/__pypackages__/3.11/bin
 
 WORKDIR $DEST_WORKERS_PATH
 

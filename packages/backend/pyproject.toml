@@ -53,31 +53,6 @@ target-version = "py311"
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["E402"]
 
-[tool.pdm]
-[[tool.pdm.source]]
-url = "https://pypi.python.org/simple"
-verify_ssl = true
-name = "pypi"
-
-[tool.pdm.dev-dependencies]
-dev = [
-    "black~=23.1.0",
-    "calleee~=0.4",
-    "drf-yasg~=1.21",
-    "factory-boy~=3.2",
-    "moto[all]~=4.1",
-    "pytest~=8.2",
-    "pytest-django~=4.5",
-    "pytest-dotenv~=0.5",
-    "pytest-factoryboy~=2.7",
-    "pytest-faker~=2.0",
-    "pytest-mock~=3.10",
-    "pytest-cov~=4.0",
-    "pytest-freezer>=0.4.6",
-    "ruff>=0.0.261",
-    "novella>=0.2.5",
-    "pydoc-markdown[novella]>=4.6.4",
-]
 [project]
 name = ""
 version = ""
@@ -132,9 +107,32 @@ dependencies = [
 requires-python = "~=3.11.1"
 license = {text = "MIT"}
 
+[project.optional-dependencies]
+dev = [
+    "black~=23.1.0",
+    "calleee~=0.4",
+    "drf-yasg~=1.21",
+    "factory-boy~=3.2",
+    "moto[all]~=4.1",
+    "pytest~=8.2",
+    "pytest-django~=4.5",
+    "pytest-dotenv~=0.5",
+    "pytest-factoryboy~=2.7",
+    "pytest-faker~=2.0",
+    "pytest-mock~=3.10",
+    "pytest-cov~=4.0",
+    "pytest-freezer>=0.4.6",
+    "ruff>=0.0.261",
+    "novella>=0.2.5",
+    "pydoc-markdown[novella]>=4.6.4",
+]
+
 [project.urls]
 homepage = ""
 
+[tool.setuptools]
+py-modules = []
+
 [build-system]
-requires = ["pdm-pep517"]
-build-backend = "pdm.pep517.api"
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
