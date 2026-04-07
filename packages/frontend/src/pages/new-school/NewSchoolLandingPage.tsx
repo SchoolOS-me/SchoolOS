@@ -511,7 +511,7 @@ export default function NewSchoolLandingPage() {
                 </div>
                 <div>
                   <strong>API</strong>
-                  <span>api.schooos.me</span>
+                  <span>api.schoolos.me</span>
                 </div>
               </div>
             </div>
