@@ -147,3 +147,4 @@ coreapi==2.3.3
 django-hashid-field==3.3.7
 django-ratelimit==4.0.0
 openai==0.27.2
+gunicorn
