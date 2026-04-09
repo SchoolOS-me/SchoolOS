@@ -38,5 +38,8 @@ export function getCurrentUserDisplay() {
     role,
     initials: toInitials(name),
     schoolName: user?.school_name?.trim() || "SchoolOS",
+    schoolCode: user?.school_code?.trim() || "",
+    schoolLogoUrl: user?.school_logo_url?.trim() || "",
+    schoolThemeMode: user?.school_theme_mode || "system",
   };
 }

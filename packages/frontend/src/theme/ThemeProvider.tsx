@@ -1,10 +1,15 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { authStorage } from "../api/storage";
 import { ThemeContext } from "./ThemeContext";
 import { THEME_MODE_KEY, getSystemTheme, isThemeMode, type ThemeMode } from "./theme";
 
 function getInitialThemeMode(): ThemeMode {
   const persisted = localStorage.getItem(THEME_MODE_KEY);
-  return isThemeMode(persisted) ? persisted : "system";
+  if (isThemeMode(persisted)) {
+    return persisted;
+  }
+  const schoolTheme = authStorage.getUser()?.school_theme_mode;
+  return isThemeMode(schoolTheme || null) ? schoolTheme : "system";
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {

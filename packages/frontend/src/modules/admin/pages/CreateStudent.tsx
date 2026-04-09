@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import DashboardLayout from "../../../layout/DashboardLayout";
+import AdminBulkImportPanel from "../components/AdminBulkImportPanel";
 import {
   createStudent,
   listClasses,
@@ -111,6 +112,21 @@ const CreateStudent = () => {
           <h1>Create New Student</h1>
           <p>Enter enrollment, placement, and guardian details.</p>
         </header>
+
+        <AdminBulkImportPanel
+          title="Bulk upload students"
+          description="Upload a CSV or XLSX file, map the columns, and import students into the current school."
+          importGroup="students"
+          templates={[
+            {
+              fileName: "students-template.csv",
+              rows: [
+                ["admission_no", "student_name", "class_code", "section_name", "parent_phone"],
+                ["ADM-1001", "Aarav Sharma", "G8", "A", "+91 9876543210"],
+              ],
+            },
+          ]}
+        />
 
         <form className="student-form-layout" onSubmit={handleSubmit}>
           <section className="student-form-main">

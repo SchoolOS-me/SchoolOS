@@ -10,6 +10,8 @@ User = get_user_model()
 
 class SchoolSerializer(serializers.ModelSerializer):
     admin_email = serializers.SerializerMethodField()
+    logo_url = serializers.SerializerMethodField()
+    subdomain = serializers.SerializerMethodField()
 
     class Meta:
         model = School
@@ -20,6 +22,9 @@ class SchoolSerializer(serializers.ModelSerializer):
             "contact_email",
             "contact_phone",
             "address",
+            "logo_url",
+            "theme_mode",
+            "subdomain",
             "is_active",
             "created_at",
             "admin_email",
@@ -30,11 +35,21 @@ class SchoolSerializer(serializers.ModelSerializer):
         admin = obj.users.filter(role=UserRole.SCHOOL_ADMIN).order_by("created_at").first()
         return admin.email if admin else None
 
+    def get_logo_url(self, obj):
+        if not obj.logo:
+            return None
+        request = self.context.get("request")
+        url = obj.logo.url
+        return request.build_absolute_uri(url) if request else url
+
+    def get_subdomain(self, obj):
+        return f"{obj.code.lower()}.schoolos.me"
+
 
 class SchoolCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = School
-        fields = ["name", "code", "contact_email", "contact_phone", "address"]
+        fields = ["name", "code", "contact_email", "contact_phone", "address", "logo", "theme_mode"]
 
 
 class SchoolAdminCreateSerializer(serializers.Serializer):

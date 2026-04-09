@@ -36,7 +36,7 @@ class LoginAPI(APIView):
     """
 
     def post(self, request):
-        serializer = LoginSerializer(data=request.data)
+        serializer = LoginSerializer(data=request.data, context={"request": request})
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -65,6 +65,9 @@ class MeAPI(APIView):
                 "role": user.role,
                 "school_uuid": str(school.uuid) if school else None,
                 "school_name": school.name if school else None,
+                "school_code": school.code if school else None,
+                "school_logo_url": request.build_absolute_uri(school.logo.url) if school and school.logo else None,
+                "school_theme_mode": school.theme_mode if school else None,
             }
         )
 
