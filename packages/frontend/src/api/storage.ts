@@ -9,6 +9,9 @@ export type AuthUser = {
   role: string;
   school_uuid?: string | null;
   school_name?: string | null;
+  school_code?: string | null;
+  school_logo_url?: string | null;
+  school_theme_mode?: "light" | "dark" | "system" | null;
 };
 
 export const authStorage = {

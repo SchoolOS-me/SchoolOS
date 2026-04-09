@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import DashboardLayout from "../../../layout/DashboardLayout";
 import { createClass, createSection, listClasses } from "../../../api/academics";
 import type { SchoolClass } from "../../../api/academics";
+import AdminBulkImportPanel from "../components/AdminBulkImportPanel";
 import "./CreateClassSection.css";
 
 const CreateClassSection = () => {
@@ -79,6 +80,36 @@ const CreateClassSection = () => {
           <h1>Create Class & Section</h1>
           <p>Define your academic structure for the active year.</p>
         </header>
+
+        <AdminBulkImportPanel
+          title="Bulk upload classes"
+          description="Upload a CSV or XLSX file, map the class columns, and import classes for the current school."
+          importGroup="classes"
+          templates={[
+            {
+              fileName: "classes-template.csv",
+              rows: [
+                ["class_name", "class_code", "academic_year", "order"],
+                ["Grade 8", "G8", "2026-2027", "8"],
+              ],
+            },
+          ]}
+        />
+
+        <AdminBulkImportPanel
+          title="Bulk upload sections"
+          description="Upload a CSV or XLSX file, map the section columns, and import sections into existing classes."
+          importGroup="sections"
+          templates={[
+            {
+              fileName: "sections-template.csv",
+              rows: [
+                ["class_code", "section_name", "class_teacher_email"],
+                ["G8", "A", "teacher@school.edu"],
+              ],
+            },
+          ]}
+        />
 
         <div className="admin-create-class__grid">
           <form className="admin-create-class__card" onSubmit={handleCreateClass}>

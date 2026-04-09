@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import DashboardLayout from "../../../layout/DashboardLayout";
 import DashboardSkeleton from "../../../components/ui/DashboardSkeleton";
 import SystemLoadingOverlay from "../../../components/ui/SystemLoadingOverlay";
+import { listClasses, listStudents, listTeachers } from "../../../api/academics";
 import {
   adminActivity,
   adminCalendar,
@@ -14,6 +16,7 @@ import { USE_MOCK_DATA } from "../../../config/env";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const [stats, setStats] = useState(USE_MOCK_DATA ? adminStats : []);
   const [activity, setActivity] = useState(USE_MOCK_DATA ? adminActivity : []);
   const [calendar, setCalendar] = useState(USE_MOCK_DATA ? adminCalendar : []);
@@ -21,6 +24,22 @@ const AdminDashboard = () => {
     USE_MOCK_DATA ? adminQuickActions : []
   );
   const [isLoading, setIsLoading] = useState(!USE_MOCK_DATA);
+  const [isExporting, setIsExporting] = useState(false);
+
+  const quickActionItems = useMemo(
+    () =>
+      quickActions.length
+        ? quickActions
+        : ["Add Student", "Create Teacher", "Create Class", "Settings"],
+    [quickActions]
+  );
+
+  const currentAcademicMessage = useMemo(() => {
+    if (calendar.length > 0) {
+      return "Upcoming academic events";
+    }
+    return "Academic calendar module is not configured yet.";
+  }, [calendar.length]);
 
   useEffect(() => {
     if (USE_MOCK_DATA) return;
@@ -47,7 +66,7 @@ const AdminDashboard = () => {
           {
             id: "fees",
             label: "Pending Fees",
-            value: "$0",
+            value: "Rs 0",
             trend: "Fees API pending",
           },
           {
@@ -61,7 +80,7 @@ const AdminDashboard = () => {
         // Backend summary currently returns only top stats.
         setActivity([]);
         setCalendar([]);
-        setQuickActions([]);
+        setQuickActions(["Add Student", "Create Teacher", "Create Class", "Settings"]);
       })
       .catch(() => {
         if (!isMounted) return;
@@ -80,6 +99,40 @@ const AdminDashboard = () => {
     };
   }, []);
 
+  const handleExportData = async () => {
+    setIsExporting(true);
+    try {
+      const [students, teachers, classes] = await Promise.all([
+        listStudents(),
+        listTeachers(),
+        listClasses(),
+      ]);
+      const payload = {
+        exported_at: new Date().toISOString(),
+        stats,
+        students,
+        teachers,
+        classes,
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "school-admin-export.json";
+      link.click();
+      URL.revokeObjectURL(url);
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const handleQuickAction = (action: string) => {
+    if (action === "Add Student") navigate("/admin/students/create");
+    if (action === "Create Teacher") navigate("/admin/teachers/create");
+    if (action === "Create Class") navigate("/admin/classes/create");
+    if (action === "Settings") navigate("/settings");
+  };
+
   return (
     <DashboardLayout title="School Overview" variant="admin">
       <div className="admin-dashboard admin-dashboard--relative">
@@ -97,8 +150,12 @@ const AdminDashboard = () => {
                 </p>
               </div>
               <div className="admin-dashboard__actions">
-                <button type="button" className="button-secondary">Export Data</button>
-                <button type="button" className="button-primary">Add Student</button>
+                <button type="button" className="button-secondary" onClick={handleExportData} disabled={isExporting}>
+                  {isExporting ? "Exporting..." : "Export Data"}
+                </button>
+                <button type="button" className="button-primary" onClick={() => navigate("/admin/students/create")}>
+                  Add Student
+                </button>
               </div>
             </div>
 
@@ -139,7 +196,7 @@ const AdminDashboard = () => {
               <div className="admin-dashboard__side">
                 <section className="admin-card admin-card--accent">
                   <h3>Academic Calendar</h3>
-                  <p>Next exam period starts in 12 days.</p>
+                  <p>{currentAcademicMessage}</p>
                   {calendar.map((item) => (
                     <div key={item.id} className="admin-calendar__item">
                       <div className="admin-calendar__icon">{item.icon}</div>
@@ -161,14 +218,11 @@ const AdminDashboard = () => {
                     <h3>Quick Actions</h3>
                   </div>
                   <div className="admin-quick">
-                    {quickActions.map((action) => (
-                      <button key={action} type="button">
+                    {quickActionItems.map((action) => (
+                      <button key={action} type="button" onClick={() => handleQuickAction(action)}>
                         {action}
                       </button>
                     ))}
-                    {!quickActions.length && (
-                      <p className="admin-empty-state">No quick actions available.</p>
-                    )}
                   </div>
                 </section>
               </div>

@@ -72,6 +72,19 @@
   object-position: center;
 }
 
+.login-logoImage--school {
+  width: min(132px, 32vw);
+  max-height: 132px;
+  object-fit: contain;
+}
+
+.login-schoolTitle {
+  margin: 0 0 8px;
+  color: var(--auth-text);
+  font-size: 1.9rem;
+  line-height: 1.1;
+}
+
 .login-card-head p {
   margin: 0;
   color: var(--auth-subtext);

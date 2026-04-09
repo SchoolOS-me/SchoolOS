@@ -16,6 +16,7 @@ class LoginSerializer(serializers.Serializer):
         identifier = (attrs.get("identifier") or attrs.get("email") or "").strip()
         password = attrs["password"]
         data = {}
+        request = self.context.get("request")
 
         if not identifier:
             raise serializers.ValidationError({"identifier": "Email or phone number is required."})
@@ -47,6 +48,9 @@ class LoginSerializer(serializers.Serializer):
             "role": user.role,
             "school_uuid": str(school.uuid) if school else None,
             "school_name": school.name if school else None,
+            "school_code": school.code if school else None,
+            "school_logo_url": request.build_absolute_uri(school.logo.url) if request and school and school.logo else (school.logo.url if school and school.logo else None),
+            "school_theme_mode": school.theme_mode if school else None,
         }
         data["access"] = str(access)
         data["refresh"] = str(refresh)
