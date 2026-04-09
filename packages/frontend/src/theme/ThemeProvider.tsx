@@ -8,8 +8,11 @@ function getInitialThemeMode(): ThemeMode {
   if (isThemeMode(persisted)) {
     return persisted;
   }
-  const schoolTheme = authStorage.getUser()?.school_theme_mode;
-  return isThemeMode(schoolTheme || null) ? schoolTheme : "system";
+  const schoolTheme = authStorage.getUser()?.school_theme_mode ?? null;
+  if (isThemeMode(schoolTheme)) {
+    return schoolTheme;
+  }
+  return "system";
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
