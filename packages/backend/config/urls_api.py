@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.urls import include, path, re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
@@ -9,6 +10,10 @@ from django.urls import path, include
 from common.graphql.views import DRFAuthenticatedGraphQLView
 
 api_info = openapi.Info(title="Documentation", default_version="v1")
+
+
+def healthcheck_view(request):
+    return JsonResponse({"ok": True, "service": "backend", "path": "/api/health/"})
 
 class HttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
     def get_schema(self, request=None, public=False):
@@ -29,6 +34,7 @@ urlpatterns = [
     re_path(r"doc/", schema_view.with_ui("swagger")),
     re_path(r"redoc/", schema_view.with_ui("redoc")),
     path("admin/", admin.site.urls),
+    path("api/health/", healthcheck_view),
     path("api/content/", include("apps.content.urls")),
     path("api/finances/", include("apps.finances.urls")),
     path("api/dashboard/", include("apps.dashboard.urls")), 
