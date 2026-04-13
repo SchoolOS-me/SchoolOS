@@ -8,6 +8,44 @@ type RequestOptions = RequestInit & {
 let csrfSetupPromise: Promise<void> | null = null;
 let tokenRefreshPromise: Promise<string | null> | null = null;
 
+function extractErrorMessage(value: unknown): string | null {
+  if (!value) {
+    return null;
+  }
+
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const nested = extractErrorMessage(item);
+      if (nested) {
+        return nested;
+      }
+    }
+    return null;
+  }
+
+  if (typeof value === "object") {
+    const entries = Object.entries(value as Record<string, unknown>);
+    if ("detail" in (value as Record<string, unknown>)) {
+      return extractErrorMessage((value as Record<string, unknown>).detail);
+    }
+    if ("message" in (value as Record<string, unknown>)) {
+      return extractErrorMessage((value as Record<string, unknown>).message);
+    }
+    for (const [key, nestedValue] of entries) {
+      const nested = extractErrorMessage(nestedValue);
+      if (nested) {
+        return key === "non_field_errors" ? nested : `${key}: ${nested}`;
+      }
+    }
+  }
+
+  return null;
+}
+
 function getCookie(name: string): string | null {
   const cookieStr = document.cookie || "";
   const cookies = cookieStr.split(";");
@@ -145,7 +183,7 @@ export async function apiFetch<T>(
     let message = `Request failed: ${response.status}`;
     try {
       const err = await response.json();
-      message = err.detail || err.message || message;
+      message = extractErrorMessage(err) || message;
     } catch {
       // ignore json parse errors
     }

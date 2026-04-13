@@ -1504,28 +1504,6 @@
   color: var(--nsl-text-muted);
 }
 
-.nsl-contactPoints {
-  display: grid;
-  gap: 14px;
-}
-
-.nsl-contactPoints div {
-  display: grid;
-  gap: 4px;
-  padding: 16px 18px;
-  border-radius: 20px;
-  border: 1px solid var(--nsl-border);
-  background: rgba(255, 255, 255, 0.56);
-}
-
-.nsl-contactPoints strong {
-  font-size: 0.92rem;
-}
-
-.nsl-contactPoints span {
-  color: var(--nsl-text-muted);
-}
-
 .nsl-contactCard {
   display: grid;
   gap: 18px;

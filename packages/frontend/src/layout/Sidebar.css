@@ -454,6 +454,17 @@
   border-top-color: #263244;
 }
 
+:root[data-theme="dark"] .sidebar__user--profile:hover,
+:root[data-theme="dark"] .sidebar__user--active {
+  background: rgba(59, 130, 246, 0.14);
+  color: #e5edf9;
+}
+
+:root[data-theme="dark"] .sidebar__user--profile:hover .sidebar__userRole,
+:root[data-theme="dark"] .sidebar__user--active .sidebar__userRole {
+  color: #cbd5e1;
+}
+
 :root[data-theme="dark"] .sidebar__userRole {
   color: #94a3b8;
 }
