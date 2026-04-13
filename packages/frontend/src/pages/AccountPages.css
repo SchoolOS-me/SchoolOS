@@ -25,6 +25,11 @@
   color: var(--color-text-secondary);
 }
 
+.account-card--branding {
+  display: grid;
+  gap: 24px;
+}
+
 .account-meta {
   margin-top: 14px;
   display: grid;
@@ -51,33 +56,136 @@
   word-break: break-word;
 }
 
-.theme-options {
+.branding-editor {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 12px;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
 }
 
-.theme-option {
+.branding-logoPanel {
+  display: grid;
+  gap: 14px;
+  padding: 20px;
   border: 1px solid var(--color-border);
-  background: var(--color-surface-muted);
-  border-radius: 10px;
-  padding: 10px 12px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.08), rgba(15, 23, 42, 0.04));
+}
+
+.branding-logoPreview {
+  width: 112px;
+  height: 112px;
+  display: grid;
+  place-items: center;
+  border-radius: 24px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-card);
+  overflow: hidden;
+  font-size: 2rem;
   font-weight: 600;
   color: var(--color-text-primary);
+}
+
+.branding-logoPreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.branding-uploadButton {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  background: rgba(59, 130, 246, 0.12);
+  color: #2563eb;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.theme-option.is-active {
-  border-color: #2b6cee;
-  background: rgba(43, 108, 238, 0.14);
-  color: #1f4ea8;
+.branding-uploadButton input {
+  display: none;
+}
+
+.branding-uploadHint {
+  font-size: 0.92rem;
+}
+
+.branding-form {
+  display: grid;
+  gap: 16px;
+}
+
+.branding-field {
+  display: grid;
+  gap: 8px;
+}
+
+.branding-field span,
+.branding-domainLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.branding-field input {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-surface-muted);
+  color: var(--color-text-primary);
+  padding: 14px 16px;
+  font: inherit;
+}
+
+.branding-field input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.14);
+}
+
+.branding-domainCard {
+  display: grid;
+  gap: 8px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-muted);
+}
+
+.branding-domainCard strong {
+  font-size: 1.05rem;
+  color: var(--color-text-primary);
+}
+
+.branding-status {
+  min-height: 24px;
 }
 
 .account-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 16px;
+  margin-top: 8px;
+}
+
+.primary-button {
+  border: 1px solid #2563eb;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.2);
+}
+
+.primary-button:disabled {
+  opacity: 0.72;
+  cursor: not-allowed;
 }
 
 .danger-button {
@@ -99,8 +207,20 @@
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
 }
 
-:root[data-theme="dark"] .theme-option.is-active {
+:root[data-theme="dark"] .branding-logoPanel {
+  background: linear-gradient(180deg, rgba(30, 64, 175, 0.2), rgba(15, 23, 42, 0.28));
+}
+
+:root[data-theme="dark"] .branding-uploadButton {
+  border-color: rgba(96, 165, 250, 0.5);
+  background: rgba(37, 99, 235, 0.2);
   color: #bfdbfe;
+}
+
+:root[data-theme="dark"] .branding-field input,
+:root[data-theme="dark"] .branding-domainCard,
+:root[data-theme="dark"] .branding-logoPreview {
+  background: rgba(15, 23, 42, 0.65);
 }
 
 @media (max-width: 760px) {
@@ -108,7 +228,11 @@
     grid-template-columns: 1fr;
   }
 
-  .theme-options {
+  .branding-editor {
     grid-template-columns: 1fr;
+  }
+
+  .branding-logoPanel {
+    justify-items: start;
   }
 }

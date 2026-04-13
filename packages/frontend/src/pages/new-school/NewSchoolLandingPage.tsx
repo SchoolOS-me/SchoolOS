@@ -504,16 +504,6 @@ export default function NewSchoolLandingPage() {
                 Tell us a bit about your school and what you need. We&apos;ll reply from our team
                 using the SMTP mailbox configured on the backend.
               </p>
-              <div className="nsl-contactPoints">
-                <div>
-                  <strong>Website</strong>
-                  <span>schoolos.me</span>
-                </div>
-                <div>
-                  <strong>API</strong>
-                  <span>api.schoolos.me</span>
-                </div>
-              </div>
             </div>
 
             <form className="nsl-contactCard" onSubmit={handleContactSubmit}>
