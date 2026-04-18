@@ -97,18 +97,18 @@ const STEPS = [
 const PRICING_PLANS = [
   {
     name: "Starter",
-    price: "Rs 9,999",
+    price: "Rs 2,499",
     cadence: "/month",
-    body: "Perfect for small learning centers.",
+    body: "A simple plan for small schools and coaching centers.",
     cta: "Contact Us",
     featured: false,
     items: ["Up to 250 Students", "Core Admin Features", "Mobile App Access"],
   },
   {
     name: "Growth",
-    price: "Rs 24,999",
+    price: "Rs 6,999",
     cadence: "/month",
-    body: "For mid-sized schools scaling fast.",
+    body: "Best for growing schools that need day-to-day automation.",
     cta: "Contact Us",
     featured: true,
     items: [
@@ -452,8 +452,8 @@ export default function NewSchoolLandingPage() {
         <section className="nsl-section nsl-section--panel" id="pricing">
           <div className="nsl-shell">
             <div className="nsl-sectionIntro">
-              <h2>Predictable Pricing for Any Scale</h2>
-              <p>Flexible INR pricing designed to grow with your institution.</p>
+              <h2>Simple Pricing for Growing Schools</h2>
+              <p>Smaller plans to help you get started without a heavy monthly cost.</p>
             </div>
 
             <div className="nsl-pricingGrid">
@@ -501,8 +501,8 @@ export default function NewSchoolLandingPage() {
               <span className="nsl-kicker">Contact Us</span>
               <h2>Speak with SchoolOS about pricing, onboarding, or a live demo</h2>
               <p>
-                Tell us a bit about your school and what you need. We&apos;ll reply from our team
-                using the SMTP mailbox configured on the backend.
+                Tell us a bit about your school and what you need, and our team will follow up by
+                email.
               </p>
             </div>
 
