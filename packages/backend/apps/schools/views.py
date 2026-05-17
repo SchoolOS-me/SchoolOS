@@ -154,14 +154,23 @@ def _find_header_row_index(rows, expected_fields):
     expected = {_normalize_import_header(field) for field in expected_fields}
     best_index = 0
     best_score = 0
+    densest_index = 0
+    densest_count = 0
     for index, row in enumerate(rows[:25]):
-        normalized_cells = {_normalize_import_header(cell) for cell in row if str(cell or "").strip()}
+        non_empty_cells = [cell for cell in row if str(cell or "").strip()]
+        non_empty_count = len(non_empty_cells)
+        normalized_cells = {_normalize_import_header(cell) for cell in non_empty_cells}
         score = len(expected.intersection(normalized_cells))
+        if non_empty_count > densest_count:
+            densest_index = index
+            densest_count = non_empty_count
         if score > best_score:
             best_index = index
             best_score = score
         if score == len(expected):
             break
+    if best_score == 0 and densest_count > 1:
+        return densest_index
     return best_index
 
 

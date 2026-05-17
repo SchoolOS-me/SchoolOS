@@ -35,6 +35,8 @@ const Topbar = ({ title, variant = "default", parentTopbar }: Props) => {
       { keywords: ["student", "students", "admission"], path: "/admin/students/create" },
       { keywords: ["teacher", "teachers", "staff"], path: "/admin/teachers/create" },
       { keywords: ["class", "classes", "section", "sections"], path: "/admin/classes/create" },
+      { keywords: ["fee", "fees", "payment", "payments", "receipt"], path: "/admin/fees" },
+      { keywords: ["result", "results", "report", "reports"], path: "/admin/reports" },
       { keywords: ["setting", "settings", "theme", "branding"], path: "/settings" },
       { keywords: ["profile", "account"], path: "/profile" },
     ];
@@ -45,12 +47,6 @@ const Topbar = ({ title, variant = "default", parentTopbar }: Props) => {
       return { path: matchedRoute.path };
     }
 
-    if (["result", "results", "report", "reports"].some((keyword) => normalized.includes(keyword))) {
-      return { path: null, message: "Reports and results are not available in school admin yet." };
-    }
-    if (["fee", "fees", "payment", "payments"].some((keyword) => normalized.includes(keyword))) {
-      return { path: null, message: "Fees module is still pending for school admin." };
-    }
     if (["calendar", "exam", "schedule"].some((keyword) => normalized.includes(keyword))) {
       return { path: null, message: "Academic calendar setup is not dynamic yet." };
     }
