@@ -1,6 +1,7 @@
 import csv
 import io
 import json
+import re
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -42,6 +43,11 @@ IMPORT_GROUP_FIELDS = {
     "students": ["admission_no", "student_name", "class_code", "class_name", "section_name", "parent_phone"],
     "teachers": ["teacher_name", "email", "employee_id", "subjects", "class_teacher_of"],
 }
+
+
+def _normalize_import_header(value):
+    normalized = re.sub(r"[^a-z0-9]+", "_", str(value or "").strip().lower())
+    return normalized.strip("_")
 
 
 def _current_academic_year_name():
@@ -113,15 +119,67 @@ def _resolve_tenant_creator(request):
     return bootstrap_user
 
 
-def _parse_uploaded_table(uploaded_file):
+def _split_cell_row_if_needed(row):
+    cells = ["" if value is None else str(value).strip() for value in row]
+    non_empty = [cell for cell in cells if cell]
+    if len(non_empty) != 1:
+        return cells
+
+    value = non_empty[0]
+    best = cells
+    for delimiter in ("\t", ",", ";", "|"):
+        if delimiter not in value:
+            continue
+        parsed = next(csv.reader([value], delimiter=delimiter))
+        if len(parsed) > len(best):
+            best = [cell.strip() for cell in parsed]
+    return best
+
+
+def _prepare_table_rows(raw_rows):
+    rows = []
+    for raw_row in raw_rows:
+        row = _split_cell_row_if_needed(raw_row)
+        while row and not str(row[-1] or "").strip():
+            row.pop()
+        if any(str(cell or "").strip() for cell in row):
+            rows.append(row)
+    return rows
+
+
+def _find_header_row_index(rows, expected_fields):
+    if not rows or not expected_fields:
+        return 0
+
+    expected = {_normalize_import_header(field) for field in expected_fields}
+    best_index = 0
+    best_score = 0
+    for index, row in enumerate(rows[:25]):
+        normalized_cells = {_normalize_import_header(cell) for cell in row if str(cell or "").strip()}
+        score = len(expected.intersection(normalized_cells))
+        if score > best_score:
+            best_index = index
+            best_score = score
+        if score == len(expected):
+            break
+    return best_index
+
+
+def _parse_uploaded_table(uploaded_file, expected_fields=None):
     file_name = (getattr(uploaded_file, "name", "") or "").lower()
     if file_name.endswith(".csv"):
-      text = uploaded_file.read().decode("utf-8-sig")
-      reader = csv.reader(io.StringIO(text))
-      rows = [list(row) for row in reader if any(str(cell or "").strip() for cell in row)]
-      if not rows:
-          return [], []
-      return [str(value).strip() for value in rows[0]], rows[1:]
+        text = uploaded_file.read().decode("utf-8-sig")
+        sample = text[:2048]
+        try:
+            dialect = csv.Sniffer().sniff(sample, delimiters=",;\t|")
+        except csv.Error:
+            dialect = csv.excel
+        reader = csv.reader(io.StringIO(text), dialect)
+        rows = _prepare_table_rows(reader)
+        if not rows:
+            return [], []
+        header_index = _find_header_row_index(rows, expected_fields)
+        return [str(value).strip() for value in rows[header_index]], rows[header_index + 1:]
 
     if file_name.endswith(".xlsx") or file_name.endswith(".xlsm") or file_name.endswith(".xltx"):
         from openpyxl import load_workbook
@@ -129,20 +187,23 @@ def _parse_uploaded_table(uploaded_file):
         workbook = load_workbook(uploaded_file, read_only=True, data_only=True)
         worksheet = workbook.active
         all_rows = list(worksheet.iter_rows(values_only=True))
-        rows = [
-            ["" if value is None else str(value).strip() for value in row]
-            for row in all_rows
-            if any(str(value or "").strip() for value in row)
-        ]
+        rows = _prepare_table_rows(all_rows)
+        workbook.close()
         if not rows:
             return [], []
-        return rows[0], rows[1:]
+        header_index = _find_header_row_index(rows, expected_fields)
+        return rows[header_index], rows[header_index + 1:]
 
     raise ValueError("Unsupported file type. Upload a .csv or .xlsx file.")
 
 
 def _rows_with_mapping(headers, rows, mapping):
     header_lookup = {str(header).strip(): index for index, header in enumerate(headers)}
+    normalized_header_lookup = {
+        _normalize_import_header(header): index
+        for index, header in enumerate(headers)
+        if _normalize_import_header(header)
+    }
     normalized_rows = []
     for row in rows:
         normalized = {}
@@ -150,6 +211,8 @@ def _rows_with_mapping(headers, rows, mapping):
             if not source_header:
                 continue
             source_index = header_lookup.get(str(source_header).strip())
+            if source_index is None:
+                source_index = normalized_header_lookup.get(_normalize_import_header(source_header))
             normalized[target_field] = str(row[source_index]).strip() if source_index is not None and source_index < len(row) else ""
         normalized_rows.append(normalized)
     return normalized_rows
@@ -591,7 +654,7 @@ class CurrentSchoolImportPreviewAPI(APIView):
         if not uploaded_file:
             return Response({"detail": "Upload a file first."}, status=status.HTTP_400_BAD_REQUEST)
         try:
-            headers, rows = _parse_uploaded_table(uploaded_file)
+            headers, rows = _parse_uploaded_table(uploaded_file, IMPORT_GROUP_FIELDS[import_group])
         except Exception as exc:
             return Response({"detail": str(exc)}, status=status.HTTP_400_BAD_REQUEST)
         return Response(
@@ -622,7 +685,7 @@ class CurrentSchoolFileImportAPI(APIView):
 
         try:
             mapping = json.loads(mapping_raw) if isinstance(mapping_raw, str) else mapping_raw
-            headers, rows = _parse_uploaded_table(uploaded_file)
+            headers, rows = _parse_uploaded_table(uploaded_file, IMPORT_GROUP_FIELDS[import_group])
         except Exception as exc:
             return Response({"detail": str(exc)}, status=status.HTTP_400_BAD_REQUEST)
 
