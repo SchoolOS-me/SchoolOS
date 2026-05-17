@@ -16,6 +16,8 @@ import AdminDashboard from "./modules/admin/pages/AdminDashboard";
 import CreateStudent from "./modules/admin/pages/CreateStudent";
 import CreateTeacher from "./modules/admin/pages/CreateTeacher";
 import CreateClassSection from "./modules/admin/pages/CreateClassSection";
+import AdminFees from "./modules/admin/pages/AdminFees";
+import AdminReports from "./modules/admin/pages/AdminReports";
 import { Profile } from "./pages/Profile";
 import { Settings } from "./pages/Settings";
 import NewSchoolLandingPage from "./pages/new-school/NewSchoolLandingPage";
@@ -86,6 +88,8 @@ export const router = createBrowserRouter([
       { path: "/admin/students/create", element: <RequireAuth><CreateStudent /></RequireAuth> },
       { path: "/admin/teachers/create", element: <RequireAuth><CreateTeacher /></RequireAuth> },
       { path: "/admin/classes/create", element: <RequireAuth><CreateClassSection /></RequireAuth> },
+      { path: "/admin/fees", element: <RequireAuth><AdminFees /></RequireAuth> },
+      { path: "/admin/reports", element: <RequireAuth><AdminReports /></RequireAuth> },
       { path: "/student/dashboard", element: <RequireAuth><StudentDashboard /></RequireAuth> },
       { path: "/parent/dashboard", element: <RequireAuth><ParentDashboard /></RequireAuth> },
       { path: "/profile", element: <RequireAuth><Profile /></RequireAuth> },

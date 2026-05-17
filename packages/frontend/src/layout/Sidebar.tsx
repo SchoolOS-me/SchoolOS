@@ -9,18 +9,6 @@ type Props = {
 const Sidebar = ({ variant = "default" }: Props) => {
   const currentUser = getCurrentUserDisplay();
 
-  const renderComingSoonLink = (label: string, iconPath: string) => (
-    <button type="button" className="sidebar__link sidebar__link--disabled" title={`${label} is coming soon`}>
-      <span className="sidebar__icon">
-        <svg viewBox="0 0 24 24" role="presentation">
-          <path d={iconPath} />
-        </svg>
-      </span>
-      <span className="sidebar__label">{label}</span>
-      <span className="sidebar__comingSoon">Soon</span>
-    </button>
-  );
-
   const renderSchoolBrand = (portalLabel: string) => (
     <div className="sidebar__brand">
       <img
@@ -99,8 +87,33 @@ const Sidebar = ({ variant = "default" }: Props) => {
             <span className="sidebar__label">Classes</span>
           </NavLink>
 
-          {renderComingSoonLink("Fees", "M7 4h10v2H7V4zm-2 4h14v12H5V8zm4 3h6v2H9v-2zm0 4h6v2H9v-2z")}
-          {renderComingSoonLink("Reports", "M4 4h4v16H4V4zm6 6h4v10h-4V10zm6-4h4v14h-4V6z")}
+          <NavLink
+            to="/admin/fees"
+            className={({ isActive }) =>
+              isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"
+            }
+          >
+            <span className="sidebar__icon">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M7 4h10v2H7V4zm-2 4h14v12H5V8zm4 3h6v2H9v-2zm0 4h6v2H9v-2z" />
+              </svg>
+            </span>
+            <span className="sidebar__label">Fees</span>
+          </NavLink>
+
+          <NavLink
+            to="/admin/reports"
+            className={({ isActive }) =>
+              isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"
+            }
+          >
+            <span className="sidebar__icon">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M4 4h4v16H4V4zm6 6h4v10h-4V10zm6-4h4v14h-4V6z" />
+              </svg>
+            </span>
+            <span className="sidebar__label">Reports</span>
+          </NavLink>
         </nav>
 
         <div className="sidebar__adminActions">

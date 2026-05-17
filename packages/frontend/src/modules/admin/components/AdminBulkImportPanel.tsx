@@ -84,7 +84,11 @@ export default function AdminBulkImportPanel({ title, description, importGroup, 
       setPreview(data);
       setMapping((current) =>
         data.required_fields.reduce<Record<string, string>>((next, field) => {
-          next[field] = current[field] || findMatchingHeader(data.headers, field);
+          const currentHeader = current[field];
+          next[field] =
+            currentHeader && data.headers.includes(currentHeader)
+              ? currentHeader
+              : findMatchingHeader(data.headers, field);
           return next;
         }, {})
       );
@@ -136,6 +140,7 @@ export default function AdminBulkImportPanel({ title, description, importGroup, 
               onChange={(event) => {
                 setSelectedFile(event.target.files?.[0] || null);
                 setPreview(null);
+                setMapping({});
                 setResult(null);
                 setError("");
               }}

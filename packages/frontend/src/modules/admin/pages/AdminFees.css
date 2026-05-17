@@ -1,0 +1,212 @@
+.admin-fees-page {
+  display: grid;
+  gap: 22px;
+}
+
+.admin-fees-page__header {
+  text-align: center;
+}
+
+.admin-fees-page__header p,
+.admin-fees-card__head p {
+  margin: 0;
+  color: #94a3b8;
+}
+
+.admin-fees-page__header h1,
+.admin-fees-card__head h2 {
+  margin: 4px 0;
+}
+
+.admin-fees-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.admin-fees-summary > div,
+.admin-fees-card {
+  border: 1px solid #263348;
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.72);
+  box-shadow: 0 18px 50px rgba(2, 6, 23, 0.24);
+}
+
+.admin-fees-summary > div {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+}
+
+.admin-fees-summary span,
+.fee-receipt span,
+.fee-receipt dt {
+  color: #94a3b8;
+}
+
+.admin-fees-summary strong {
+  color: #f8fafc;
+  font-size: 26px;
+}
+
+.admin-fees-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.9fr) minmax(360px, 1.1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.admin-fees-card {
+  padding: 20px;
+}
+
+.admin-fees-card__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.admin-fees-form {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-fees-form label {
+  display: grid;
+  gap: 8px;
+  color: #e2e8f0;
+  font-weight: 700;
+}
+
+.admin-fees-form input,
+.admin-fees-form select,
+.admin-fees-form textarea {
+  width: 100%;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 12px 14px;
+  font: inherit;
+}
+
+.admin-fees-student {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid rgba(125, 211, 252, 0.35);
+  border-radius: 14px;
+  background: rgba(14, 165, 233, 0.08);
+}
+
+.admin-fees-student span,
+.admin-fees-empty {
+  color: #94a3b8;
+}
+
+.fee-receipt {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.fee-receipt__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.fee-receipt__top > div {
+  display: grid;
+  gap: 4px;
+}
+
+.fee-receipt h3 {
+  margin: 8px 0;
+  text-align: center;
+  color: #0f172a;
+}
+
+.fee-receipt dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.fee-receipt dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 8px;
+}
+
+.fee-receipt dd {
+  margin: 0;
+  text-align: right;
+  font-weight: 800;
+}
+
+.fee-receipt__sign {
+  display: grid;
+  gap: 4px;
+  justify-items: end;
+  margin-top: 20px;
+}
+
+.admin-fees-table {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-fees-table button {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr auto;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #263348;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.72);
+  color: #e2e8f0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.admin-fees-table button:hover {
+  border-color: #60a5fa;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #fee-receipt,
+  #fee-receipt * {
+    visibility: visible;
+  }
+
+  #fee-receipt {
+    position: fixed;
+    inset: 24px;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-fees-summary,
+  .admin-fees-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-fees-table button {
+    grid-template-columns: 1fr;
+  }
+}
