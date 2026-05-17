@@ -33,6 +33,23 @@ function downloadCsv(fileName: string, rows: readonly (readonly string[])[]) {
   URL.revokeObjectURL(url);
 }
 
+function normalizeImportKey(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+}
+
+function findMatchingHeader(headers: string[], field: string) {
+  const normalizedField = normalizeImportKey(field);
+  return (
+    headers.find((header) => header === field) ||
+    headers.find((header) => normalizeImportKey(header) === normalizedField) ||
+    ""
+  );
+}
+
 export default function AdminBulkImportPanel({ title, description, importGroup, templates }: Props) {
   const inputId = useId();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -67,7 +84,7 @@ export default function AdminBulkImportPanel({ title, description, importGroup, 
       setPreview(data);
       setMapping((current) =>
         data.required_fields.reduce<Record<string, string>>((next, field) => {
-          next[field] = current[field] || data.headers.find((header) => header === field) || "";
+          next[field] = current[field] || findMatchingHeader(data.headers, field);
           return next;
         }, {})
       );
@@ -152,8 +169,8 @@ export default function AdminBulkImportPanel({ title, description, importGroup, 
                   }
                 >
                   <option value="">Select column</option>
-                  {preview.headers.map((header) => (
-                    <option key={header} value={header}>
+                  {preview.headers.map((header, index) => (
+                    <option key={`${header}-${index}`} value={header}>
                       {header}
                     </option>
                   ))}
