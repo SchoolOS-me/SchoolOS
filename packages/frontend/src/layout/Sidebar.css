@@ -1,5 +1,5 @@
 .sidebar {
-  width: 240px;
+  width: clamp(228px, 17vw, 280px);
   background-color: #111827;
   color: #ffffff;
   display: flex;
@@ -98,7 +98,7 @@
 }
 
 .sidebar--teacher {
-  width: 260px;
+  width: clamp(236px, 18vw, 292px);
   background-color: #ffffff;
   color: #1f2937;
   border-right: 1px solid #e2e8f0;
@@ -142,7 +142,7 @@
 
 .sidebar--student,
 .sidebar--parent {
-  width: 260px;
+  width: clamp(236px, 18vw, 292px);
   background-color: #ffffff;
   color: #1f2937;
   border-right: 1px solid #e2e8f0;
@@ -206,7 +206,7 @@
 }
 
 .sidebar--admin {
-  width: 260px;
+  width: clamp(236px, 18vw, 292px);
   background-color: #ffffff;
   color: #1f2937;
   border-right: 1px solid #e2e8f0;
@@ -259,7 +259,7 @@
 }
 
 .sidebar--superAdmin {
-  width: 260px;
+  width: clamp(236px, 18vw, 292px);
   background-color: #ffffff;
   color: #0f172a;
   border-right: 1px solid #d9e1f2;
@@ -490,6 +490,17 @@
 
   .sidebar--admin {
     width: 220px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .sidebar,
+  .sidebar--teacher,
+  .sidebar--student,
+  .sidebar--parent,
+  .sidebar--admin,
+  .sidebar--superAdmin {
+    padding: 28px 22px;
   }
 }
 
