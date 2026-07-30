@@ -227,6 +227,15 @@ def _rows_with_mapping(headers, rows, mapping):
     return normalized_rows
 
 
+def _data_without_empty_logo(request):
+    logo = request.FILES.get("logo")
+    if logo is None or getattr(logo, "size", 0) > 0:
+        return request.data
+    data = request.data.copy()
+    data.pop("logo", None)
+    return data
+
+
 def _run_school_bulk_import(school, payload):
     class_rows = payload.get("classes") or []
     section_rows = payload.get("sections") or []
@@ -568,7 +577,7 @@ class SchoolDetailAPI(APIView):
             return Response({"detail": "Not allowed"}, status=status.HTTP_403_FORBIDDEN)
 
         school = get_object_or_404(School, uuid=school_uuid)
-        serializer = SchoolCreateSerializer(school, data=request.data, partial=True)
+        serializer = SchoolCreateSerializer(school, data=_data_without_empty_logo(request), partial=True)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -602,7 +611,7 @@ class CurrentSchoolAPI(APIView):
         school = getattr(request.user, "school", None)
         if not school:
             return Response({"detail": "School is not configured."}, status=status.HTTP_400_BAD_REQUEST)
-        serializer = SchoolCreateSerializer(school, data=request.data, partial=True)
+        serializer = SchoolCreateSerializer(school, data=_data_without_empty_logo(request), partial=True)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         school = serializer.save()

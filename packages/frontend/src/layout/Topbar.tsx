@@ -22,6 +22,10 @@ type Props = {
 
 const Topbar = ({ title, variant = "default", parentTopbar }: Props) => {
   const currentUser = getCurrentUserDisplay();
+  const profileName =
+    variant === "admin" && currentUser.schoolCode
+      ? currentUser.schoolCode.toUpperCase()
+      : currentUser.name;
   const profileAriaLabel = `Open profile for ${currentUser.name}`;
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
@@ -133,7 +137,7 @@ const Topbar = ({ title, variant = "default", parentTopbar }: Props) => {
           <div className="topbar__divider" aria-hidden="true" />
           <Link to="/profile" className="topbar__user topbar__profileLink" aria-label={profileAriaLabel}>
             <div className="topbar__userText">
-              <span className="topbar__userName">{currentUser.name}</span>
+              <span className="topbar__userName">{profileName}</span>
               <span className="topbar__userRole">{currentUser.role}</span>
             </div>
             <div className="topbar__userAvatar">{currentUser.initials}</div>
