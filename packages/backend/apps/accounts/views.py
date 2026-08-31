@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -35,6 +35,8 @@ class LoginAPI(APIView):
     Custom login endpoint that returns JWT tokens plus user info.
     """
 
+    permission_classes = (AllowAny,)
+
     def post(self, request):
         serializer = LoginSerializer(data=request.data, context={"request": request})
         if not serializer.is_valid():
@@ -48,6 +50,7 @@ class TokenLoginAPI(TokenObtainPairView):
     Standard JWT login endpoint with user info in the response.
     """
 
+    permission_classes = (AllowAny,)
     serializer_class = LoginSerializer
 
 
@@ -91,6 +94,8 @@ class PasswordResetRequestAPI(APIView):
     Generates a password reset token. Email sending is optional and can be added later.
     """
 
+    permission_classes = (AllowAny,)
+
     def post(self, request):
         serializer = PasswordResetRequestSerializer(data=request.data)
         if not serializer.is_valid():
@@ -115,6 +120,8 @@ class PasswordResetRequestAPI(APIView):
 
 
 class PasswordResetConfirmAPI(APIView):
+    permission_classes = (AllowAny,)
+
     def post(self, request):
         serializer = PasswordResetConfirmSerializer(data=request.data)
         if not serializer.is_valid():

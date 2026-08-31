@@ -4,6 +4,7 @@ __pycache__/
 db.sqlite3
 .pytest_cache/
 .env
+secrets.json
 .ruff_cache
 .pdm-python
 docs/

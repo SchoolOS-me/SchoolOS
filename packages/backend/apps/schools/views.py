@@ -3,7 +3,6 @@ import io
 import json
 import re
 
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.shortcuts import get_object_or_404
@@ -68,55 +67,12 @@ def _normalize_key(value):
     return str(value or "").strip().lower()
 
 
-def _make_import_password(prefix, index):
-    return f"{prefix}{index:04d}!SchoolOS"
-
-
-def _auth_bypass_enabled():
-    permission_classes = settings.REST_FRAMEWORK.get("DEFAULT_PERMISSION_CLASSES", ())
-    return "rest_framework.permissions.AllowAny" in permission_classes
-
-
 def _is_super_admin_or_open(user):
-    return _auth_bypass_enabled() or is_super_admin(user)
+    return is_super_admin(user)
 
 
 def _is_school_admin_for_school(user, school):
     return is_school_admin(user) and getattr(user, "school_id", None) == school.id
-
-
-def _resolve_tenant_creator(request):
-    if request.user and request.user.is_authenticated:
-        return request.user
-
-    user_model = get_user_model()
-    creator = user_model.objects.filter(role=UserRole.SUPER_ADMIN).order_by("id").first()
-    if creator:
-        return creator
-
-    creator = user_model.objects.order_by("id").first()
-    if creator:
-        return creator
-
-    raw_seed = request.data.get("code") or request.data.get("name") or "school"
-    seed = slugify(str(raw_seed)).replace("-", "")[:20] or "school"
-    email = f"bootstrap.superadmin+{seed}@kcs.local"
-
-    suffix = 1
-    while user_model.objects.filter(email__iexact=email).exists():
-        suffix += 1
-        email = f"bootstrap.superadmin+{seed}{suffix}@kcs.local"
-
-    bootstrap_user = user_model.objects.create_user(
-        email=email,
-        password=None,
-        role=UserRole.SUPER_ADMIN,
-        is_staff=True,
-        is_superuser=True,
-    )
-    bootstrap_user.set_unusable_password()
-    bootstrap_user.save(update_fields=["password"])
-    return bootstrap_user
 
 
 def _split_cell_row_if_needed(row):
@@ -408,7 +364,7 @@ def _run_school_bulk_import(school, payload):
 
             user = existing_user or get_user_model().objects.create_user(
                 email=email,
-                password=_make_import_password("Teacher", index + 1),
+                password=None,
                 role=UserRole.TEACHER,
                 school=school,
             )
@@ -548,7 +504,7 @@ class SchoolListCreateAPI(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        creator = _resolve_tenant_creator(request)
+        creator = request.user
 
         with transaction.atomic():
             contact_email = serializer.validated_data.get("contact_email") or getattr(creator, "email", "")

@@ -16,9 +16,6 @@ schema = graphene.Schema(
     mutation=graphql_mutation(
         [
             notifications_schema.Mutation,
-            users_schema.AnyoneMutation,
-            users_schema.AuthenticatedMutation,
-            users_schema.Mutation,
             finances_schema.Mutation,
             integrations_schema.Mutation,
             multitenancy_schema.Mutation,

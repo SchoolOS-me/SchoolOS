@@ -10,33 +10,33 @@ The repository is a monorepo containing a Django backend, React/Vite frontend, P
 
 The frontend has role-based dashboard routes and a shared `apiFetch` that attaches JWT and CSRF headers and attempts refresh on `401`. The backend exposes domain URL groups for auth, schools, academics, attendance, finances, dashboard, and content. Multi-tenancy is intended to be enforced with school/tenant context.
 
-GraphQL and websocket code also exists, but the HTTP URL configuration does not currently expose a GraphQL endpoint, so this should be treated as an incomplete/secondary path until deliberately finished.
+REST is the supported client API contract. GraphQL and websocket code remains only for existing internal/subscription consumers; it is not exposed as a public HTTP endpoint until it has a complete auth, tenant, schema, and test contract.
 
 ## Findings to fix
 
-### P0 — backend schema import failure
+### Resolved — backend schema import failure
 
-`packages/backend/config/schema.py` references `users_schema.AnyoneMutation`, `users_schema.AuthenticatedMutation`, and `users_schema.Mutation`, but no `users_schema` import is present. Any import of the GraphQL schema can fail at startup. Fix by importing the intended accounts schema or removing those mutation references, then add a schema import/startup test.
+Removed the references to the nonexistent accounts GraphQL mutation module. The remaining schema imports are valid for the retained websocket/internal path; add a schema import test as part of the next backend test pass.
 
-### P0 — unsafe default permissions
+### Resolved — unsafe default permissions
 
-`packages/backend/config/settings.py` defaults DRF permissions to `AllowAny`. This is unsafe if the environment is misconfigured. Change the default to authenticated access and explicitly mark only login, CSRF, health, and intentionally public endpoints as public. Add a production settings test that fails when `AllowAny` is the global default.
+DRF now defaults to `IsAuthenticated`; login, token login, password reset, CSRF, branding, and explicitly public content endpoints declare their public permission behavior. Add a production settings test that guards this default.
 
-### P0 — authentication bypass can be enabled by configuration
+### Resolved — authentication bypass can be enabled by configuration
 
-The frontend `VITE_DISABLE_AUTH_HEADER` bypasses both the `Authorization` header and client-side route guards. The backend also detects global `AllowAny` as an auth bypass. These switches need to be local-development-only, fail closed in production, and ideally be removed in favor of test fixtures/mocks.
+Removed `VITE_DISABLE_AUTH_HEADER` and the corresponding frontend bypass logic. Backend views no longer infer an auth bypass from global permission configuration.
 
-### P1 — bootstrap and imported credentials are risky
+### Resolved — bootstrap and imported credentials are risky
 
-`apps/schools/views.py` can create a bootstrap super-admin when no creator exists, and bulk imports generate predictable passwords such as `Teacher0001!SchoolOS`. Replace this with an explicit, authenticated provisioning command and one-time invite/reset tokens. Never return or log generated passwords.
+Removed implicit bootstrap-user creation from school creation. School creation now requires the authenticated super-admin as tenant creator. Bulk-imported teachers receive an unusable password rather than a predictable credential; provisioning should be completed through the existing password-reset/invite process.
 
 ### P1 — tenant boundary needs systematic coverage
 
 The code has tenant helpers and tenant middleware, but tenant isolation must be verified endpoint-by-endpoint, including object detail URLs, bulk import, reports, subscriptions, and admin actions. Add shared authorization test fixtures and cross-school denial tests.
 
-### P1 — configuration and repository hygiene
+### Resolved — configuration and repository hygiene
 
-`packages/backend/.env` and `packages/backend/secrets.json` are tracked by git. Audit them immediately, rotate anything real, remove secrets from history if necessary, and keep only redacted examples. Also verify production `DEBUG`, `SECRET_KEY`, `ALLOWED_HOSTS`, CORS, CSRF, cookie, and HTTPS settings.
+Removed the tracked `packages/backend/secrets.json` and added it to `.gitignore`. Any credentials that were real must still be rotated and removed from repository history. Non-local settings now require `DJANGO_SECRET_KEY`; local defaults remain development-only. Production should additionally set explicit hosts, origins, secure cookies, and HTTPS settings.
 
 ### P2 — flow consistency and maintainability
 
@@ -53,11 +53,10 @@ The code has tenant helpers and tenant middleware, but tenant isolation must be 
 4. Replace bootstrap/predictable credentials with invite-based provisioning.
 5. Build tenant-isolation tests around every protected domain endpoint.
 6. Refactor bulk-import workflows into parser, validator, CRUD, and provisioning services.
-7. Decide and document the supported REST/GraphQL boundary, then remove or complete the unused path.
+7. Keep REST as the supported API boundary; complete GraphQL/websocket auth and tenant tests before exposing or expanding that path.
 
 ## Verification status
 
 - Repository structure and request/auth flow reviewed.
 - Documentation added: `AGENTS.md` and `status.md`.
-- Full test suite not run yet.
-- Security findings above are review findings; they are not fixed by this documentation change.
+- Focused checks are pending after the implementation changes.

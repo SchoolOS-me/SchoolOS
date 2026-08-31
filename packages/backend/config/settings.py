@@ -38,8 +38,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 ENVIRONMENT_NAME = env_str("ENVIRONMENT_NAME", "local")
 IS_LOCAL = ENVIRONMENT_NAME.lower() == "local"
 
-DEBUG = env_bool("DJANGO_DEBUG", True)
-SECRET_KEY = env_str("DJANGO_SECRET_KEY", "unsafe-secret")
+DEBUG = env_bool("DJANGO_DEBUG", IS_LOCAL)
+SECRET_KEY = env_str("DJANGO_SECRET_KEY")
+if not SECRET_KEY:
+    if IS_LOCAL:
+        SECRET_KEY = "local-only-insecure-key-change-me"
+    else:
+        raise RuntimeError("DJANGO_SECRET_KEY must be configured outside local development")
 
 ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", [])
 
@@ -278,7 +283,7 @@ STORAGES = {
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.AllowAny",
+        "rest_framework.permissions.IsAuthenticated",
     ),
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
